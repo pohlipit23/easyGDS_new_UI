@@ -33,6 +33,8 @@
     <style>
         .form-card {
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .form-card:hover {
@@ -69,6 +71,25 @@
         .autocomplete-item:hover {
             background-color: #f3f4f6;
         }
+        }
+
+        /* Traveler Popover Animation */
+        .traveler-popover {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform-origin: top right;
+        }
+
+        .traveler-popover.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .traveler-popover:not(.hidden) {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
     </style>
 </head>
 
@@ -92,9 +113,9 @@
                 <form id="form-flight" class="space-y-4">
                     <div class="flex gap-4 text-sm font-medium">
                         <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ft_type"
-                                checked> Round Trip</label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ft_type"> One
-                            Way</label>
+                                value="round" checked> Round Trip</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ft_type"
+                                value="oneway"> One Way</label>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -119,17 +140,91 @@
                                 class="w-full p-3 bg-slate-50 rounded-lg border outline-none"
                                 placeholder="Depart - Return">
                         </div>
-                        <div class="relative">
+                        <div class="relative" id="fl-pax-container">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers</label>
-                            <div
-                                class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
-                                <span class="selected-val">1 Adult</span>
+                            <div id="fl-pax-trigger"
+                                class="w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none flex justify-between items-center hover:border-brand-blue transition-colors">
+                                <span id="fl-pax-display" class="text-sm font-medium">1 Adult</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
                             </div>
-                            <div
-                                class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="1">1 Adult</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="2">2 Adults</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="family">2 Adults, 1 Child
+
+                            <!-- Dropdown Panel -->
+                            <div id="fl-pax-menu"
+                                class="hidden absolute top-full right-0 w-80 bg-white border rounded-xl shadow-2xl z-30 mt-2 p-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <!-- Adults -->
+                                <div class="flex justify-between items-center mb-5">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Adults</div>
+                                        <div class="text-xs text-slate-500">Age 12+</div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="adt" data-action="minus"><i data-lucide="minus"
+                                                class="w-3 h-3"></i></button>
+                                        <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                            id="count-adt">1</span>
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="adt" data-action="plus"><i data-lucide="plus"
+                                                class="w-3 h-3"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Children -->
+                                <div class="flex justify-between items-center mb-5">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Children</div>
+                                        <div class="text-xs text-slate-500">Age 2-11</div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="chd" data-action="minus"><i data-lucide="minus"
+                                                class="w-3 h-3"></i></button>
+                                        <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                            id="count-chd">0</span>
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="chd" data-action="plus"><i data-lucide="plus"
+                                                class="w-3 h-3"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Child Ages (Dynamic) -->
+                                <div id="chd-ages-container" class="mb-5 hidden">
+                                    <div class="text-xs font-bold text-slate-400 uppercase mb-2">Child Ages</div>
+                                    <div class="grid grid-cols-3 gap-2" id="chd-ages-grid">
+                                        <!-- Selects go here -->
+                                    </div>
+                                </div>
+
+                                <!-- Infants -->
+                                <div class="flex justify-between items-center mb-2">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Infants</div>
+                                        <div class="text-xs text-slate-500">Under 2 (on lap)</div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="inf" data-action="minus"><i data-lucide="minus"
+                                                class="w-3 h-3"></i></button>
+                                        <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                            id="count-inf">0</span>
+                                        <button type="button"
+                                            class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                            data-type="inf" data-action="plus"><i data-lucide="plus"
+                                                class="w-3 h-3"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="text-xs text-red-500 mt-2 hidden bg-red-50 p-2 rounded" id="fl-pax-error">
+                                </div>
+
+                                <div class="mt-4 pt-3 border-t text-right">
+                                    <button type="button" id="btn-done-pax"
+                                        class="px-4 py-2 bg-brand-blue text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors">Done</button>
                                 </div>
                             </div>
                         </div>
@@ -235,292 +330,342 @@
                         </div>
                     </div>
 
-                    <div class="relative hidden p-4 bg-slate-50 rounded-lg border border-dashed border-emerald-300"
-                        id="pkg-partial-dates-container">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Hotel Dates</label>
-                        <input type="text" id="pkg-hotel-dates"
-                            class="w-full p-3 bg-white rounded-lg border outline-none" placeholder="Checkin - Checkout">
-                    </div>
+                    <!-- Travelers & Rooms -->
+                    <div class="relative" id="pkg-traveler-widget">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers & Rooms</label>
 
-                    <button type="button" id="btn-search-pkg"
-                        class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors">Search
-                        Packages</button>
-                </form>
-            </div>
-
-            <!-- 4. TRANSFER FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-orange-100 rounded-lg text-orange-600"><i data-lucide="car-taxi-front"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Transfers</h2>
-                </div>
-
-                <form id="form-transfer" class="space-y-4">
-                    <div class="flex flex-col gap-4">
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pick-up</label>
-                            <input type="text" id="tr-pickup"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-orange-500 outline-none"
-                                placeholder="Airport Code" data-type="airport_code">
+                        <!-- Trigger -->
+                        <div id="pkg-traveler-trigger"
+                            class="w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none flex justify-between items-center hover:border-emerald-500 transition-colors">
+                            <span id="pkg-traveler-summary" class="text-sm font-medium">1 Room, 2 Guests</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
                         </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Drop-off</label>
-                            <input type="text" id="tr-dropoff"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-orange-500 outline-none"
-                                placeholder="Hotel or Address" data-type="hotel">
-                        </div>
-                    </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
-                            <input type="text" id="tr-date"
-                                class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                        </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Time</label>
-                            <div
-                                class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
-                                <span class="selected-val" id="tr-time-val">12:00</span>
+                        <!-- Popover -->
+                        <div id="pkg-traveler-popover"
+                            class="traveler-popover hidden absolute top-full left-0 w-80 sm:w-96 bg-white border border-slate-200 rounded-xl shadow-2xl z-30 mt-2 p-4 max-h-[80vh] overflow-y-auto">
+
+                            <div id="pkg-rooms-container" class="space-y-6">
+                                <!-- Room Items Injected Here -->
                             </div>
-                            <div class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1 max-h-48 overflow-y-auto"
-                                id="tr-time-opts">
-                                <!-- JS will populate times -->
+
+                            <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
+                                <button type="button" id="pkg-btn-add-room"
+                                    class="text-emerald-600 text-sm font-bold hover:text-emerald-800 flex items-center gap-1">
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Room
+                                </button>
+                                <button type="button" id="pkg-btn-done-travelers"
+                                    class="bg-emerald-600 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-emerald-700">
+                                    Done
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <button type="button" id="btn-search-transfer"
-                        class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors">Search
-                        Transfers</button>
-                </form>
-            </div>
-
-            <!-- 5. CAR RENTAL FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-zinc-100 rounded-lg text-zinc-600"><i data-lucide="car"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Car Rental</h2>
-                </div>
-
-                <form id="form-car" class="space-y-4">
+                    <!-- Cabin Class -->
                     <div class="relative">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pick-up Location</label>
-                        <input type="text" id="car-loc"
-                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-zinc-500 outline-none"
-                            placeholder="City or Airport" data-type="airport_code">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pick-up Date</label>
-                            <input type="text" id="car-pick-date"
-                                class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cabin Class</label>
+                        <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                            <span class="selected-val" id="pkg-cabin-val">Economy</span>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Drop-off Date</label>
-                            <input type="text" id="car-drop-date"
-                                class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                        <div class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1"
+                            id="pkg-cabin-opts">
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="E">Economy</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="B">Business</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="F">First</div>
                         </div>
                     </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Driver Age</label>
-                        <input type="number" id="car-age" value="30"
-                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                    </div>
-
-                    <button type="button" id="btn-search-car"
-                        class="w-full py-3 bg-zinc-700 hover:bg-zinc-800 text-white font-bold rounded-lg transition-colors">Search
-                        Cars</button>
-                </form>
             </div>
 
-            <!-- 6. TOUR FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-purple-100 rounded-lg text-purple-600"><i data-lucide="map"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Tours</h2>
-                </div>
-
-                <form id="form-tour" class="space-y-4">
-                    <div class="relative">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
-                        <input type="text" id="tour-dest"
-                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-purple-500 outline-none"
-                            placeholder="Destination" data-type="place_id">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
-                            <input type="text" id="tour-dates"
-                                class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                        </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers</label>
-                            <div
-                                class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
-                                <span class="selected-val">2 Adults</span>
-                            </div>
-                            <div
-                                class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">1 Adult</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">2 Adults</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" id="btn-search-tour"
-                        class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors">Search
-                        Tours</button>
-                </form>
+            <div class="relative hidden p-4 bg-slate-50 rounded-lg border border-dashed border-emerald-300"
+                id="pkg-partial-dates-container">
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Hotel Dates</label>
+                <input type="text" id="pkg-hotel-dates" class="w-full p-3 bg-white rounded-lg border outline-none"
+                    placeholder="Checkin - Checkout">
             </div>
 
-            <!-- 7. TRAIN FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-red-100 rounded-lg text-red-600"><i data-lucide="train-front"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Train</h2>
-                </div>
-
-                <form id="form-train" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">From</label>
-                            <input type="text" id="train-from"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-red-500 outline-none"
-                                placeholder="Station" data-type="station">
-                        </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">To</label>
-                            <input type="text" id="train-to"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-red-500 outline-none"
-                                placeholder="Station" data-type="station">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
-                        <input type="text" id="train-dates"
-                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                    </div>
-
-                    <button type="button" id="btn-search-train"
-                        class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors">Search
-                        Trains</button>
-                </form>
-            </div>
-
-            <!-- 8. STOPOVER FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-cyan-100 rounded-lg text-cyan-600"><i data-lucide="clock"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Stopover</h2>
-                </div>
-
-                <form id="form-stopover" class="space-y-4">
-                    <div class="relative">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
-                        <input type="text" id="stop-dest"
-                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-cyan-500 outline-none"
-                            placeholder="Destination" data-type="airport_code">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
-                        <input type="text" id="stop-dates"
-                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                    </div>
-
-                    <button type="button" id="btn-search-stopover"
-                        class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors">Search
-                        Stopovers</button>
-                </form>
-            </div>
-
-            <!-- 9. TRAIN + HOTEL FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-pink-100 rounded-lg text-pink-600"><i data-lucide="train-front"></i><i
-                            data-lucide="bed"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Train + Hotel</h2>
-                </div>
-
-                <form id="form-train-hotel" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Origin</label>
-                            <input type="text" id="th-origin"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-pink-500 outline-none"
-                                placeholder="City or Station" data-type="station">
-                        </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
-                            <input type="text" id="th-dest"
-                                class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-pink-500 outline-none"
-                                placeholder="Hotel or City" data-type="place_id">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
-                            <input type="text" id="th-dates"
-                                class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                        </div>
-                        <div class="relative">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Stars</label>
-                            <div
-                                class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
-                                <span class="selected-val">Any</span>
-                            </div>
-                            <div
-                                class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">Any</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">3 Stars</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">4 Stars</div>
-                                <div class="p-2 hover:bg-slate-50 cursor-pointer">5 Stars</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" id="btn-search-train-hotel"
-                        class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition-colors">Search
-                        Train + Hotel</button>
-                </form>
-            </div>
-
-            <!-- 10. TOUR PACKAGE FORM -->
-            <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="p-2 bg-teal-100 rounded-lg text-teal-600"><i data-lucide="compass"></i></div>
-                    <h2 class="text-xl font-bold text-brand-dark">Tour Package</h2>
-                </div>
-
-                <form id="form-tour-pkg" class="space-y-4">
-                    <div class="relative">
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
-                        <input type="text" id="tp-dest"
-                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-teal-500 outline-none"
-                            placeholder="Destination" data-type="place_id">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
-                        <input type="text" id="tp-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
-                    </div>
-
-                    <button type="button" id="btn-search-tour-pkg"
-                        class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg transition-colors">Search
-                        Tour Packages</button>
-                </form>
-            </div>
+            <button type="button" id="btn-search-pkg"
+                class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors">Search
+                Packages</button>
+            </form>
         </div>
 
-        <div class="mt-12 p-4 text-center text-sm text-gray-500">
-            * Note: API integration is live. CORS restrictions may apply if not running on approved domains.
+        <!-- 4. TRANSFER FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-orange-100 rounded-lg text-orange-600"><i data-lucide="car-taxi-front"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Transfers</h2>
+            </div>
+
+            <form id="form-transfer" class="space-y-4">
+                <div class="flex flex-col gap-1">
+                    <div class="relative">
+                        <label id="lbl-tr-1"
+                            class="block text-xs font-bold text-slate-500 uppercase mb-1">Airport</label>
+                        <input type="text" id="tr-pickup"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-orange-500 outline-none"
+                            placeholder="Airport Code" data-type="airport_code">
+                    </div>
+
+                    <div class="relative flex justify-center -my-3 z-10">
+                        <button type="button" id="btn-swap-transfer"
+                            class="p-1.5 bg-white rounded-full border border-slate-200 shadow-sm text-orange-500 hover:bg-orange-50 hover:border-orange-300 transition-all active:scale-95">
+                            <i data-lucide="arrow-down-up" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <label id="lbl-tr-2"
+                            class="block text-xs font-bold text-slate-500 uppercase mb-1">Hotel/Destination</label>
+                        <input type="text" id="tr-dropoff"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-orange-500 outline-none"
+                            placeholder="Hotel or Address" data-type="hotel">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
+                        <input type="text" id="tr-date" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Time</label>
+                        <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                            <span class="selected-val" id="tr-time-val">12:00</span>
+                        </div>
+                        <div class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1 max-h-48 overflow-y-auto"
+                            id="tr-time-opts">
+                            <!-- JS will populate times -->
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-search-transfer"
+                    class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors">Search
+                    Transfers</button>
+            </form>
         </div>
+
+        <!-- 5. CAR RENTAL FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-zinc-100 rounded-lg text-zinc-600"><i data-lucide="car"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Car Rental</h2>
+            </div>
+
+            <form id="form-car" class="space-y-4">
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pick-up Location</label>
+                    <input type="text" id="car-loc"
+                        class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-zinc-500 outline-none"
+                        placeholder="City or Airport" data-type="airport_code">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pick-up Date</label>
+                        <input type="text" id="car-pick-date"
+                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Drop-off Date</label>
+                        <input type="text" id="car-drop-date"
+                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Driver Age</label>
+                    <input type="number" id="car-age" value="30"
+                        class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                </div>
+
+                <button type="button" id="btn-search-car"
+                    class="w-full py-3 bg-zinc-700 hover:bg-zinc-800 text-white font-bold rounded-lg transition-colors">Search
+                    Cars</button>
+            </form>
+        </div>
+
+        <!-- 6. TOUR FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-purple-100 rounded-lg text-purple-600"><i data-lucide="map"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Tours</h2>
+            </div>
+
+            <form id="form-tour" class="space-y-4">
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                    <input type="text" id="tour-dest"
+                        class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-purple-500 outline-none"
+                        placeholder="Destination" data-type="place_id">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                        <input type="text" id="tour-dates"
+                            class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers</label>
+                        <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                            <span class="selected-val">2 Adults</span>
+                        </div>
+                        <div
+                            class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">1 Adult</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">2 Adults</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-search-tour"
+                    class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors">Search
+                    Tours</button>
+            </form>
+        </div>
+
+        <!-- 7. TRAIN FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-red-100 rounded-lg text-red-600"><i data-lucide="train-front"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Train</h2>
+            </div>
+
+            <form id="form-train" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">From</label>
+                        <input type="text" id="train-from"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-red-500 outline-none"
+                            placeholder="Station" data-type="station">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">To</label>
+                        <input type="text" id="train-to"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-red-500 outline-none"
+                            placeholder="Station" data-type="station">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                    <input type="text" id="train-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                </div>
+
+                <button type="button" id="btn-search-train"
+                    class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors">Search
+                    Trains</button>
+            </form>
+        </div>
+
+        <!-- 8. STOPOVER FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-cyan-100 rounded-lg text-cyan-600"><i data-lucide="clock"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Stopover</h2>
+            </div>
+
+            <form id="form-stopover" class="space-y-4">
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                    <input type="text" id="stop-dest"
+                        class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-cyan-500 outline-none"
+                        placeholder="Destination" data-type="airport_code">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                    <input type="text" id="stop-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                </div>
+
+                <button type="button" id="btn-search-stopover"
+                    class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors">Search
+                    Stopovers</button>
+            </form>
+        </div>
+
+        <!-- 9. TRAIN + HOTEL FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-pink-100 rounded-lg text-pink-600"><i data-lucide="train-front"></i><i
+                        data-lucide="bed"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Train + Hotel</h2>
+            </div>
+
+            <form id="form-train-hotel" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Origin</label>
+                        <input type="text" id="th-origin"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-pink-500 outline-none"
+                            placeholder="City or Station" data-type="station">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                        <input type="text" id="th-dest"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-pink-500 outline-none"
+                            placeholder="Hotel or City" data-type="place_id">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                        <input type="text" id="th-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Stars</label>
+                        <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                            <span class="selected-val">Any</span>
+                        </div>
+                        <div
+                            class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">Any</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">3 Stars</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">4 Stars</div>
+                            <div class="p-2 hover:bg-slate-50 cursor-pointer">5 Stars</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-search-train-hotel"
+                    class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition-colors">Search
+                    Train + Hotel</button>
+            </form>
+        </div>
+
+        <!-- 10. TOUR PACKAGE FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-teal-100 rounded-lg text-teal-600"><i data-lucide="compass"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Tour Package</h2>
+            </div>
+
+            <form id="form-tour-pkg" class="space-y-4">
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                    <input type="text" id="tp-dest"
+                        class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-teal-500 outline-none"
+                        placeholder="Destination" data-type="place_id">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                    <input type="text" id="tp-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none">
+                </div>
+
+                <button type="button" id="btn-search-tour-pkg"
+                    class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg transition-colors">Search
+                    Tour Packages</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-12 p-4 text-center text-sm text-gray-500">
+        * Note: API integration is live. CORS restrictions may apply if not running on approved domains.
+    </div>
     </div>
 
     <script>
@@ -532,8 +677,10 @@
         const API_BASE_URL = '/api';
         const SESSION_ID = 'demo_session_dynamic_123';
         // Updated Package ID from working URL
+        // Updated Package ID from working URL
         const CONFIG_ID = '3dca0e8c-b1ec-4fef-913e-09b577956c6d';
 
+        // Generic Redirect
         // Generic Redirect
         function go(paramsObj, customPath) {
             let base;
@@ -543,13 +690,20 @@
                 base = 'https://demo.apps.easygds.com/shopping/processes/' + (paramsObj.process || 'flight');
             }
 
-            paramsObj.currency_code = 'USD';
+            paramsObj.currency_code = 'EUR'; // Updating to EUR as per working URL, though USD might work
             paramsObj.language_code = 'en-US';
             paramsObj.session_id = SESSION_ID;
 
             // Add missing params required for prices to show
             paramsObj.office_domain = 'demo.b2c.easygds.com';
             paramsObj.scope_type = 'B2C';
+            paramsObj.disabled_currency = 'true';
+
+            // Generate random search_id
+
+            // Generate random search_id
+            paramsObj.search_id = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
 
             const qs = new URLSearchParams(paramsObj).toString();
             console.log("Submitting to:", base + '?' + qs);
@@ -716,7 +870,7 @@
         // --- Autocomplete Component ---
         function setupAutocomplete(input) {
             if (!input) return;
-            const type = input.dataset.type || 'any'; // airport_code, place_id, hotel, station
+            // const type = input.dataset.type || 'any'; // Moved to input listener for dynamic updates
 
             const container = document.createElement('div');
             container.className = 'absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50 hidden mt-1';
@@ -739,7 +893,8 @@
                     container.innerHTML = '<div class="p-3 text-sm text-gray-400">Loading...</div>';
                     container.classList.remove('hidden');
 
-                    const results = await fetchLocations(query, type);
+                    const dynamicType = input.dataset.type || 'any';
+                    const results = await fetchLocations(query, dynamicType);
 
                     container.innerHTML = '';
                     if (results.length === 0) {
@@ -816,7 +971,22 @@
         // --- Date Pickers ---
         // --- Date Pickers ---
         // Changed to Y-m-d format to match API requirements
-        flatpickr('#fl-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
+        // Changed to Y-m-d format to match API requirements
+        const flDateInput = document.getElementById('fl-dates');
+        const fp = flatpickr(flDateInput, { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
+
+        // Handle Trip Type Change
+        document.querySelectorAll('input[name="ft_type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'oneway') {
+                    fp.set('mode', 'single');
+                    flDateInput.placeholder = "Depart";
+                } else {
+                    fp.set('mode', 'range');
+                    flDateInput.placeholder = "Depart - Return";
+                }
+            });
+        });
         flatpickr('#ht-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
         flatpickr('#pkg-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
         flatpickr('#pkg-hotel-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
@@ -838,6 +1008,186 @@
             });
         }
 
+        // ================= FLIGHT PASSENGER LOGIC =================
+        const flightPax = (function () {
+            const state = { adt: 1, chd: 0, inf: 0, chdAges: [] };
+            const MAX_SEATS = 8; // ADT + CHD
+
+            const els = {
+                trigger: document.getElementById('fl-pax-trigger'),
+                menu: document.getElementById('fl-pax-menu'),
+                display: document.getElementById('fl-pax-display'),
+                btnDone: document.getElementById('btn-done-pax'),
+                counts: {
+                    adt: document.getElementById('count-adt'),
+                    chd: document.getElementById('count-chd'),
+                    inf: document.getElementById('count-inf')
+                },
+                chdAgesCont: document.getElementById('chd-ages-container'),
+                chdAgesGrid: document.getElementById('chd-ages-grid'),
+                error: document.getElementById('fl-pax-error')
+            };
+
+            if (!els.trigger) return { getState: () => state };
+
+            // Toggle Menu
+            els.trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                els.menu.classList.toggle('hidden');
+            });
+
+            els.menu.addEventListener('click', (e) => e.stopPropagation());
+
+            // Close on Done
+            if (els.btnDone) {
+                els.btnDone.addEventListener('click', () => {
+                    els.menu.classList.add('hidden');
+                });
+            }
+
+            // Buttons
+            document.querySelectorAll('.pax-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const type = btn.dataset.type; // adt, chd, inf
+                    const action = btn.dataset.action; // plus, minus
+                    updateState(type, action);
+                });
+            });
+
+            function updateState(type, action) {
+                let { adt, chd, inf } = state;
+                let newAdt = adt, newChd = chd, newInf = inf;
+
+                if (type === 'adt') {
+                    if (action === 'plus') newAdt++;
+                    else newAdt--;
+                } else if (type === 'chd') {
+                    if (action === 'plus') newChd++;
+                    else newChd--;
+                } else if (type === 'inf') {
+                    if (action === 'plus') newInf++;
+                    else newInf--;
+                }
+
+                // VALIDATION RULES
+                // 1. Min 1 Adult
+                if (newAdt < 1) return; // Block going below 1
+
+                // 2. Max 8 Pax (ADT + CHD)
+                if ((newAdt + newChd) > MAX_SEATS) {
+                    // Only block if we are increasing
+                    if (action === 'plus') {
+                        showError(`Max ${MAX_SEATS} passengers (excluding infants) allowed.`);
+                        return;
+                    }
+                }
+
+                // 3. Infants <= Adults
+                if (newInf > newAdt) {
+                    // Avoid stuck state: If decreasing adults forces invalid state, reduce infants
+                    if (type === 'adt' && action === 'minus') {
+                        newInf = newAdt;
+                    } else {
+                        showError("Cannot have more infants than adults.");
+                        return;
+                    }
+                }
+
+                // Apply State
+                state.adt = newAdt;
+                state.chd = newChd;
+                state.inf = newInf;
+
+                // Handle Child Ages Array
+                updateChildAgesArray();
+
+                // Update UI
+                render();
+            }
+
+            function updateChildAgesArray() {
+                // If chd count increased, add default ages
+                while (state.chdAges.length < state.chd) {
+                    state.chdAges.push(5); // Default age 5
+                }
+                // If chd count decreased, remove
+                while (state.chdAges.length > state.chd) {
+                    state.chdAges.pop();
+                }
+            }
+
+            function render() {
+                // Counts
+                if (els.counts.adt) els.counts.adt.textContent = state.adt;
+                if (els.counts.chd) els.counts.chd.textContent = state.chd;
+                if (els.counts.inf) els.counts.inf.textContent = state.inf;
+
+                // Display Text
+                const parts = [];
+                parts.push(`${state.adt} Adult${state.adt > 1 ? 's' : ''}`);
+                if (state.chd > 0) parts.push(`${state.chd} Child${state.chd > 1 ? 'ren' : ''}`);
+                if (state.inf > 0) parts.push(`${state.inf} Infant${state.inf > 1 ? 's' : ''}`);
+                if (els.display) els.display.textContent = parts.join(', ');
+
+                // Child Ages inputs
+                if (state.chd > 0) {
+                    els.chdAgesCont.classList.remove('hidden');
+                    // Only rebuild if count changed to preserve values where possible, 
+                    // but simple rebuild is safer for maintaining correct age-to-index mapping
+                    els.chdAgesGrid.innerHTML = '';
+                    state.chdAges.forEach((age, idx) => {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'relative';
+
+                        const label = document.createElement('div');
+                        label.className = 'text-[10px] text-gray-500 mb-1';
+                        label.textContent = `Child ${idx + 1}`;
+
+                        const sel = document.createElement('select');
+                        sel.className = 'w-full p-2 bg-slate-50 border rounded text-xs outline-none focus:border-brand-blue';
+                        for (let i = 2; i <= 11; i++) {
+                            const opt = document.createElement('option');
+                            opt.value = i;
+                            opt.textContent = `${i} yrs`;
+                            if (i === age) opt.selected = true;
+                            sel.appendChild(opt);
+                        }
+                        sel.onchange = (e) => {
+                            state.chdAges[idx] = parseInt(e.target.value);
+                        };
+
+                        wrapper.appendChild(label);
+                        wrapper.appendChild(sel);
+                        els.chdAgesGrid.appendChild(wrapper);
+                    });
+
+                } else {
+                    els.chdAgesCont.classList.add('hidden');
+                }
+
+                // Error (clear if successful update)
+                els.error.textContent = '';
+                els.error.classList.add('hidden');
+            }
+
+            function showError(msg) {
+                els.error.textContent = msg;
+                els.error.classList.remove('hidden');
+                setTimeout(() => {
+                    els.error.classList.add('hidden');
+                }, 3000);
+            }
+
+            // Init
+            render();
+
+            return {
+                getState: () => state
+            };
+        })();
+
         // ================= SUBMIT HANDLERS =================
         // Helper to get selected code or default
         function getCode(id, def) {
@@ -847,43 +1197,48 @@
         }
 
         // Generic Redirect
-        function go(paramsObj, customPath) {
-            let base;
-            if (customPath) {
-                base = 'https://demo.apps.easygds.com/shopping/' + customPath;
-            } else {
-                base = 'https://demo.apps.easygds.com/shopping/processes/' + (paramsObj.process || 'flight');
-            }
 
-            paramsObj.currency_code = 'USD';
-            paramsObj.language_code = 'en-US';
-            paramsObj.session_id = SESSION_ID;
-
-            const qs = new URLSearchParams(paramsObj).toString();
-            console.log("Submitting to:", base + '?' + qs);
-            window.location.href = base + '?' + qs;
-        }
 
         // 1. Flight Submit
         // 1. Flight Submit
         document.getElementById('btn-search-flight').onclick = () => {
             const dates = document.getElementById('fl-dates').value.split(' to ');
             const def = getDefaultDates();
+
+            // Build travelers
+            const paxState = flightPax.getState();
+            const travelers = [];
+            // Adults
+            for (let i = 0; i < paxState.adt; i++) travelers.push({ type: 'adult', age: 30, room: 1 });
+            // Children
+            paxState.chdAges.forEach(age => travelers.push({ type: 'child', age: age, room: 1 }));
+            // Infants
+            for (let i = 0; i < paxState.inf; i++) travelers.push({ type: 'infant', age: 1, room: 1 });
+
+            // Ensure infants are correctly typed if API expects 'infant' or 'inf'
+            // Usually 'infant'
+
+            const isRoundTrip = document.querySelector('input[name="ft_type"]:checked').value === 'round';
+            const expectation = {
+                is_multi_city: false,
+                start_place_code: getCode('fl-origin', 'SIN'),
+                start_place_type: 'airport_code',
+                des_code: getCode('fl-dest', 'BKK'),
+                des_type: 'airport_code',
+                fl_cabin_class: document.getElementById('fl-cabin-val').textContent,
+                fl_departure_date: dates[0] || def.startStr,
+                fl_round_trip: isRoundTrip
+            };
+
+            if (isRoundTrip) {
+                expectation.fl_return_date = dates[1] || def.endStr;
+            }
+
             go({
                 process: 'flight',
                 package_id: CONFIG_ID,
-                expectation: JSON.stringify({
-                    is_multi_city: false,
-                    start_place_code: getCode('fl-origin', 'SIN'),
-                    start_place_type: 'airport_code',
-                    des_code: getCode('fl-dest', 'BKK'),
-                    des_type: 'airport_code',
-                    fl_cabin_class: document.getElementById('fl-cabin-val').textContent,
-                    fl_departure_date: dates[0] || def.startStr,
-                    fl_return_date: dates[1] || def.endStr,
-                    fl_round_trip: true
-                }),
-                travelers: JSON.stringify([{ type: 'adult', age: 30, room: 1 }])
+                expectation: JSON.stringify(expectation),
+                travelers: JSON.stringify(travelers)
             });
         };
 
@@ -944,6 +1299,26 @@
             const destInput = document.getElementById('pkg-dest');
             const destId = (destInput && destInput.dataset.id) ? destInput.dataset.id : destCode;
 
+            // Generate Travelers from State
+            const travelersApi = [];
+            pkgTravelerState.forEach((room, rIndex) => {
+                // Adults
+                for (let i = 0; i < room.adults; i++) {
+                    travelersApi.push({ type: 'adult', age: 30, room: rIndex + 1 });
+                }
+                // Children
+                room.children.forEach(age => {
+                    travelersApi.push({ type: 'child', age: age, room: rIndex + 1 });
+                });
+                // Infants
+                for (let i = 0; i < room.infants; i++) {
+                    travelersApi.push({ type: 'infant', age: 1, room: rIndex + 1 });
+                }
+            });
+
+            // Cabin Class
+            const cabinVal = document.getElementById('pkg-cabin-val').textContent;
+
             go({
                 process: 'bundle',
                 // Working URL uses this specific ID for packages
@@ -955,7 +1330,7 @@
                 is_separate: document.getElementById('pkg-partial-hotel').checked,
 
                 expectation: JSON.stringify({
-                    fl_cabin_class: 'Economy',
+                    fl_cabin_class: cabinVal,
                     fl_departure_date: dates[0] || def.startStr,
                     fl_return_date: dates[1] || def.endStr,
                     fl_round_trip: true,
@@ -975,21 +1350,84 @@
                     is_separate: document.getElementById('pkg-partial-hotel').checked,
                     stars: null
                 }),
-                travelers: JSON.stringify([{ type: 'adult', age: 30, room: 1 }])
+                travelers: JSON.stringify(travelersApi)
             });
         };
 
         // 4. Transfer Submit
         // 4. Transfer Submit
+        // Swap Logic
+        const trSwapBtn = document.getElementById('btn-swap-transfer');
+        if (trSwapBtn) {
+            trSwapBtn.onclick = () => {
+                const l1 = document.getElementById('lbl-tr-1');
+                const i1 = document.getElementById('tr-pickup');
+                const l2 = document.getElementById('lbl-tr-2');
+                const i2 = document.getElementById('tr-dropoff');
+
+                // Swap Labels
+                const tempLbl = l1.textContent;
+                l1.textContent = l2.textContent;
+                l2.textContent = tempLbl;
+
+                // Swap Values
+                const tempVal = i1.value;
+                i1.value = i2.value;
+                i2.value = tempVal;
+
+                // Swap Data Types (Critical for validation and Autocomplete)
+                const t1 = i1.dataset.type;
+                const t2 = i2.dataset.type;
+                i1.dataset.type = t2;
+                i2.dataset.type = t1;
+
+                // Swap Placeholders
+                const p1 = i1.placeholder;
+                i1.placeholder = i2.placeholder;
+                i2.placeholder = p1;
+
+                // Swap Hidden Data
+                const swapData = (k) => {
+                    const v1 = i1.dataset[k];
+                    const v2 = i2.dataset[k];
+                    if (v2) i1.dataset[k] = v2; else delete i1.dataset[k];
+                    if (v1) i2.dataset[k] = v1; else delete i2.dataset[k];
+                };
+                swapData('code');
+                swapData('id');
+                swapData('selType');
+            };
+        }
+
         document.getElementById('btn-search-transfer').onclick = () => {
             const date = document.getElementById('tr-date').value || getDefaultDates().startStr;
             const time = document.getElementById('tr-time-val').textContent;
 
-            // Get dropoff details to determine type
-            const dropInput = document.getElementById('tr-dropoff');
-            const dropCode = getCode('tr-dropoff', '27158'); // Default generic ID
-            const dropId = (dropInput && dropInput.dataset.id) ? dropInput.dataset.id : dropCode;
-            const dropType = (dropInput && dropInput.dataset.selType === 'hotel') ? 'property_id' : 'place_id';
+            const topInput = document.getElementById('tr-pickup');
+            const bottomInput = document.getElementById('tr-dropoff');
+
+            // Direction Logic: Based on which input is currently the Airport
+            const isFromAirport = topInput.dataset.type === 'airport_code';
+
+            let airportCode, placeId, placeType;
+
+            if (isFromAirport) {
+                // Airport -> Hotel
+                airportCode = getCode('tr-pickup', 'LHR'); // Using top input
+
+                // Bottom is Place
+                placeId = (bottomInput.dataset.id || bottomInput.dataset.code || '27158');
+                placeType = (bottomInput.dataset.selType === 'hotel') ? 'property_id' : 'place_id';
+
+            } else {
+                // Hotel -> Airport
+                // Bottom is Airport
+                airportCode = getCode('tr-dropoff', 'LHR');
+
+                // Top is Place
+                placeId = (topInput.dataset.id || topInput.dataset.code || '27158');
+                placeType = (topInput.dataset.selType === 'hotel') ? 'property_id' : 'place_id';
+            }
 
             go({
                 process: 'transfer',
@@ -997,13 +1435,13 @@
                 package_id: '7bf47e3c-8951-4016-9190-d813047b3939',
                 expectation: JSON.stringify({
                     is_separate: false,
-                    tf_airport_code: getCode('tr-pickup', 'LHR'),
-                    tf_from_airport: true,
+                    tf_airport_code: airportCode,
+                    tf_from_airport: isFromAirport,
                     tf_pickup_date: date,
                     tf_pickup_time: time,
 
-                    tf_place_code: dropId,
-                    tf_place_type: dropType,
+                    tf_place_code: placeId,
+                    tf_place_type: placeType,
 
                     tf_return_date: null,
                     tf_return_time: null,
@@ -1090,6 +1528,212 @@
                 })
             });
         };
+
+        // ================= PACKAGE FORM TRAVELER LOGIC =================
+        const pkgTravelerState = [
+            { id: 1, adults: 2, children: [], infants: 0 } // Default: 1 Room, 2 Adults
+        ];
+
+        const pkgTrigger = document.getElementById('pkg-traveler-trigger');
+        const pkgPopover = document.getElementById('pkg-traveler-popover');
+        const pkgSummary = document.getElementById('pkg-traveler-summary');
+        const pkgRoomsContainer = document.getElementById('pkg-rooms-container');
+        const pkgBtnAddRoom = document.getElementById('pkg-btn-add-room');
+        const pkgBtnDone = document.getElementById('pkg-btn-done-travelers');
+
+        if (pkgTrigger) {
+            // Toggle Popover
+            pkgTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close others
+                document.querySelectorAll('.traveler-popover:not(#pkg-traveler-popover)').forEach(el => el.classList.add('hidden'));
+                pkgPopover.classList.toggle('hidden');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('pkg-traveler-widget').contains(e.target)) {
+                    pkgPopover.classList.add('hidden');
+                }
+            });
+
+            pkgBtnDone.addEventListener('click', () => {
+                pkgPopover.classList.add('hidden');
+            });
+
+            // Add Room
+            pkgBtnAddRoom.addEventListener('click', () => {
+                pkgTravelerState.push({
+                    id: Date.now(),
+                    adults: 1,
+                    children: [],
+                    infants: 0
+                });
+                renderPkgRooms();
+                updatePkgSummary();
+            });
+
+            function renderPkgRooms() {
+                pkgRoomsContainer.innerHTML = '';
+                pkgTravelerState.forEach((room, index) => {
+                    const roomEl = document.createElement('div');
+                    roomEl.className = 'w-full';
+
+                    // Header (Room # + Remove)
+                    const header = document.createElement('div');
+                    header.className = 'flex justify-between items-center mb-3';
+                    header.innerHTML = `<h3 class="text-sm font-bold text-slate-700">Room ${index + 1}</h3>`;
+
+                    if (pkgTravelerState.length > 1) {
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'text-xs text-red-500 hover:text-red-700 font-medium';
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.onclick = (e) => {
+                            e.stopPropagation(); // Prevent closing
+                            pkgTravelerState.splice(index, 1);
+                            renderPkgRooms();
+                            updatePkgSummary();
+                        };
+                        header.appendChild(removeBtn);
+                    }
+                    roomEl.appendChild(header);
+
+                    // Grid for Counters
+                    const countersDiv = document.createElement('div');
+                    countersDiv.className = 'grid grid-cols-1 gap-4 p-3 bg-slate-50 rounded-lg';
+
+                    // Helper to create counter row
+                    const createCounter = (label, value, min, onChange) => {
+                        const row = document.createElement('div');
+                        row.className = 'flex justify-between items-center';
+
+                        const lbl = document.createElement('span');
+                        lbl.className = 'text-sm text-slate-600 font-medium';
+                        lbl.textContent = label;
+
+                        const controls = document.createElement('div');
+                        controls.className = 'flex items-center gap-3 bg-white rounded-md border border-slate-200 p-1';
+
+                        const btnMinus = document.createElement('button');
+                        btnMinus.type = 'button';
+                        btnMinus.className = 'w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded disabled:opacity-30';
+                        btnMinus.innerHTML = '<i data-lucide="minus" class="w-3 h-3"></i>';
+                        btnMinus.disabled = value <= min;
+                        btnMinus.onclick = (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            if (value > min) onChange(value - 1);
+                        };
+
+                        const valDisplay = document.createElement('span');
+                        valDisplay.className = 'text-sm w-4 text-center font-bold';
+                        valDisplay.textContent = value;
+
+                        const btnPlus = document.createElement('button');
+                        btnPlus.type = 'button';
+                        btnPlus.className = 'w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded';
+                        btnPlus.innerHTML = '<i data-lucide="plus" class="w-3 h-3"></i>';
+                        btnPlus.onclick = (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            onChange(value + 1);
+                        };
+
+                        controls.append(btnMinus, valDisplay, btnPlus);
+                        row.append(lbl, controls);
+                        return row;
+                    };
+
+                    // Adults
+                    countersDiv.appendChild(createCounter('Adults', room.adults, 1, (v) => {
+                        room.adults = v;
+                        renderPkgRooms();
+                        updatePkgSummary();
+                    }));
+
+                    // Children
+                    countersDiv.appendChild(createCounter('Children (2-17)', room.children.length, 0, (v) => {
+                        // Adjust array size
+                        const diff = v - room.children.length;
+                        if (diff > 0) {
+                            for (let i = 0; i < diff; i++) room.children.push(8); // Default age 8
+                        } else {
+                            room.children.splice(diff); // Remove from end
+                        }
+                        renderPkgRooms();
+                        updatePkgSummary();
+                    }));
+
+                    // Infants
+                    countersDiv.appendChild(createCounter('Infants (0-2)', room.infants, 0, (v) => {
+                        room.infants = v;
+                        renderPkgRooms();
+                        updatePkgSummary();
+                    }));
+
+                    roomEl.appendChild(countersDiv);
+
+                    // Child Ages (Dynamic)
+                    if (room.children.length > 0) {
+                        const agesDiv = document.createElement('div');
+                        agesDiv.className = 'mt-3 grid grid-cols-2 gap-2 animate-fadeIn';
+
+                        room.children.forEach((age, childIdx) => {
+                            const wrap = document.createElement('div');
+                            wrap.innerHTML = `<label class="block text-xs text-slate-400 mb-1">Child ${childIdx + 1} Age</label>`;
+
+                            const select = document.createElement('select');
+                            select.className = 'w-full p-2 text-sm bg-white border border-slate-200 rounded outline-none focus:border-emerald-500';
+                            for (let i = 2; i <= 17; i++) {
+                                const opt = document.createElement('option');
+                                opt.value = i;
+                                opt.textContent = i;
+                                if (i === age) opt.selected = true;
+                                select.appendChild(opt);
+                            }
+                            select.onchange = (e) => {
+                                e.stopPropagation(); // Just in case
+                                room.children[childIdx] = parseInt(e.target.value);
+                            };
+
+                            wrap.appendChild(select);
+                            agesDiv.appendChild(wrap);
+                        });
+
+                        roomEl.appendChild(agesDiv);
+                    }
+
+                    pkgRoomsContainer.appendChild(roomEl);
+                });
+
+                lucide.createIcons();
+            }
+
+            function updatePkgSummary() {
+                const totalAdults = pkgTravelerState.reduce((sum, r) => sum + r.adults, 0);
+                const totalKids = pkgTravelerState.reduce((sum, r) => sum + r.children.length + r.infants, 0);
+                const totalRooms = pkgTravelerState.length;
+
+                let text = `${totalRooms} Room${totalRooms > 1 ? 's' : ''}, ${totalAdults + totalKids} Guest${(totalAdults + totalKids) > 1 ? 's' : ''}`;
+                pkgSummary.textContent = text;
+            }
+
+            // Init
+            renderPkgRooms();
+            updatePkgSummary();
+        }
+
+        // ================= STACKING ORDER FIX =================
+        const cards = document.querySelectorAll('.form-card');
+        cards.forEach(card => {
+            const lift = () => {
+                cards.forEach(c => c.style.zIndex = '1'); // Reset
+                card.style.zIndex = '50'; // Lift
+            };
+            card.addEventListener('mousedown', lift);
+            card.addEventListener('touchstart', lift, { passive: true });
+            card.addEventListener('focusin', lift);
+        });
 
     </script>
 </body>

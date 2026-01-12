@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGDS - Package Search</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0056b3',
+                            dark: '#0e2439',
+                            light: '#f4f7f6',
+                            accent: '#ff9800'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons & Datepicker -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        .form-card {
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Autocomplete List */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+            margin-top: 4px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .autocomplete-list.active {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 p-8">
+
+    <div class="max-w-2xl mx-auto">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-brand-dark mb-2">Flight + Hotel Search</h1>
+            <p class="text-slate-500">Standalone Package Booking Component</p>
+        </header>
+
+        <!-- PACKAGE FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200" id="pkg-traveler-widget">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-emerald-100 rounded-lg text-emerald-600"><i data-lucide="package"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Flight + Hotel</h2>
+            </div>
+
+            <form id="form-pkg" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Origin</label>
+                        <input type="text" id="pkg-origin"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-emerald-500 outline-none"
+                            placeholder="City or Airport" data-type="airport_code">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                        <input type="text" id="pkg-dest"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-emerald-500 outline-none"
+                            placeholder="City or Airport" data-type="airport_code">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                        <input type="text" id="pkg-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none"
+                            placeholder="Flight Dates">
+                    </div>
+                    <div class="mt-7">
+                        <label class="flex items-center gap-2 cursor-pointer text-sm font-medium">
+                            <input type="checkbox" id="pkg-partial-hotel" class="rounded text-emerald-600">
+                            Partial Hotel Dates
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Travelers & Rooms -->
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers & Rooms</label>
+
+                    <!-- Trigger -->
+                    <div id="pkg-traveler-trigger"
+                        class="w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none flex justify-between items-center hover:border-emerald-500 transition-colors">
+                        <span id="pkg-traveler-summary" class="text-sm font-medium">1 Room, 2 Guests</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+                    </div>
+
+                    <!-- Popover -->
+                    <div id="pkg-traveler-popover"
+                        class="traveler-popover hidden absolute top-full left-0 w-80 sm:w-96 bg-white border border-slate-200 rounded-xl shadow-2xl z-30 mt-2 p-4 max-h-[80vh] overflow-y-auto">
+
+                        <div id="pkg-rooms-container" class="space-y-6">
+                            <!-- Room Items Injected Here -->
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center">
+                            <button type="button" id="pkg-btn-add-room"
+                                class="text-emerald-600 text-sm font-bold hover:text-emerald-800 flex items-center gap-1">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Room
+                            </button>
+                            <button type="button" id="pkg-btn-done-travelers"
+                                class="bg-emerald-600 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-emerald-700">
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cabin Class -->
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cabin Class</label>
+                    <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                        <span class="selected-val" id="pkg-cabin-val">Economy</span>
+                    </div>
+                    <div class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1"
+                        id="pkg-cabin-opts">
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="E">Economy</div>
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="B">Business</div>
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer" data-val="F">First</div>
+                    </div>
+                </div>
+
+                <div class="relative hidden p-4 bg-slate-50 rounded-lg border border-dashed border-emerald-300"
+                    id="pkg-partial-dates-container">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Hotel Dates</label>
+                    <input type="text" id="pkg-hotel-dates" class="w-full p-3 bg-white rounded-lg border outline-none"
+                        placeholder="Checkin - Checkout">
+                </div>
+
+                <button type="button" id="btn-search-pkg"
+                    class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors">Search
+                    Packages</button>
+            </form>
+        </div>
+
+        <div class="mt-8 text-center text-sm text-gray-500">
+            * API Proxy must be running.<br>
+            <span class="text-xs">Results redirect to <a href="https://demo.apps.easygds.com"
+                    class="underline hover:text-indigo-600">demo.apps.easygds.com</a></span>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // ================= CONFIGURATION =================
+        const API_BASE_URL = '/api';
+        const SESSION_ID = 'demo_session_dynamic_123';
+        const CONFIG_ID = 'aaa34775-f480-477c-a656-f7a9a07ce605'; // Specific Package ID
+
+        // ================= UTILITIES =================
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        function getDefaultDates() {
+            const start = new Date();
+            start.setDate(start.getDate() + 14); // 2 weeks out
+            const end = new Date();
+            end.setDate(end.getDate() + 17); // 3 days trip
+            const fmt = (d) => d.toISOString().split('T')[0];
+            return { startStr: fmt(start), endStr: fmt(end) };
+        }
+
+        // ================= API CONNECTION =================
+        async function fetchLocations(query, type) {
+            let url;
+            if (type === 'airport_code') {
+                url = new URL(`${API_BASE_URL}/places/cities-with-airports`, window.location.origin);
+                url.searchParams.append("search_text", query);
+                url.searchParams.append("language_code", "en-US");
+            } else {
+                url = new URL(`${API_BASE_URL}/places`, window.location.origin);
+                url.searchParams.append("search_text", query);
+                url.searchParams.append("language_code", "en-US");
+                url.searchParams.append("types", "country,airport,administrative_area_level_4,administrative_area_level_3");
+                url.searchParams.append("property_included", "false");
+                url.searchParams.append("with_properties", "true");
+                url.searchParams.append("has_code", "false");
+                url.searchParams.append("per_page", "20");
+                url.searchParams.append("page", "1");
+            }
+
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("API Request Failed");
+                const data = await res.json();
+                let results = [];
+
+                if (Array.isArray(data)) {
+                    results = data.map(item => ({
+                        name: item.name,
+                        code: item.code || item.id,
+                        type: 'airport_code',
+                        id: item.id,
+                        city: item.location?.city_code || item.city,
+                        country: item.country,
+                        icon: '✈️'
+                    }));
+                } else {
+                    const places = (data.places || []).map(p => ({
+                        name: p.long_name || p.name,
+                        code: p.id,
+                        type: 'place_id',
+                        id: p.id,
+                        city: p.name,
+                        country: p.location?.country_code,
+                        icon: '📍'
+                    }));
+                    const props = (data.properties || []).map(p => ({
+                        name: p.name,
+                        code: p.hotel_id || p.id,
+                        type: 'hotel',
+                        id: p.id,
+                        city: p.city_name || p.city || p.location?.city_name || p.location?.city_code || p.location?.name || '',
+                        country: p.country_code || p.location?.country_code || '',
+                        stars: p.star || 0,
+                        icon: '🏨'
+                    }));
+                    results = [...places, ...props];
+                }
+                return results;
+            } catch (e) {
+                console.warn("API Error:", e);
+                return [];
+            }
+        }
+
+        function setupAutocomplete(input) {
+            if (!input) return;
+            const type = input.dataset.type || 'any';
+
+            const container = document.createElement('div');
+            container.className = 'absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50 hidden mt-1';
+            input.parentElement.style.position = 'relative';
+            input.parentElement.appendChild(container);
+
+            let debounceTimer;
+
+            input.addEventListener('input', () => {
+                const query = input.value;
+                if (query.length < 3) {
+                    container.classList.add('hidden');
+                    return;
+                }
+
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(async () => {
+                    container.innerHTML = '<div class="p-3 text-sm text-gray-400">Loading...</div>';
+                    container.classList.remove('hidden');
+
+                    const results = await fetchLocations(query, type);
+
+                    container.innerHTML = '';
+                    if (results.length === 0) {
+                        container.innerHTML = '<div class="p-3 text-sm text-gray-400">No results found</div>';
+                    } else {
+                        results.forEach(res => {
+                            const item = document.createElement('div');
+                            item.className = 'p-2 hover:bg-slate-50 cursor-pointer text-sm flex justify-between items-center';
+
+                            let icon = res.icon || '📍';
+                            if (!res.icon) {
+                                if (res.type === 'airport_code') icon = '✈️';
+                                if (res.type === 'hotel') icon = '🏨';
+                                if (res.type === 'station') icon = '🚆';
+                            }
+                            let parts = [res.name];
+                            if (res.stars && res.stars > 0) parts.push(`*${res.stars}`);
+                            if (res.city) parts.push(res.city);
+                            if (res.country) parts.push(res.country);
+
+                            let locStr = [res.city, res.country].filter(Boolean).join(', ');
+
+                            item.innerHTML = `
+                                <div class="flex justify-between items-center w-full">
+                                    <div class="font-medium text-slate-800 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                                        ${icon} ${res.name}
+                                    </div>
+                                    <div class="text-xs text-slate-400 ml-2 whitespace-nowrap">
+                                        ${locStr}
+                                    </div>
+                                </div>
+                            `;
+
+                            item.onclick = () => {
+                                input.value = res.name;
+                                input.dataset.code = res.code;
+                                input.dataset.id = res.id;
+                                input.dataset.selType = res.type;
+                                container.classList.add('hidden');
+                            };
+                            container.appendChild(item);
+                        });
+                    }
+                }, 400);
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !container.contains(e.target)) {
+                    container.classList.add('hidden');
+                }
+            });
+        }
+
+        document.querySelectorAll('.auto-input').forEach(el => setupAutocomplete(el));
+
+        // Date Pickers
+        flatpickr('#pkg-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
+        flatpickr('#pkg-hotel-dates', { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
+
+        // Partial Hotel Logic
+        const pkgCheck = document.getElementById('pkg-partial-hotel');
+        const pkgHotelCont = document.getElementById('pkg-partial-dates-container');
+        if (pkgCheck) {
+            pkgCheck.addEventListener('change', (e) => {
+                e.target.checked ? pkgHotelCont.classList.remove('hidden') : pkgHotelCont.classList.add('hidden');
+            });
+        }
+
+        // Custom Select (Cabin)
+        const cabinSel = document.querySelector('.custom-select');
+        if (cabinSel) {
+            cabinSel.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                cabinSel.nextElementSibling.classList.toggle('hidden');
+            });
+        }
+        document.querySelectorAll('.custom-options div').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                const val = opt.textContent;
+                document.getElementById('pkg-cabin-val').textContent = val;
+                opt.parentElement.classList.add('hidden');
+            });
+        });
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-options').forEach(el => el.classList.add('hidden'));
+        });
+
+
+        // ================= TRAVELER WIDGET LOGIC =================
+        const pkgTravelerState = [
+            { id: 1, adults: 2, children: [], infants: 0 } // Default: 1 Room, 2 Adults
+        ];
+
+        const pkgTrigger = document.getElementById('pkg-traveler-trigger');
+        const pkgPopover = document.getElementById('pkg-traveler-popover');
+        const pkgSummary = document.getElementById('pkg-traveler-summary');
+        const pkgRoomsContainer = document.getElementById('pkg-rooms-container');
+        const pkgBtnAddRoom = document.getElementById('pkg-btn-add-room');
+        const pkgBtnDone = document.getElementById('pkg-btn-done-travelers');
+
+        if (pkgTrigger) {
+            // Toggle Popover
+            pkgTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                pkgPopover.classList.toggle('hidden');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('pkg-traveler-widget').contains(e.target)) {
+                    pkgPopover.classList.add('hidden');
+                }
+            });
+
+            pkgBtnDone.addEventListener('click', () => {
+                pkgPopover.classList.add('hidden');
+            });
+
+            // Add Room
+            pkgBtnAddRoom.addEventListener('click', () => {
+                pkgTravelerState.push({
+                    id: Date.now(),
+                    adults: 1,
+                    children: [],
+                    infants: 0
+                });
+                renderPkgRooms();
+                updatePkgSummary();
+            });
+
+            function renderPkgRooms() {
+                pkgRoomsContainer.innerHTML = '';
+                pkgTravelerState.forEach((room, index) => {
+                    const roomEl = document.createElement('div');
+                    roomEl.className = 'w-full';
+
+                    // Header (Room # + Remove)
+                    const header = document.createElement('div');
+                    header.className = 'flex justify-between items-center mb-3';
+                    header.innerHTML = `<h3 class="text-sm font-bold text-slate-700">Room ${index + 1}</h3>`;
+
+                    if (pkgTravelerState.length > 1) {
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'text-xs text-red-500 hover:text-red-700 font-medium';
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.onclick = (e) => {
+                            e.stopPropagation(); // Prevent closing
+                            pkgTravelerState.splice(index, 1);
+                            renderPkgRooms();
+                            updatePkgSummary();
+                        };
+                        header.appendChild(removeBtn);
+                    }
+                    roomEl.appendChild(header);
+
+                    // Grid for Counters
+                    const countersDiv = document.createElement('div');
+                    countersDiv.className = 'grid grid-cols-1 gap-4 p-3 bg-slate-50 rounded-lg';
+
+                    // Helper to create counter row
+                    const createCounter = (label, value, min, onChange) => {
+                        const row = document.createElement('div');
+                        row.className = 'flex justify-between items-center';
+
+                        const lbl = document.createElement('span');
+                        lbl.className = 'text-sm text-slate-600 font-medium';
+                        lbl.textContent = label;
+
+                        const controls = document.createElement('div');
+                        controls.className = 'flex items-center gap-3 bg-white rounded-md border border-slate-200 p-1';
+
+                        const btnMinus = document.createElement('button');
+                        btnMinus.type = 'button';
+                        btnMinus.className = 'w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded disabled:opacity-30';
+                        btnMinus.innerHTML = '<i data-lucide="minus" class="w-3 h-3"></i>';
+                        btnMinus.disabled = value <= min;
+                        btnMinus.onclick = (e) => {
+                            e.stopPropagation(); e.preventDefault();
+                            if (value > min) onChange(value - 1);
+                        };
+
+                        const valDisplay = document.createElement('span');
+                        valDisplay.className = 'text-sm w-4 text-center font-bold';
+                        valDisplay.textContent = value;
+
+                        const btnPlus = document.createElement('button');
+                        btnPlus.type = 'button';
+                        btnPlus.className = 'w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded';
+                        btnPlus.innerHTML = '<i data-lucide="plus" class="w-3 h-3"></i>';
+                        btnPlus.onclick = (e) => {
+                            e.stopPropagation(); e.preventDefault();
+                            onChange(value + 1);
+                        };
+
+                        controls.append(btnMinus, valDisplay, btnPlus);
+                        row.append(lbl, controls);
+                        return row;
+                    };
+
+                    countersDiv.appendChild(createCounter('Adults', room.adults, 1, (v) => { room.adults = v; renderPkgRooms(); updatePkgSummary(); }));
+                    countersDiv.appendChild(createCounter('Children (2-17)', room.children.length, 0, (v) => {
+                        const diff = v - room.children.length;
+                        if (diff > 0) { for (let i = 0; i < diff; i++) room.children.push(8); }
+                        else { room.children.splice(diff); }
+                        renderPkgRooms(); updatePkgSummary();
+                    }));
+                    countersDiv.appendChild(createCounter('Infants (0-2)', room.infants, 0, (v) => { room.infants = v; renderPkgRooms(); updatePkgSummary(); }));
+
+                    roomEl.appendChild(countersDiv);
+
+                    if (room.children.length > 0) {
+                        const agesDiv = document.createElement('div');
+                        agesDiv.className = 'mt-3 grid grid-cols-2 gap-2 animate-fadeIn';
+                        room.children.forEach((age, childIdx) => {
+                            const wrap = document.createElement('div');
+                            wrap.innerHTML = `<label class="block text-xs text-slate-400 mb-1">Child ${childIdx + 1} Age</label>`;
+                            const select = document.createElement('select');
+                            select.className = 'w-full p-2 text-sm bg-white border border-slate-200 rounded outline-none';
+                            for (let i = 2; i <= 17; i++) {
+                                const opt = document.createElement('option');
+                                opt.value = i; opt.textContent = i;
+                                if (i === age) opt.selected = true;
+                                select.appendChild(opt);
+                            }
+                            select.onchange = (e) => {
+                                e.stopPropagation();
+                                room.children[childIdx] = parseInt(e.target.value);
+                            };
+                            wrap.appendChild(select);
+                            agesDiv.appendChild(wrap);
+                        });
+                        roomEl.appendChild(agesDiv);
+                    }
+                    pkgRoomsContainer.appendChild(roomEl);
+                });
+                lucide.createIcons();
+            }
+
+            function updatePkgSummary() {
+                const totalAdults = pkgTravelerState.reduce((sum, r) => sum + r.adults, 0);
+                const totalKids = pkgTravelerState.reduce((sum, r) => sum + r.children.length + r.infants, 0);
+                const totalRooms = pkgTravelerState.length;
+                pkgSummary.textContent = `${totalRooms} Room${totalRooms > 1 ? 's' : ''}, ${totalAdults + totalKids} Guest${(totalAdults + totalKids) > 1 ? 's' : ''}`;
+            }
+
+            renderPkgRooms();
+            updatePkgSummary();
+        }
+
+        // ================= SUBMIT HANDLER =================
+        function getCode(id, def) {
+            const el = document.getElementById(id);
+            return (el && el.dataset.code) ? el.dataset.code : def;
+        }
+
+        function go(paramsObj, customPath) {
+            let base;
+            if (customPath) {
+                base = 'https://demo.apps.easygds.com/shopping/' + customPath;
+            } else {
+                base = 'https://demo.apps.easygds.com/shopping/processes/' + (paramsObj.process || 'flight');
+            }
+            paramsObj.currency_code = 'EUR';
+            paramsObj.language_code = 'en-US';
+            paramsObj.session_id = SESSION_ID;
+            paramsObj.office_domain = 'demo.b2c.easygds.com';
+            paramsObj.scope_type = 'B2C';
+            paramsObj.disabled_currency = 'true';
+            paramsObj.search_id = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const qs = new URLSearchParams(paramsObj).toString();
+            console.log("Submitting to:", base + '?' + qs);
+            window.location.href = base + '?' + qs;
+        }
+
+        document.getElementById('btn-search-pkg').onclick = () => {
+            const dates = document.getElementById('pkg-dates').value.split(' to ');
+            const def = getDefaultDates();
+
+            const originCode = getCode('pkg-origin', 'SIN');
+            const destCode = getCode('pkg-dest', 'HKT');
+            const destInput = document.getElementById('pkg-dest');
+            const destId = (destInput && destInput.dataset.id) ? destInput.dataset.id : destCode;
+
+            // Generate Travelers
+            const travelersApi = [];
+            pkgTravelerState.forEach((room, rIndex) => {
+                for (let i = 0; i < room.adults; i++) travelersApi.push({ type: 'adult', age: 30, room: rIndex + 1 });
+                room.children.forEach(age => travelersApi.push({ type: 'child', age: age, room: rIndex + 1 }));
+                for (let i = 0; i < room.infants; i++) travelersApi.push({ type: 'infant', age: 1, room: rIndex + 1 });
+            });
+
+            const cabinVal = document.getElementById('pkg-cabin-val').textContent;
+
+            go({
+                process: 'bundle',
+                package_id: CONFIG_ID,
+                place_type: 'airport',
+                place_id: destId,
+                is_separate: document.getElementById('pkg-partial-hotel').checked,
+                expectation: JSON.stringify({
+                    fl_cabin_class: cabinVal,
+                    fl_departure_date: dates[0] || def.startStr,
+                    fl_return_date: dates[1] || def.endStr,
+                    fl_round_trip: true,
+                    start_place_code: originCode,
+                    start_place_type: 'airport_code',
+                    des_code: destCode,
+                    des_type: 'airport_code',
+                    ht_des_code: destCode,
+                    ht_des_type: 'airport_code',
+                    ht_checkin_date: dates[0] || def.startStr,
+                    ht_checkout_date: dates[1] || def.endStr,
+                    is_separate: document.getElementById('pkg-partial-hotel').checked,
+                    stars: null
+                }),
+                travelers: JSON.stringify(travelersApi)
+            });
+        };
+
+    </script>
+</body>
+
+</html>

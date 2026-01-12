@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGDS - Flight Search</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0056b3',
+                            dark: '#0e2439',
+                            light: '#f4f7f6',
+                            accent: '#ff9800'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons & Datepicker -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        .form-card {
+            transition: all 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Autocomplete List */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+            margin-top: 4px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .autocomplete-list.active {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800 p-8">
+
+    <div class="max-w-2xl mx-auto">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-brand-dark mb-2">Flight Search</h1>
+            <p class="text-slate-500">Standalone Flight Booking Component</p>
+        </header>
+
+        <!-- FLIGHT FORM -->
+        <div class="form-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                <div class="p-2 bg-blue-100 rounded-lg text-brand-blue"><i data-lucide="plane"></i></div>
+                <h2 class="text-xl font-bold text-brand-dark">Flight</h2>
+            </div>
+
+            <form id="form-flight" class="space-y-4">
+                <div class="flex gap-4 text-sm font-medium">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ft_type"
+                            value="round" checked> Round Trip</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="ft_type"
+                            value="oneway"> One Way</label>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Origin</label>
+                        <input type="text" id="fl-origin"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-brand-blue outline-none"
+                            placeholder="City or Airport" data-type="airport_code">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
+                        <input type="text" id="fl-dest"
+                            class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-brand-blue outline-none"
+                            placeholder="City or Airport" data-type="airport_code">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dates</label>
+                        <input type="text" id="fl-dates" class="w-full p-3 bg-slate-50 rounded-lg border outline-none"
+                            placeholder="Depart - Return">
+                    </div>
+                    <div class="relative" id="fl-pax-container">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers</label>
+                        <div id="fl-pax-trigger"
+                            class="w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none flex justify-between items-center hover:border-brand-blue transition-colors">
+                            <span id="fl-pax-display" class="text-sm font-medium">1 Adult</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+                        </div>
+
+                        <!-- Dropdown Panel -->
+                        <div id="fl-pax-menu"
+                            class="hidden absolute top-full right-0 w-80 bg-white border rounded-xl shadow-2xl z-30 mt-2 p-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                            <!-- Adults -->
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Adults</div>
+                                    <div class="text-xs text-slate-500">Age 12+</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="adt" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="count-adt">1</span>
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="adt" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Children -->
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Children</div>
+                                    <div class="text-xs text-slate-500">Age 2-11</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="chd" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="count-chd">0</span>
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="chd" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Child Ages (Dynamic) -->
+                            <div id="chd-ages-container" class="mb-5 hidden">
+                                <div class="text-xs font-bold text-slate-400 uppercase mb-2">Child Ages</div>
+                                <div class="grid grid-cols-3 gap-2" id="chd-ages-grid">
+                                    <!-- Selects go here -->
+                                </div>
+                            </div>
+
+                            <!-- Infants -->
+                            <div class="flex justify-between items-center mb-2">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Infants</div>
+                                    <div class="text-xs text-slate-500">Under 2 (on lap)</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="inf" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="count-inf">0</span>
+                                    <button type="button"
+                                        class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
+                                        data-type="inf" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-red-500 mt-2 hidden bg-red-50 p-2 rounded" id="fl-pax-error">
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t text-right">
+                                <button type="button" id="btn-done-pax"
+                                    class="px-4 py-2 bg-brand-blue text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cabin Class</label>
+                    <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
+                        <span class="selected-val" id="fl-cabin-val">Economy</span>
+                    </div>
+                    <div class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1"
+                        id="fl-cabin-opts">
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer">Economy</div>
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer">Business</div>
+                        <div class="p-2 hover:bg-slate-50 cursor-pointer">First</div>
+                    </div>
+                </div>
+
+
+                <button type="button" id="btn-search-flight"
+                    class="w-full py-3 bg-brand-blue hover:bg-blue-700 text-white font-bold rounded-lg transition-colors">Search
+                    Flights</button>
+            </form>
+        </div>
+
+        <div class="mt-8 text-center text-sm text-gray-500">
+            * API Proxy must be running.<br>
+            <span class="text-xs">Results redirect to <a href="https://demo.apps.easygds.com"
+                    class="underline hover:text-indigo-600">demo.apps.easygds.com</a></span>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // ================= CONFIGURATION =================
+        const API_BASE_URL = '/api';
+        const SESSION_ID = 'demo_session_dynamic_123';
+        const CONFIG_ID = '3dca0e8c-b1ec-4fef-913e-09b577956c6d';
+
+        // ================= UTILITIES =================
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        function getDefaultDates() {
+            const start = new Date();
+            start.setDate(start.getDate() + 14); // 2 weeks out
+            const end = new Date();
+            end.setDate(end.getDate() + 17); // 3 days trip
+            const fmt = (d) => d.toISOString().split('T')[0];
+            return { startStr: fmt(start), endStr: fmt(end) };
+        }
+
+        // ================= API CONNECTION =================
+        async function fetchLocations(query, type) {
+            let url;
+            if (type === 'airport_code') {
+                url = new URL(`${API_BASE_URL}/places/cities-with-airports`, window.location.origin);
+                url.searchParams.append("search_text", query);
+                url.searchParams.append("language_code", "en-US");
+            } else {
+                url = new URL(`${API_BASE_URL}/places`, window.location.origin);
+                url.searchParams.append("search_text", query);
+                url.searchParams.append("language_code", "en-US");
+                url.searchParams.append("types", "country,airport,administrative_area_level_4,administrative_area_level_3");
+                url.searchParams.append("property_included", "false");
+                url.searchParams.append("with_properties", "true");
+                url.searchParams.append("has_code", "false");
+                url.searchParams.append("per_page", "20");
+                url.searchParams.append("page", "1");
+            }
+
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("API Request Failed");
+                const data = await res.json();
+                let results = [];
+
+                if (Array.isArray(data)) {
+                    results = data.map(item => ({
+                        name: item.name,
+                        code: item.code || item.id,
+                        type: 'airport_code',
+                        id: item.id,
+                        city: item.location?.city_code || item.city,
+                        country: item.country,
+                        icon: '✈️'
+                    }));
+                } else {
+                    const places = (data.places || []).map(p => ({
+                        name: p.long_name || p.name,
+                        code: p.id,
+                        type: 'place_id',
+                        id: p.id,
+                        city: p.name,
+                        country: p.location?.country_code,
+                        icon: '📍'
+                    }));
+                    const props = (data.properties || []).map(p => ({
+                        name: p.name,
+                        code: p.hotel_id || p.id,
+                        type: 'hotel',
+                        id: p.id,
+                        city: p.city_name || p.city || p.location?.city_name || p.location?.city_code || p.location?.name || '',
+                        country: p.country_code || p.location?.country_code || '',
+                        stars: p.star || 0,
+                        icon: '🏨'
+                    }));
+                    results = [...places, ...props];
+                }
+                return results;
+            } catch (e) {
+                console.warn("API Error:", e);
+                return [];
+            }
+        }
+
+        // ================= UI COMPONENTS =================
+        function setupAutocomplete(input) {
+            if (!input) return;
+            const type = input.dataset.type || 'any';
+
+            const container = document.createElement('div');
+            container.className = 'absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50 hidden mt-1';
+            input.parentElement.style.position = 'relative';
+            input.parentElement.appendChild(container);
+
+            let debounceTimer;
+
+            input.addEventListener('input', () => {
+                const query = input.value;
+                if (query.length < 3) {
+                    container.classList.add('hidden');
+                    return;
+                }
+
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(async () => {
+                    container.innerHTML = '<div class="p-3 text-sm text-gray-400">Loading...</div>';
+                    container.classList.remove('hidden');
+
+                    const results = await fetchLocations(query, type);
+
+                    container.innerHTML = '';
+                    if (results.length === 0) {
+                        container.innerHTML = '<div class="p-3 text-sm text-gray-400">No results found</div>';
+                    } else {
+                        results.forEach(res => {
+                            const item = document.createElement('div');
+                            item.className = 'p-2 hover:bg-slate-50 cursor-pointer text-sm flex justify-between items-center';
+
+                            let icon = res.icon || '📍';
+                            if (!res.icon) {
+                                if (res.type === 'airport_code') icon = '✈️';
+                                if (res.type === 'hotel') icon = '🏨';
+                                if (res.type === 'station') icon = '🚆';
+                            }
+                            let parts = [res.name];
+                            if (res.stars && res.stars > 0) parts.push(`*${res.stars}`);
+                            if (res.city) parts.push(res.city);
+                            if (res.country) parts.push(res.country);
+
+                            let locStr = [res.city, res.country].filter(Boolean).join(', ');
+
+                            item.innerHTML = `
+                                <div class="flex justify-between items-center w-full">
+                                    <div class="font-medium text-slate-800 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                                        ${icon} ${res.name}
+                                    </div>
+                                    <div class="text-xs text-slate-400 ml-2 whitespace-nowrap">
+                                        ${locStr}
+                                    </div>
+                                </div>
+                            `;
+
+                            item.onclick = () => {
+                                input.value = res.name;
+                                input.dataset.code = res.code;
+                                input.dataset.id = res.id;
+                                input.dataset.selType = res.type;
+                                container.classList.add('hidden');
+                            };
+                            container.appendChild(item);
+                        });
+                    }
+                }, 400);
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !container.contains(e.target)) {
+                    container.classList.add('hidden');
+                }
+            });
+        }
+
+        document.querySelectorAll('.auto-input').forEach(el => setupAutocomplete(el));
+
+        // Datepicker
+        // Datepicker
+        const flDateInput = document.getElementById('fl-dates');
+        const fp = flatpickr(flDateInput, { mode: "range", dateFormat: "Y-m-d", minDate: "today" });
+
+        // Handle Trip Type Change
+        document.querySelectorAll('input[name="ft_type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'oneway') {
+                    fp.set('mode', 'single');
+                    flDateInput.placeholder = "Depart";
+                } else {
+                    fp.set('mode', 'range');
+                    flDateInput.placeholder = "Depart - Return";
+                }
+            });
+        });
+
+        // Custom Select Logic (Cabin)
+        const cabinSel = document.querySelector('.custom-select');
+        if (cabinSel) {
+            cabinSel.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                cabinSel.nextElementSibling.classList.toggle('hidden');
+            });
+        }
+        document.querySelectorAll('.custom-options div').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                const val = opt.textContent;
+                document.getElementById('fl-cabin-val').textContent = val;
+                opt.parentElement.classList.add('hidden');
+            });
+        });
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-options').forEach(el => el.classList.add('hidden'));
+        });
+
+
+        // ================= FLIGHT PASSENGER LOGIC =================
+        const flightPax = (function () {
+            const state = { adt: 1, chd: 0, inf: 0, chdAges: [] };
+            const MAX_SEATS = 8;
+
+            const els = {
+                trigger: document.getElementById('fl-pax-trigger'),
+                menu: document.getElementById('fl-pax-menu'),
+                display: document.getElementById('fl-pax-display'),
+                btnDone: document.getElementById('btn-done-pax'),
+                counts: {
+                    adt: document.getElementById('count-adt'),
+                    chd: document.getElementById('count-chd'),
+                    inf: document.getElementById('count-inf')
+                },
+                chdAgesCont: document.getElementById('chd-ages-container'),
+                chdAgesGrid: document.getElementById('chd-ages-grid'),
+                error: document.getElementById('fl-pax-error')
+            };
+
+            if (!els.trigger) return { getState: () => state };
+
+            els.trigger.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                els.menu.classList.toggle('hidden');
+            });
+
+            els.menu.addEventListener('click', (e) => e.stopPropagation());
+
+            if (els.btnDone) {
+                els.btnDone.addEventListener('click', () => {
+                    els.menu.classList.add('hidden');
+                });
+            }
+
+            document.querySelectorAll('.pax-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    updateState(btn.dataset.type, btn.dataset.action);
+                });
+            });
+
+            function updateState(type, action) {
+                let { adt, chd, inf } = state;
+                let newAdt = adt, newChd = chd, newInf = inf;
+
+                if (type === 'adt') action === 'plus' ? newAdt++ : newAdt--;
+                else if (type === 'chd') action === 'plus' ? newChd++ : newChd--;
+                else if (type === 'inf') action === 'plus' ? newInf++ : newInf--;
+
+                if (newAdt < 1) return;
+                if ((newAdt + newChd) > MAX_SEATS) {
+                    if (action === 'plus') {
+                        showError(`Max ${MAX_SEATS} passengers (excluding infants) allowed.`);
+                        return;
+                    }
+                }
+                if (newInf > newAdt) {
+                    if (type === 'adt' && action === 'minus') newInf = newAdt;
+                    else {
+                        showError("Cannot have more infants than adults.");
+                        return;
+                    }
+                }
+
+                state.adt = newAdt;
+                state.chd = newChd;
+                state.inf = newInf;
+                updateChildAgesArray();
+                render();
+            }
+
+            function updateChildAgesArray() {
+                while (state.chdAges.length < state.chd) state.chdAges.push(5);
+                while (state.chdAges.length > state.chd) state.chdAges.pop();
+            }
+
+            function render() {
+                if (els.counts.adt) els.counts.adt.textContent = state.adt;
+                if (els.counts.chd) els.counts.chd.textContent = state.chd;
+                if (els.counts.inf) els.counts.inf.textContent = state.inf;
+
+                const parts = [];
+                parts.push(`${state.adt} Adult${state.adt > 1 ? 's' : ''}`);
+                if (state.chd > 0) parts.push(`${state.chd} Child${state.chd > 1 ? 'ren' : ''}`);
+                if (state.inf > 0) parts.push(`${state.inf} Infant${state.inf > 1 ? 's' : ''}`);
+                if (els.display) els.display.textContent = parts.join(', ');
+
+                if (state.chd > 0) {
+                    els.chdAgesCont.classList.remove('hidden');
+                    els.chdAgesGrid.innerHTML = '';
+                    state.chdAges.forEach((age, idx) => {
+                        const wrapper = document.createElement('div');
+                        const label = document.createElement('div');
+                        label.className = 'text-[10px] text-gray-500 mb-1';
+                        label.textContent = `Child ${idx + 1}`;
+                        const sel = document.createElement('select');
+                        sel.className = 'w-full p-2 bg-slate-50 border rounded text-xs outline-none';
+                        for (let i = 2; i <= 11; i++) {
+                            const opt = document.createElement('option');
+                            opt.value = i; opt.textContent = `${i} yrs`;
+                            if (i === age) opt.selected = true;
+                            sel.appendChild(opt);
+                        }
+                        sel.onchange = (e) => state.chdAges[idx] = parseInt(e.target.value);
+                        wrapper.appendChild(label);
+                        wrapper.appendChild(sel);
+                        els.chdAgesGrid.appendChild(wrapper);
+                    });
+                } else {
+                    els.chdAgesCont.classList.add('hidden');
+                }
+                els.error.classList.add('hidden');
+            }
+
+            function showError(msg) {
+                els.error.textContent = msg;
+                els.error.classList.remove('hidden');
+                setTimeout(() => els.error.classList.add('hidden'), 3000);
+            }
+
+            render();
+            return { getState: () => state };
+        })();
+
+        // ================= SUBMIT HANDLER =================
+        function getCode(id, def) {
+            const el = document.getElementById(id);
+            return (el && el.dataset.code) ? el.dataset.code : def;
+        }
+
+        function go(paramsObj, customPath) {
+            let base;
+            if (customPath) {
+                base = 'https://demo.apps.easygds.com/shopping/' + customPath;
+            } else {
+                base = 'https://demo.apps.easygds.com/shopping/processes/' + (paramsObj.process || 'flight');
+            }
+            paramsObj.currency_code = 'EUR';
+            paramsObj.language_code = 'en-US';
+            paramsObj.session_id = SESSION_ID;
+            paramsObj.office_domain = 'demo.b2c.easygds.com';
+            paramsObj.scope_type = 'B2C';
+            paramsObj.disabled_currency = 'true';
+            paramsObj.search_id = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const qs = new URLSearchParams(paramsObj).toString();
+            console.log("Submitting to:", base + '?' + qs);
+            window.location.href = base + '?' + qs;
+        }
+
+        document.getElementById('btn-search-flight').onclick = () => {
+            const dates = document.getElementById('fl-dates').value.split(' to ');
+            const def = getDefaultDates();
+
+            const paxState = flightPax.getState();
+            const travelers = [];
+            for (let i = 0; i < paxState.adt; i++) travelers.push({ type: 'adult', age: 30, room: 1 });
+            paxState.chdAges.forEach(age => travelers.push({ type: 'child', age: age, room: 1 }));
+            for (let i = 0; i < paxState.inf; i++) travelers.push({ type: 'infant', age: 1, room: 1 });
+
+            go({
+                process: 'flight',
+                package_id: CONFIG_ID,
+                const isRoundTrip = document.querySelector('input[name="ft_type"]:checked').value === 'round';
+                const expectation = {
+                    is_multi_city: false,
+                    start_place_code: getCode('fl-origin', 'SIN'),
+                    start_place_type: 'airport_code',
+                    des_code: getCode('fl-dest', 'BKK'),
+                    des_type: 'airport_code',
+                    fl_cabin_class: document.getElementById('fl-cabin-val').textContent,
+                    fl_departure_date: dates[0] || def.startStr,
+                    fl_round_trip: isRoundTrip
+                };
+
+                if(isRoundTrip) {
+                    expectation.fl_return_date = dates[1] || def.endStr;
+                }
+
+            go({
+                    process: 'flight',
+                    package_id: CONFIG_ID,
+                    expectation: JSON.stringify(expectation),
+                travelers: JSON.stringify(travelers)
+            });
+            travelers: JSON.stringify(travelers)
+        });
+        };
+
+    </script>
+</body>
+
+</html>
