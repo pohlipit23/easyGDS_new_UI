@@ -163,7 +163,7 @@
                                             data-type="adt" data-action="minus"><i data-lucide="minus"
                                                 class="w-3 h-3"></i></button>
                                         <span class="w-6 text-center font-bold text-sm text-slate-800"
-                                            id="count-adt">1</span>
+                                            id="fl-count-adt">1</span>
                                         <button type="button"
                                             class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
                                             data-type="adt" data-action="plus"><i data-lucide="plus"
@@ -183,7 +183,7 @@
                                             data-type="chd" data-action="minus"><i data-lucide="minus"
                                                 class="w-3 h-3"></i></button>
                                         <span class="w-6 text-center font-bold text-sm text-slate-800"
-                                            id="count-chd">0</span>
+                                            id="fl-count-chd">0</span>
                                         <button type="button"
                                             class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
                                             data-type="chd" data-action="plus"><i data-lucide="plus"
@@ -192,9 +192,9 @@
                                 </div>
 
                                 <!-- Child Ages (Dynamic) -->
-                                <div id="chd-ages-container" class="mb-5 hidden">
+                                <div id="fl-chd-ages-container" class="mb-5 hidden">
                                     <div class="text-xs font-bold text-slate-400 uppercase mb-2">Child Ages</div>
-                                    <div class="grid grid-cols-3 gap-2" id="chd-ages-grid">
+                                    <div class="grid grid-cols-3 gap-2" id="fl-chd-ages-grid">
                                         <!-- Selects go here -->
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                                             data-type="inf" data-action="minus"><i data-lucide="minus"
                                                 class="w-3 h-3"></i></button>
                                         <span class="w-6 text-center font-bold text-sm text-slate-800"
-                                            id="count-inf">0</span>
+                                            id="fl-count-inf">0</span>
                                         <button type="button"
                                             class="pax-btn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-95"
                                             data-type="inf" data-action="plus"><i data-lucide="plus"
@@ -223,7 +223,7 @@
                                 </div>
 
                                 <div class="mt-4 pt-3 border-t text-right">
-                                    <button type="button" id="btn-done-pax"
+                                    <button type="button" id="fl-btn-done-pax"
                                         class="px-4 py-2 bg-brand-blue text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors">Done</button>
                                 </div>
                             </div>
@@ -498,7 +498,7 @@
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Destination</label>
                     <input type="text" id="tour-dest"
                         class="auto-input w-full p-3 bg-slate-50 rounded-lg border focus:border-purple-500 outline-none"
-                        placeholder="Destination" data-type="place_id">
+                        placeholder="Destination" data-type="tour_dest">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -509,13 +509,89 @@
                     </div>
                     <div class="relative">
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travelers</label>
-                        <div class="custom-select w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none">
-                            <span class="selected-val">2 Adults</span>
+                        <div id="tour-pax-trigger"
+                            class="w-full p-3 bg-slate-50 rounded-lg border cursor-pointer select-none flex justify-between items-center hover:border-purple-500 transition-colors">
+                            <span id="tour-pax-display" class="text-sm font-medium">1 Adult</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
                         </div>
-                        <div
-                            class="custom-options hidden absolute top-full left-0 w-full bg-white border rounded-lg shadow-lg z-20 mt-1">
-                            <div class="p-2 hover:bg-slate-50 cursor-pointer">1 Adult</div>
-                            <div class="p-2 hover:bg-slate-50 cursor-pointer">2 Adults</div>
+
+                        <!-- Tour Pax Menu -->
+                        <div id="tour-pax-menu"
+                            class="hidden absolute top-auto right-0 w-80 bg-white border rounded-xl shadow-2xl z-30 mt-2 p-5 animate-in fade-in slide-in-from-top-2 duration-200">
+
+                            <!-- Adults -->
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Adults</div>
+                                    <div class="text-xs text-slate-500">Age 12+</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="adt" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="tour-count-adt">1</span>
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="adt" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Children -->
+                            <div class="flex justify-between items-center mb-5">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Children</div>
+                                    <div class="text-xs text-slate-500">Age 2-11</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="chd" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="tour-count-chd">0</span>
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="chd" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Child Ages -->
+                            <div id="tour-chd-ages-container" class="mb-5 hidden">
+                                <div class="text-xs font-bold text-slate-400 uppercase mb-2">Child Ages</div>
+                                <div class="grid grid-cols-3 gap-2" id="tour-chd-ages-grid"></div>
+                            </div>
+
+                            <!-- Infants -->
+                            <div class="flex justify-between items-center mb-2">
+                                <div>
+                                    <div class="font-bold text-sm text-slate-800">Infants</div>
+                                    <div class="text-xs text-slate-500">Under 2 (on lap)</div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="inf" data-action="minus"><i data-lucide="minus"
+                                            class="w-3 h-3"></i></button>
+                                    <span class="w-6 text-center font-bold text-sm text-slate-800"
+                                        id="tour-count-inf">0</span>
+                                    <button type="button"
+                                        class="pax-btn-tour w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 text-slate-600 active:scale-95"
+                                        data-type="inf" data-action="plus"><i data-lucide="plus"
+                                            class="w-3 h-3"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-red-500 mt-2 hidden bg-red-50 p-2 rounded" id="tour-pax-error">
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t text-right">
+                                <button type="button" id="tour-btn-done-pax"
+                                    class="px-4 py-2 bg-purple-600 text-white text-sm font-bold rounded-lg hover:bg-purple-700 transition-colors">Done</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -741,6 +817,13 @@
                 url.searchParams.append("language_code", "en-US");
             }
 
+            // 1a. TOUR DESTINATION SEARCH
+            else if (type === 'tour_dest') {
+                url = new URL(`${API_BASE_URL}/tour-packages/destinations`, window.location.origin);
+                url.searchParams.append("search_text", query);
+                url.searchParams.append("language_code", "en-US");
+            }
+
             // 2. GENERAL SEARCH (Hotels, Tours, Packages)
             // using USER PROVIDED configuration to allow searching for Cities AND Hotel Names
             else {
@@ -805,7 +888,36 @@
                         icon: '🏨'
                     }));
 
+
+
                     results = [...places, ...props];
+                }
+                // Handle /tour-packages/destinations (Assuming {countries: [...]})
+                if (data.countries) {
+                    // Try to map countries AND their nested cities
+                    const countries = data.countries.map(c => ({
+                        name: c.name,
+                        code: c.code || c.id,
+                        type: 'tour_dest_country',
+                        id: c.id,
+                        city: '',
+                        country: c.name,
+                        icon: '🌏'
+                    }));
+
+                    const cities = data.countries.flatMap(c =>
+                        (c.cities || []).map(city => ({
+                            name: city.name,
+                            code: city.code || city.id,
+                            type: 'tour_dest_city',
+                            id: city.id,
+                            city: c.name, // Country name as context
+                            country: c.name,
+                            icon: '📍'
+                        }))
+                    );
+
+                    results = [...countries, ...cities];
                 }
 
                 return results;
@@ -1009,23 +1121,24 @@
         }
 
         // ================= FLIGHT PASSENGER LOGIC =================
-        const flightPax = (function () {
+        // ================= GENERIC PASSENGER LOGIC =================
+        function setupPaxWidget(prefix, btnClass) {
             const state = { adt: 1, chd: 0, inf: 0, chdAges: [] };
             const MAX_SEATS = 8; // ADT + CHD
 
             const els = {
-                trigger: document.getElementById('fl-pax-trigger'),
-                menu: document.getElementById('fl-pax-menu'),
-                display: document.getElementById('fl-pax-display'),
-                btnDone: document.getElementById('btn-done-pax'),
+                trigger: document.getElementById(`${prefix}-pax-trigger`),
+                menu: document.getElementById(`${prefix}-pax-menu`),
+                display: document.getElementById(`${prefix}-pax-display`),
+                btnDone: document.getElementById(`${prefix}-btn-done-pax`),
                 counts: {
-                    adt: document.getElementById('count-adt'),
-                    chd: document.getElementById('count-chd'),
-                    inf: document.getElementById('count-inf')
+                    adt: document.getElementById(`${prefix}-count-adt`),
+                    chd: document.getElementById(`${prefix}-count-chd`),
+                    inf: document.getElementById(`${prefix}-count-inf`)
                 },
-                chdAgesCont: document.getElementById('chd-ages-container'),
-                chdAgesGrid: document.getElementById('chd-ages-grid'),
-                error: document.getElementById('fl-pax-error')
+                chdAgesCont: document.getElementById(`${prefix}-chd-ages-container`),
+                chdAgesGrid: document.getElementById(`${prefix}-chd-ages-grid`),
+                error: document.getElementById(`${prefix}-pax-error`)
             };
 
             if (!els.trigger) return { getState: () => state };
@@ -1047,7 +1160,8 @@
             }
 
             // Buttons
-            document.querySelectorAll('.pax-btn').forEach(btn => {
+            // Scoped to this widget specifically via specific btn class if possible, or just look within menu
+            els.menu.querySelectorAll(btnClass || '.pax-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     const type = btn.dataset.type; // adt, chd, inf
@@ -1108,11 +1222,9 @@
             }
 
             function updateChildAgesArray() {
-                // If chd count increased, add default ages
                 while (state.chdAges.length < state.chd) {
-                    state.chdAges.push(5); // Default age 5
+                    state.chdAges.push(5);
                 }
-                // If chd count decreased, remove
                 while (state.chdAges.length > state.chd) {
                     state.chdAges.pop();
                 }
@@ -1134,8 +1246,6 @@
                 // Child Ages inputs
                 if (state.chd > 0) {
                     els.chdAgesCont.classList.remove('hidden');
-                    // Only rebuild if count changed to preserve values where possible, 
-                    // but simple rebuild is safer for maintaining correct age-to-index mapping
                     els.chdAgesGrid.innerHTML = '';
                     state.chdAges.forEach((age, idx) => {
                         const wrapper = document.createElement('div');
@@ -1167,7 +1277,7 @@
                     els.chdAgesCont.classList.add('hidden');
                 }
 
-                // Error (clear if successful update)
+                // Error
                 els.error.textContent = '';
                 els.error.classList.add('hidden');
             }
@@ -1186,7 +1296,10 @@
             return {
                 getState: () => state
             };
-        })();
+        }
+
+        const flightPax = setupPaxWidget('fl', '.pax-btn');
+        const tourPax = setupPaxWidget('tour', '.pax-btn-tour');
 
         // ================= SUBMIT HANDLERS =================
         // Helper to get selected code or default
@@ -1468,18 +1581,26 @@
         document.getElementById('btn-search-tour').onclick = () => {
             const dates = document.getElementById('tour-dates').value.split(' to ');
             const def = getDefaultDates();
+
+            // Build travelers from tourPax
+            const paxState = tourPax.getState();
+            const travelers = [];
+            for (let i = 0; i < paxState.adt; i++) travelers.push({ type: 'adult', age: 30, room: 1 });
+            paxState.chdAges.forEach(age => travelers.push({ type: 'child', age: age, room: 1 }));
+            for (let i = 0; i < paxState.inf; i++) travelers.push({ type: 'infant', age: 1, room: 1 });
+
             go({
                 process: 'tour',
                 // Working URL uses this specific ID for tours
                 package_id: 'ddd85aba-76ad-47f0-abd4-a36d7767b624',
                 expectation: JSON.stringify({
                     is_separate: false,
-                    tr_des_code: getCode('tour-dest', '178312'), // Default to a valid Place ID preferably
+                    tr_des_code: getCode('tour-dest', '178312'),
                     tr_des_type: 'place_id',
                     tr_start_date: dates[0] || def.startStr,
                     tr_end_date: dates[1] || def.endStr // Tour requires end date matching API
                 }),
-                travelers: JSON.stringify([{ type: 'adult', age: 30, room: 1 }])
+                travelers: JSON.stringify(travelers)
             });
         };
 
