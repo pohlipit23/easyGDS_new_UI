@@ -1,0 +1,746 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Air Astana Holidays - Discover the World</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C8AA6E", // Air Astana Gold
+                        secondary: "#2D2D2D", // Graphite Grey
+                        "primary-hover": "#B09256",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#555555",
+                        "bg-surface": "#F9F9F9",
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-slide {
+            transition: opacity 1.5s ease-in-out;
+            opacity: 0;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-text-main bg-bg-surface antialiased flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" alt="Air Astana"
+                    class="h-10 md:h-12 object-contain group-hover:opacity-90 transition-opacity">
+                <div class="h-8 w-px bg-gray-200 hidden sm:block"></div>
+                <span class="text-lg font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#" class="text-secondary font-medium hover:text-primary transition-colors relative group">
+                    Book
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="text-secondary font-medium hover:text-primary transition-colors relative group">
+                    Manage
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="text-secondary font-medium hover:text-primary transition-colors relative group">
+                    Experience
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="text-secondary font-medium hover:text-primary transition-colors relative group">
+                    Nomad Club
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-full hover:bg-white/10 text-secondary hover:text-primary transition-colors">
+                    <span class="material-icons-round">search</span>
+                </button>
+                <button class="p-2 rounded-full hover:bg-white/10 text-secondary hover:text-primary transition-colors">
+                    <span class="material-icons-round">person_outline</span>
+                </button>
+                <div class="h-4 w-px bg-gray-300"></div>
+                <button class="text-sm font-bold text-secondary hover:text-primary transition-colors">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative h-[600px] md:h-[700px] flex items-center justify-center">
+            <!-- Carousel Images -->
+            <div id="hero-slider" class="absolute inset-0 w-full h-full">
+                <div class="hero-slide active absolute inset-0 w-full h-full bg-cover bg-center"
+                    style="background-image: url('https://images.unsplash.com/photo-1542296332-2e44a996aa0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                </div>
+                <div class="hero-slide absolute inset-0 w-full h-full bg-cover bg-center"
+                    style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                </div>
+                <div class="hero-slide absolute inset-0 w-full h-full bg-cover bg-center"
+                    style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                </div>
+            </div>
+
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60">
+            </div>
+
+            <!-- Hero Content -->
+            <div class="relative z-30 container mx-auto px-4 text-center text-white mb-32 animate-slide-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg tracking-tight leading-tight">
+                    Discover the World with <br /><span class="text-primary">Air Astana</span>
+                </h1>
+                <p class="text-lg md:text-xl opacity-90 drop-shadow-md max-w-2xl mx-auto font-light">
+                    Unforgettable journeys, curated packages, and seamless travel experiences start
+                    here.
+                </p>
+
+                <div id="search-widget-container"
+                    class="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 overflow-hidden transition-all duration-500 mx-auto max-w-5xl relative z-50 mt-12 text-left">
+                    <!-- Tab Navigation -->
+                    <div
+                        class="flex items-center justify-center gap-1 p-1.5 bg-black/50 backdrop-blur-md border-b border-white/10 overflow-x-auto no-scrollbar">
+                        <button
+                            class="tab-btn px-6 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white/10 text-white/70 hover:text-white whitespace-nowrap data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg"
+                            data-tab="packages" onclick="activateWidget('packages')">
+                            <span class="flex items-center gap-2"><span
+                                    class="material-icons-round text-lg">inventory_2</span> Packages</span>
+                        </button>
+                        <button
+                            class="tab-btn px-6 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white/10 text-white/70 hover:text-white whitespace-nowrap data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg"
+                            data-tab="hotels" onclick="activateWidget('hotels')">
+                            <span class="flex items-center gap-2"><span
+                                    class="material-icons-round text-lg">hotel</span>
+                                Hotels</span>
+                        </button>
+                        <button
+                            class="tab-btn px-6 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white/10 text-white/70 hover:text-white whitespace-nowrap data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg"
+                            data-tab="tours" onclick="activateWidget('tours')">
+                            <span class="flex items-center gap-2"><span
+                                    class="material-icons-round text-lg">confirmation_number</span> Tours</span>
+                        </button>
+                        <button
+                            class="tab-btn px-6 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white/10 text-white/70 hover:text-white whitespace-nowrap data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg"
+                            data-tab="transfers" onclick="activateWidget('transfers')">
+                            <span class="flex items-center gap-2"><span
+                                    class="material-icons-round text-lg">airport_shuttle</span> Transfers</span>
+                        </button>
+                        <button
+                            class="tab-btn px-6 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white/10 text-white/70 hover:text-white whitespace-nowrap data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg"
+                            data-tab="car_rental" onclick="activateWidget('car_rental')">
+                            <span class="flex items-center gap-2"><span
+                                    class="material-icons-round text-lg">directions_car</span> Car Rental</span>
+                        </button>
+                    </div>
+
+                    <!-- Widget Content -->
+                    <div id="widget-content"
+                        class="bg-white transition-all duration-500 ease-in-out max-h-[800px] opacity-100 overflow-hidden">
+                        <div class="p-6 md:p-8">
+                            <div id="tab-packages" class="tab-content block animate-fade-in">
+                                <!-- Flight Type Radios -->
+                                <div class="flex items-center gap-6 mb-6">
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="flight_type" checked
+                                            class="w-5 h-5 text-primary focus:ring-primary border-gray-300 transition-all">
+                                        <span
+                                            class="ml-2 text-sm font-bold text-secondary group-hover:text-primary transition-colors">Return</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="flight_type"
+                                            class="w-5 h-5 text-primary focus:ring-primary border-gray-300 transition-all">
+                                        <span
+                                            class="ml-2 text-sm font-bold text-secondary group-hover:text-primary transition-colors">Multi-city</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="flight_type"
+                                            class="w-5 h-5 text-primary focus:ring-primary border-gray-300 transition-all">
+                                        <span
+                                            class="ml-2 text-sm font-bold text-secondary group-hover:text-primary transition-colors">One-way</span>
+                                    </label>
+                                </div>
+
+                                <!-- Main Grid -->
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4">
+                                    <!-- From -->
+                                    <div
+                                        class="lg:col-span-3 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all group">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">From</label>
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-icons-round text-primary group-focus-within:text-primary-hover">flight_takeoff</span>
+                                            <input type="text" value="Almaty (ALA)"
+                                                class="w-full bg-transparent border-none p-0 text-secondary font-bold focus:ring-0 placeholder-gray-400">
+                                        </div>
+                                    </div>
+
+                                    <!-- To -->
+                                    <div
+                                        class="lg:col-span-3 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all group">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">To</label>
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-icons-round text-primary group-focus-within:text-primary-hover">flight_land</span>
+                                            <input type="text" placeholder="Destination"
+                                                class="w-full bg-transparent border-none p-0 text-secondary font-bold focus:ring-0 placeholder-gray-400">
+                                        </div>
+                                    </div>
+
+                                    <!-- Dates -->
+                                    <div
+                                        class="lg:col-span-2 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all group">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Dates</label>
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-icons-round text-primary group-focus-within:text-primary-hover">calendar_month</span>
+                                            <input type="text" placeholder="Depart - Return"
+                                                class="w-full bg-transparent border-none p-0 text-secondary font-bold focus:ring-0 placeholder-gray-400">
+                                        </div>
+                                    </div>
+
+                                    <!-- Travellers -->
+                                    <div
+                                        class="lg:col-span-2 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all group">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Travellers</label>
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-icons-round text-primary group-focus-within:text-primary-hover">person</span>
+                                            <select
+                                                class="w-full bg-transparent border-none p-0 text-secondary font-bold focus:ring-0 cursor-pointer">
+                                                <option>1 Room, 1 Pax</option>
+                                                <option>1 Room, 2 Pax</option>
+                                                <option>2 Rooms, 4 Pax</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cabin Class -->
+                                    <div
+                                        class="lg:col-span-2 bg-gray-50 rounded-xl border border-gray-200 px-4 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all group">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Cabin
+                                            Class</label>
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-icons-round text-primary group-focus-within:text-primary-hover">airline_seat_recline_normal</span>
+                                            <select
+                                                class="w-full bg-transparent border-none p-0 text-secondary font-bold focus:ring-0 cursor-pointer">
+                                                <option>Economy</option>
+                                                <option>Business</option>
+                                                <option>First Class</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Partial Hotel Checkbox -->
+                                <div class="mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" id="partial_hotel" onchange="togglePartialHotel()"
+                                            class="rounded text-primary focus:ring-primary border-gray-300 w-4 h-4">
+                                        <label for="partial_hotel"
+                                            class="text-sm font-medium text-secondary cursor-pointer select-none">I
+                                            only need a hotel for part of my trip / in
+                                            another city</label>
+                                    </div>
+                                </div>
+
+                                <!-- Partial Hotel Fields (Hidden by default) -->
+                                <div id="partial-hotel-fields"
+                                    class="hidden grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6 p-4 bg-gray-50 rounded-xl border border-gray-100 animate-fade-in">
+                                    <div class="lg:col-span-6">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">City
+                                            / Hotel</label>
+                                        <div
+                                            class="flex items-center bg-white rounded-lg px-3 py-2 border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                                            <span class="material-icons-round text-gray-400 mr-2">hotel</span>
+                                            <input type="text" placeholder="Enter city or hotel name"
+                                                class="bg-transparent border-none p-0 text-secondary w-full focus:ring-0 text-sm">
+                                        </div>
+                                    </div>
+                                    <div class="lg:col-span-3">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Check-in</label>
+                                        <div
+                                            class="flex items-center bg-white rounded-lg px-3 py-2 border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                                            <span class="material-icons-round text-gray-400 mr-2">calendar_month</span>
+                                            <input type="text" placeholder="Select date"
+                                                class="bg-transparent border-none p-0 text-secondary w-full focus:ring-0 text-sm">
+                                        </div>
+                                    </div>
+                                    <div class="lg:col-span-3">
+                                        <label
+                                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Check-out</label>
+                                        <div
+                                            class="flex items-center bg-white rounded-lg px-3 py-2 border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                                            <span class="material-icons-round text-gray-400 mr-2">calendar_month</span>
+                                            <input type="text" placeholder="Select date"
+                                                class="bg-transparent border-none p-0 text-secondary w-full focus:ring-0 text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer Actions -->
+                                <div class="flex flex-wrap items-center justify-end gap-4 mt-6">
+                                    <button class="flex items-center text-sm font-bold text-primary hover:underline">
+                                        <span class="material-icons-round text-lg mr-1">add</span>
+                                        Add promo code
+                                    </button>
+                                    <button
+                                        class="bg-primary text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:bg-primary-hover hover:shadow-xl hover:-translate-y-0.5 transition flex items-center gap-2 text-lg">
+                                        Search <span class="material-icons-round rotate-90">flight</span>
+                                    </button>
+                                </div>
+
+                                <!-- Recent Searches -->
+                                <div class="mt-6 pt-4 border-t border-gray-100">
+                                    <h3 class="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">
+                                        Recent Searches</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button
+                                            class="flex items-center gap-2 rounded-full bg-gray-50 px-4 py-2 text-xs font-bold text-secondary border border-gray-200 hover:bg-white hover:border-primary hover:text-primary transition">
+                                            <span class="material-icons-round text-sm">history</span>
+                                            ALA-DXB, 24 Feb
+                                        </button>
+                                        <button
+                                            class="flex items-center gap-2 rounded-full bg-gray-50 px-4 py-2 text-xs font-bold text-secondary border border-gray-200 hover:bg-white hover:border-primary hover:text-primary transition">
+                                            <span class="material-icons-round text-sm">history</span>
+                                            ALA-IST, 18 Mar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Other Tabs Placeholders -->
+                            <div id="tab-hotels" class="tab-content hidden py-12 text-center">
+                                <span class="material-icons-round text-5xl text-gray-300 mb-4">hotel</span>
+                                <h3 class="text-xl font-bold text-secondary">Find the
+                                    perfect stay</h3>
+                                <p class="text-text-muted">Search thousands of hotels
+                                    worldwide.</p>
+                            </div>
+                            <div id="tab-tours" class="tab-content hidden py-12 text-center">
+                                <span
+                                    class="material-icons-round text-5xl text-gray-300 mb-4">confirmation_number</span>
+                                <h3 class="text-xl font-bold text-secondary">Discover
+                                    Experiences</h3>
+                                <p class="text-text-muted">Book tours, activities, and
+                                    attractions.</p>
+                            </div>
+                            <div id="tab-transfers" class="tab-content hidden py-12 text-center">
+                                <span class="material-icons-round text-5xl text-gray-300 mb-4">airport_shuttle</span>
+                                <h3 class="text-xl font-bold text-secondary">Airport
+                                    Transfers</h3>
+                                <p class="text-text-muted">Seamless rides from the airport
+                                    to your hotel.</p>
+                            </div>
+                            <div id="tab-car_rental" class="tab-content hidden py-12 text-center">
+                                <span class="material-icons-round text-5xl text-gray-300 mb-4">directions_car</span>
+                                <h3 class="text-xl font-bold text-secondary">Rent a Car</h3>
+                                <p class="text-text-muted">Find the best car rental deals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Destinations -->
+        <section class="pt-32 pb-16 bg-bg-surface">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex justify-between items-end mb-10">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-2">Trending
+                            Destinations</h2>
+                        <p class="text-text-muted text-lg">Explore our most popular holiday packages
+                        </p>
+                    </div>
+                    <a href="#"
+                        class="hidden md:flex items-center gap-2 text-primary font-bold uppercase tracking-wide hover:text-primary-hover transition-colors">
+                        View All <span class="material-icons-round">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div
+                        class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea904ac66de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Dubai"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-3xl font-bold mb-2">Dubai</h3>
+                            <p class="text-white/80 mb-4 line-clamp-2">Luxury shopping, ultramodern
+                                architecture and
+                                lively nightlife scene.</p>
+                            <span
+                                class="inline-block bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">From
+                                Â£499</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div
+                        class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Maldives"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-3xl font-bold mb-2">Maldives</h3>
+                            <p class="text-white/80 mb-4 line-clamp-2">Tropical nation in the Indian
+                                Ocean composed of
+                                26 ring-shaped atolls.</p>
+                            <span
+                                class="inline-block bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">From
+                                Â£899</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div
+                        class="group relative h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Istanbul"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-3xl font-bold mb-2">Istanbul</h3>
+                            <p class="text-white/80 mb-4 line-clamp-2">A major city in Turkey that
+                                straddles Europe and
+                                Asia across the Bosphorus Strait.</p>
+                            <span
+                                class="inline-block bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">From
+                                Â£350</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Props -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="bg-gray-50 rounded-[3rem] p-8 md:p-16 border border-gray-100 relative overflow-hidden">
+                    <!-- Decorative Blobs -->
+                    <div
+                        class="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl">
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 w-64 h-64 bg-secondary/5 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl">
+                    </div>
+
+                    <div class="text-center max-w-2xl mx-auto mb-16 relative z-10">
+                        <h2 class="text-3xl font-bold text-secondary mb-4">Why Book with Air Astana
+                            Holidays?</h2>
+                        <p class="text-text-muted text-lg">We bring you the best travel experiences
+                            with the reliability
+                            you trust.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                        <div class="flex flex-col items-center text-center group">
+                            <div
+                                class="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons-round text-4xl">verified_user</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-secondary mb-3">Trusted Reliability
+                            </h3>
+                            <p class="text-text-muted leading-relaxed">Book with confidence knowing
+                                you're flying with
+                                the Best Airline in Central Asia.</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center group">
+                            <div
+                                class="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons-round text-4xl">savings</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-secondary mb-3">Best Value</h3>
+                            <p class="text-text-muted leading-relaxed">Exclusive package rates and
+                                special offers that
+                                you won't find anywhere else.</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center group">
+                            <div
+                                class="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons-round text-4xl">support_agent</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-secondary mb-3">24/7 Support</h3>
+                            <p class="text-text-muted leading-relaxed">Our dedicated team is here to
+                                help you every step
+                                of the way, anytime you need us.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="bg-secondary rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl">
+                    <div
+                        class="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full -translate-x-1/3 translate-y-1/3 blur-3xl">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+                        <div class="text-white max-w-xl text-center lg:text-left">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Get Exclusive Offers
+                            </h2>
+                            <p class="text-white/80 text-lg">Subscribe to our newsletter and be the
+                                first to know about
+                                our special deals and new destinations.</p>
+                        </div>
+                        <div class="w-full max-w-md">
+                            <form class="flex gap-2">
+                                <input type="email" placeholder="Your email address"
+                                    class="flex-1 bg-white/10 border border-white/20 rounded-xl px-6 py-4 text-white placeholder-white/50 focus:ring-2 focus:ring-primary focus:border-transparent outline-none backdrop-blur-sm transition-all">
+                                <button type="button"
+                                    class="bg-primary text-white px-8 py-4 rounded-xl font-bold uppercase tracking-wide hover:bg-primary-hover transition-colors shadow-lg">
+                                    Subscribe
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" alt="Air Astana"
+                        class="h-10 mb-6">
+                    <p class="text-text-muted mb-6">Your trusted partner for unforgettable travel
+                        experiences across the
+                        globe.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-secondary hover:bg-primary hover:text-white transition-colors"><span
+                                class="material-icons-round text-lg">facebook</span></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-secondary hover:bg-primary hover:text-white transition-colors"><span
+                                class="material-icons-round text-lg">camera_alt</span></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-secondary hover:bg-primary hover:text-white transition-colors"><span
+                                class="material-icons-round text-lg">alternate_email</span></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary mb-6">Company</h4>
+                    <ul class="space-y-4 text-text-muted">
+                        <li><a href="#" class="hover:text-primary transition-colors">About Us</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Careers</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Press
+                                Centre</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Sustainability</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary mb-6">Support</h4>
+                    <ul class="space-y-4 text-text-muted">
+                        <li><a href="#" class="hover:text-primary transition-colors">Help Centre</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Baggage</a>
+                        </li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Special
+                                Assistance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary mb-6">Legal</h4>
+                    <ul class="space-y-4 text-text-muted">
+                        <li><a href="#" class="hover:text-primary transition-colors">Terms &
+                                Conditions</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Cookie
+                                Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Site Map</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-text-muted text-sm">&copy; 2024 Air Astana. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png"
+                        class="h-6 opacity-50" alt="Visa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png"
+                        class="h-6 opacity-50" alt="Mastercard">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Slider Logic
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000);
+
+        // Widget Logic
+        const widgetContainer = document.getElementById('search-widget-container');
+        const widgetContent = document.getElementById('widget-content');
+        let isExpanded = false;
+
+        function expandWidget() {
+            if (!isExpanded) {
+                widgetContent.classList.remove('max-h-0', 'opacity-0');
+                widgetContent.classList.add('max-h-[800px]', 'opacity-100');
+                isExpanded = true;
+            }
+        }
+
+        function collapseWidget() {
+            if (isExpanded) {
+                widgetContent.classList.remove('max-h-[800px]', 'opacity-100');
+                widgetContent.classList.add('max-h-0', 'opacity-0');
+                isExpanded = false;
+            }
+        }
+
+        function activateWidget(tabId) {
+            // Expand the widget first
+            expandWidget();
+
+            // Update Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.dataset.active = "true";
+                } else {
+                    btn.dataset.active = "false";
+                }
+            });
+
+            // Update Content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                if (content.id === `tab-${tabId}`) {
+                    content.classList.remove('hidden');
+                    content.classList.add('block', 'animate-fade-in');
+                } else {
+                    content.classList.add('hidden');
+                    content.classList.remove('block', 'animate-fade-in');
+                }
+            });
+        }
+
+        function togglePartialHotel() {
+            const checkbox = document.getElementById('partial_hotel');
+            const fields = document.getElementById('partial-hotel-fields');
+            if (checkbox.checked) {
+                fields.classList.remove('hidden');
+            } else {
+                fields.classList.add('hidden');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('click', (e) => {
+            // If clicking inside the widget container, expand it
+            if (widgetContainer.contains(e.target)) {
+                expandWidget();
+            } else {
+                // If clicking outside, collapse it
+                collapseWidget();
+            }
+        });
+
+        // Initialize default tab active state visually (without expanding)
+        document.querySelector('.tab-btn[data-tab="packages"]').dataset.active = "true";
+    </script>
+</body>
+
+</html>

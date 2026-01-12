@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGDS | Curated Travel Experiences</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fraunces & Outfit Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Flatpickr Datepicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    display: ['Fraunces', 'serif'],
+                    sans: ['Outfit', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            coral: '#FF6B6B',
+                            'coral-dark': '#E85555',
+                            navy: '#1A1D2E',
+                            'navy-light': '#2D3250',
+                            gold: '#D4AF37',
+                            cream: '#FFF8F0',
+                            'warm-gray': '#F5F1ED',
+                            slate: '#64748B',
+                            'slate-light': '#94A3B8',
+                        }
+                    },
+                    boxShadow: {
+                        'elegant': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.08)',
+                        'elegant-lg': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+                        'elegant-xl': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 30px 60px -15px rgba(0, 0, 0, 0.15)',
+                        'inner-glow': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'scale-in': 'scaleIn 0.5s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.7s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F1ED;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8962E;
+        }
+
+        /* Hide scrollbar utility */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Hero carousel animations */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        /* Parallax effect */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Refined radio button styling */
+        .custom-radio {
+            appearance: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            margin: 0;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-radio::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: #FF6B6B;
+            box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+        }
+
+        .custom-radio:checked::before {
+            transform: scale(1);
+        }
+
+        .custom-radio:checked {
+            border-color: #FF6B6B;
+            background-color: white;
+        }
+
+        .custom-radio:hover {
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        /* Checkbox styling */
+        .custom-checkbox {
+            cursor: pointer;
+            accent-color: #FF6B6B;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+        }
+
+        /* Sticky search panel styles */
+        #search-panel.is-sticky .input-container {
+            background-color: #FFFFFF;
+            border-color: #E5E7EB;
+        }
+
+        #search-panel.is-sticky .input-container:hover {
+            border-color: #D4AF37;
+        }
+
+        #search-panel.is-sticky label {
+            color: #64748B;
+            text-shadow: none;
+        }
+
+        #search-panel.is-sticky input {
+            color: #1A1D2E;
+        }
+
+        #search-panel.is-sticky input::placeholder {
+            color: #94A3B8;
+        }
+
+        #search-panel.is-sticky .radio-group-label {
+            color: #1A1D2E;
+            text-shadow: none;
+        }
+
+        #search-panel.is-sticky #checkbox-label {
+            color: #1A1D2E;
+            text-shadow: none;
+        }
+
+        #search-panel.is-sticky .promo-link {
+            color: #1A1D2E;
+            text-shadow: none;
+        }
+
+        #search-panel.is-sticky .input-icon {
+            color: #64748B;
+        }
+
+        /* Non-sticky visibility enhancements */
+        .radio-group-label,
+        #checkbox-label,
+        .promo-link {
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Page load animations */
+        .animate-on-load {
+            opacity: 0;
+        }
+
+        .loaded .animate-on-load {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Staggered animation delays */
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+
+        .delay-500 {
+            animation-delay: 500ms;
+        }
+
+        .delay-600 {
+            animation-delay: 600ms;
+        }
+
+        /* Texture overlay for depth */
+        .texture-overlay {
+            position: relative;
+        }
+
+        .texture-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        /* Refined button hover states */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -8px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Card hover elevations */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Golden accent line */
+        .accent-line {
+            position: relative;
+        }
+
+        .accent-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -12px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37 0%, transparent 100%);
+            border-radius: 2px;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #FF6B6B 0%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-warm-gray text-brand-navy font-sans antialiased">
+
+    <!-- ================= HEADER ================= -->
+    <header class="absolute top-0 left-0 right-0 z-[60] h-20 flex items-center transition-all duration-300"
+        id="main-header">
+        <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center h-full">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="https://waddat.com/easygds_logo_transparent.png" alt="EasyGDS Logo"
+                    class="h-9 w-auto brightness-0 invert transition-all duration-300 group-hover:scale-105 drop-shadow-lg">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-white/90">
+                <div
+                    class="flex items-center gap-1.5 cursor-pointer hover:text-white transition-all duration-300 hover:gap-2">
+                    <span class="font-semibold">USD</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+                <div
+                    class="flex items-center gap-2 cursor-pointer hover:text-white transition-all duration-300 hover:gap-3">
+                    <img src="https://flagcdn.com/w20/us.png" alt="US flag" class="w-5 h-auto rounded shadow-sm">
+                    <span class="font-semibold">EN</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+                <a href="#"
+                    class="hover:text-white transition-all duration-300 font-semibold hover:underline underline-offset-4">Log
+                    In</a>
+                <a href="#"
+                    class="bg-white text-brand-navy px-6 py-3 rounded-full hover:bg-brand-gold hover:text-white transition-all duration-300 shadow-elegant font-bold hover:shadow-elegant-lg">Sign
+                    Up</a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button class="lg:hidden text-white" id="mobile-menu-btn">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-white z-[55] transform translate-x-full transition-transform duration-300 lg:hidden pt-20 px-6 flex flex-col gap-6"
+        id="mobile-menu">
+        <a href="#"
+            class="text-xl font-semibold border-b pb-4 border-gray-200 hover:text-brand-coral transition-colors">Destinations</a>
+        <a href="#"
+            class="text-xl font-semibold border-b pb-4 border-gray-200 hover:text-brand-coral transition-colors">Deals</a>
+        <a href="#"
+            class="text-xl font-semibold border-b pb-4 border-gray-200 hover:text-brand-coral transition-colors">Packages</a>
+        <div class="flex flex-col gap-4 mt-4">
+            <a href="#"
+                class="text-center py-3 border-2 border-brand-navy rounded-full font-semibold hover:bg-brand-navy hover:text-white transition-all duration-300">Log
+                In</a>
+            <a href="#"
+                class="text-center py-3 bg-brand-coral text-white rounded-full font-bold hover:bg-brand-coral-dark transition-all duration-300 shadow-elegant">Sign
+                Up</a>
+        </div>
+        <div class="mt-auto mb-8 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="https://flagcdn.com/w20/us.png" class="w-6 shadow-sm rounded">
+                <span class="font-semibold">USD</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative h-[60vh] min-h-[500px] max-h-[800px] w-full overflow-hidden texture-overlay">
+        <!-- Carousel Images -->
+        <div class="absolute inset-0 z-0">
+            <div class="hero-slide active absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=2574&auto=format&fit=crop');">
+            </div>
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2638&auto=format&fit=crop');">
+            </div>
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=2575&auto=format&fit=crop');">
+            </div>
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div
+            class="relative z-10 container mx-auto px-6 lg:px-12 h-full flex flex-col justify-center items-center pb-40 lg:pb-52 pt-24">
+            <h1
+                class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-6 drop-shadow-2xl leading-[1.1] tracking-tight animate-on-load">
+                Discover Your Next<br>
+                <span class="italic font-light">Extraordinary</span> Journey
+            </h1>
+            <p
+                class="text-xl md:text-2xl text-white/95 text-center max-w-3xl drop-shadow-lg font-light leading-relaxed animate-on-load delay-200">
+                Handcrafted luxury destinations, exclusive deals, and unforgettable experiences curated just for you.
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= STICKY SEARCH BAR ================= -->
+    <div class="sticky top-0 z-[50] -mt-36 lg:-mt-44 px-4 lg:px-6 pb-6 transition-all duration-300 pointer-events-none"
+        id="search-container-wrapper">
+        <div class="container mx-auto pointer-events-auto">
+            <!-- Enhanced Search Panel -->
+            <div class="bg-white/25 backdrop-blur-xl rounded-3xl shadow-elegant-xl p-4 lg:p-6 max-w-7xl mx-auto transition-all duration-500 border border-white/30 flex flex-col"
+                id="search-panel">
+
+                <!-- Search Tabs -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 p-1.5 bg-white/25 rounded-full lg:w-max lg:mx-auto transition-all duration-300"
+                    id="search-tabs-container">
+                    <button
+                        class="search-tab active flex items-center gap-2.5 px-5 py-3 rounded-full text-sm lg:text-base font-semibold transition-all duration-300 whitespace-nowrap text-brand-coral bg-white shadow-elegant"
+                        data-target="packages">
+                        <i data-lucide="briefcase" class="w-4 h-4 text-brand-coral"></i> Packages
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-5 py-3 rounded-full text-sm lg:text-base font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all duration-300 whitespace-nowrap"
+                        data-target="hotels">
+                        <i data-lucide="bed" class="w-4 h-4"></i> Hotels
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-5 py-3 rounded-full text-sm lg:text-base font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all duration-300 whitespace-nowrap"
+                        data-target="tours">
+                        <i data-lucide="map" class="w-4 h-4"></i> Tours
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-5 py-3 rounded-full text-sm lg:text-base font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all duration-300 whitespace-nowrap"
+                        data-target="transfers">
+                        <i data-lucide="arrow-left-right" class="w-4 h-4"></i> Transfers
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-5 py-3 rounded-full text-sm lg:text-base font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all duration-300 whitespace-nowrap"
+                        data-target="flights">
+                        <i data-lucide="plane" class="w-4 h-4"></i> Flights
+                    </button>
+                </div>
+
+                <!-- Search Forms Container -->
+                <div class="px-2 pb-2 transition-all duration-500 origin-top" id="search-inputs-container">
+
+                    <!-- Packages Form -->
+                    <div class="search-form block" id="packages-form">
+                        <!-- Main Inputs Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-end mb-4">
+                            <!-- Origin -->
+                            <div
+                                class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                <i data-lucide="plane-takeoff"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">From</label>
+                                    <input type="text" id="pkg-origin" placeholder="Origin City"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                </div>
+                            </div>
+                            <!-- Destination -->
+                            <div
+                                class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                <i data-lucide="map-pin"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">To</label>
+                                    <input type="text" id="pkg-dest" placeholder="Destination"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                </div>
+                            </div>
+                            <!-- Dates -->
+                            <div
+                                class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                <i data-lucide="calendar-days"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Dates</label>
+                                    <input type="text" id="pkg-dates" placeholder="Departure - Return"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                </div>
+                            </div>
+                            <!-- Travellers -->
+                            <div
+                                class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                <i data-lucide="users"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Travellers</label>
+                                    <input type="text" id="pkg-travellers" placeholder="2 Travellers, 1 Room" readonly
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light cursor-pointer">
+                                </div>
+                                <!-- Travellers Dropdown -->
+                                <div id="travellers-dropdown"
+                                    class="absolute top-[120%] left-0 w-[280px] bg-white rounded-xl shadow-elegant-xl p-5 hidden z-[60] border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+                                    <!-- Adults -->
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div>
+                                            <span class="block font-bold text-brand-navy text-sm">Adults</span>
+                                            <span class="text-xs text-brand-slate">Ages 12+</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="decrease" data-target="adults"><i data-lucide="minus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                            <span class="font-bold w-4 text-center text-brand-navy"
+                                                id="count-adults">2</span>
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="increase" data-target="adults"><i data-lucide="plus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- Children -->
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div>
+                                            <span class="block font-bold text-brand-navy text-sm">Children</span>
+                                            <span class="text-xs text-brand-slate">Ages 0-11</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="decrease" data-target="children"><i data-lucide="minus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                            <span class="font-bold w-4 text-center text-brand-navy"
+                                                id="count-children">0</span>
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="increase" data-target="children"><i data-lucide="plus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- Rooms -->
+                                    <div class="flex justify-between items-center mb-5">
+                                        <div>
+                                            <span class="block font-bold text-brand-navy text-sm">Rooms</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="decrease" data-target="rooms"><i data-lucide="minus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                            <span class="font-bold w-4 text-center text-brand-navy"
+                                                id="count-rooms">1</span>
+                                            <button type="button"
+                                                class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-brand-navy hover:border-brand-coral hover:text-brand-coral hover:bg-brand-coral/10 transition-colors"
+                                                data-action="increase" data-target="rooms"><i data-lucide="plus"
+                                                    class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- Done Button -->
+                                    <button type="button" id="travellers-done-btn"
+                                        class="w-full bg-brand-coral text-white py-2.5 rounded-xl font-bold text-sm hover:bg-brand-coral-dark shadow-elegant hover:shadow-elegant-lg transition-all transform active:scale-95">Applied</button>
+                                </div>
+                            </div>
+                            <!-- Cabin Class -->
+                            <div
+                                class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                <i data-lucide="armchair"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Cabin
+                                        Class</label>
+                                    <select id="pkg-cabin"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight -ml-1 appearance-none">
+                                        <option>Economy</option>
+                                        <option>Premium Economy</option>
+                                        <option>Business</option>
+                                        <option>First</option>
+                                    </select>
+                                    <i data-lucide="chevron-down"
+                                        class="w-3.5 h-3.5 text-brand-slate absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox Row -->
+                        <div class="flex items-center gap-3 mb-5 px-4 py-2 w-fit transition-all duration-300">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" id="hotel-check"
+                                        class="peer appearance-none w-5 h-5 border-2 border-white/70 rounded-md checked:bg-brand-coral checked:border-brand-coral transition-all duration-200">
+                                    <i data-lucide="check"
+                                        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"></i>
+                                </div>
+                                <span
+                                    class="text-sm text-white/90 font-semibold group-hover:text-white transition-colors select-none">I
+                                    only need a hotel for part of my trip</span>
+                            </label>
+                        </div>
+
+                        <!-- Expanded Hotel Section -->
+                        <div id="expanded-hotel-section" class="hidden transition-all duration-300 mb-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr] gap-3 items-end">
+                                <!-- City/Hotel -->
+                                <div
+                                    class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                    <i data-lucide="bed"
+                                        class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                    <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                        <label
+                                            class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">City
+                                            / Hotel</label>
+                                        <input type="text" id="pkg-ex-city" placeholder="Enter city or hotel name"
+                                            class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                    </div>
+                                </div>
+                                <!-- Check-in -->
+                                <div
+                                    class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                    <i data-lucide="calendar"
+                                        class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                    <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                        <label
+                                            class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Check-in</label>
+                                        <input type="text" id="pkg-ex-checkin" placeholder="Select date"
+                                            class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                    </div>
+                                </div>
+                                <!-- Check-out -->
+                                <div
+                                    class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                                    <i data-lucide="calendar"
+                                        class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                    <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                        <label
+                                            class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Check-out</label>
+                                        <input type="text" id="pkg-ex-checkout" placeholder="Select date"
+                                            class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Button Row -->
+                        <div class="flex flex-col md:flex-row justify-end items-center gap-4">
+                            <button id="pkg-search-btn"
+                                class="btn-primary bg-brand-coral hover:bg-brand-coral-dark text-white h-14 px-10 rounded-xl font-bold text-lg shadow-elegant hover:shadow-elegant-lg transition-all duration-300 flex items-center justify-center gap-2.5 w-full md:w-auto relative overflow-hidden">
+                                <span class="relative z-10">Search Packages</span>
+                                <i data-lucide="briefcase" class="w-5 h-5 relative z-10"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hotels Form -->
+                    <form
+                        class="search-form hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_auto] gap-3 items-end"
+                        id="hotels-form">
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                            <i data-lucide="map-pin"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Destination</label>
+                                <input type="text" id="hotel-dest" placeholder="Where are you going?"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                            <i data-lucide="calendar"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Check-in
+                                    - Check-out</label>
+                                <input type="text" id="hotel-dates" placeholder="Add dates"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center group min-w-0">
+                            <i data-lucide="users"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Guests</label>
+                                <input type="text" id="hotel-guests" placeholder="2 Guests, 1 Room"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <button id="hotel-search-btn"
+                            class="btn-primary bg-brand-coral hover:bg-brand-coral-dark text-white h-14 px-8 rounded-xl font-bold text-lg shadow-elegant transition-all duration-300 flex items-center justify-center gap-2 md:col-span-2 lg:col-span-1 relative overflow-hidden">
+                            <i data-lucide="search" class="w-5 h-5 relative z-10"></i> <span
+                                class="relative z-10">Search</span>
+                        </button>
+                    </form>
+
+                    <!-- Flights Form -->
+                    <form
+                        class="search-form hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_0.8fr_auto] gap-3 items-end"
+                        id="flights-form">
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="plane-takeoff"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">From</label>
+                                <input type="text" id="flight-origin" placeholder="Origin City"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="plane-landing"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">To</label>
+                                <input type="text" id="flight-dest" placeholder="Destination"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="calendar-days"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Dates</label>
+                                <input type="text" id="flight-dates" placeholder="Add dates"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="user"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Travelers</label>
+                                <input type="text" id="flight-travellers" placeholder="1 Passenger"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <button id="flight-search-btn"
+                            class="btn-primary bg-brand-coral hover:bg-brand-coral-dark text-white h-14 px-8 rounded-xl font-bold text-lg shadow-elegant transition-all duration-300 md:col-span-2 lg:col-span-1 relative overflow-hidden">
+                            <span class="relative z-10">Search</span>
+                        </button>
+                    </form>
+
+                    <!-- Tours Form -->
+                    <form class="search-form hidden grid grid-cols-1 md:grid-cols-[2fr_1fr_auto] gap-3 items-end"
+                        id="tours-form">
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="search"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Things
+                                    to do</label>
+                                <input type="text" id="tour-dest" placeholder="Attractions, tours, activities..."
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group">
+                            <i data-lucide="calendar-days"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Dates</label>
+                                <input type="text" id="tour-dates" placeholder="Add dates"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+                        <button id="tour-search-btn"
+                            class="btn-primary bg-brand-coral hover:bg-brand-coral-dark text-white h-14 px-8 rounded-xl font-bold text-lg shadow-elegant transition-all duration-300 relative overflow-hidden">
+                            <span class="relative z-10">Explore</span>
+                        </button>
+                    </form>
+
+                    <!-- Transfers Form -->
+                    <form
+                        class="search-form hidden grid grid-cols-1 md:grid-cols-[1.5fr_auto_1.5fr_1fr_1fr_auto] gap-3 items-end"
+                        id="transfers-form">
+
+                        <!-- Location Inputs Container -->
+                        <div class="contents" id="transfer-locations-container">
+                            <!-- Input 1 (Left) -->
+                            <div class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group order-1"
+                                id="transfer-input-group-1">
+                                <i data-lucide="plane"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate"
+                                        id="transfer-label-1">Airport</label>
+                                    <input type="text" id="transfer-input-1" placeholder="Select Airport"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                </div>
+                            </div>
+
+                            <!-- Swap Button -->
+                            <div class="flex items-center justify-center h-14 order-2">
+                                <button type="button" id="transfer-swap-btn"
+                                    class="w-10 h-10 rounded-full bg-white border border-gray-200 hover:border-brand-coral hover:text-brand-coral shadow-sm flex items-center justify-center transition-all duration-300 group">
+                                    <i data-lucide="arrow-left-right"
+                                        class="w-4 h-4 text-brand-slate group-hover:text-brand-coral transition-colors"></i>
+                                </button>
+                            </div>
+
+                            <!-- Input 2 (Right) -->
+                            <div class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group order-3"
+                                id="transfer-input-group-2">
+                                <i data-lucide="building-2"
+                                    class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                                <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                    <label
+                                        class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate"
+                                        id="transfer-label-2">Hotel / Destination</label>
+                                    <input type="text" id="transfer-input-2" placeholder="Select Hotel or City"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Date -->
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group order-4">
+                            <i data-lucide="calendar"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Pickup
+                                    Date</label>
+                                <input type="text" id="transfer-date" placeholder="Date"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+
+                        <!-- Time -->
+                        <div
+                            class="input-container bg-white hover:bg-white h-14 px-4 rounded-xl border-2 border-white/50 focus-within:border-brand-gold focus-within:shadow-elegant transition-all duration-300 relative flex items-center min-w-0 group order-5">
+                            <i data-lucide="clock"
+                                class="input-icon w-5 h-5 text-brand-slate flex-shrink-0 group-focus-within:text-brand-gold transition-colors"></i>
+                            <div class="ml-3 w-full min-w-0 flex flex-col justify-center h-full">
+                                <label
+                                    class="block text-[10px] uppercase tracking-wider text-brand-slate font-bold mb-0 leading-none truncate">Time</label>
+                                <input type="text" id="transfer-time" placeholder="Time"
+                                    class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm leading-tight truncate placeholder:text-brand-slate-light">
+                            </div>
+                        </div>
+
+                        <button id="transfer-search-btn"
+                            class="btn-primary bg-brand-coral hover:bg-brand-coral-dark text-white h-14 px-8 rounded-xl font-bold text-lg shadow-elegant transition-all duration-300 md:col-span-1 relative overflow-hidden order-6">
+                            <span class="relative z-10">Search</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TOP DESTINATIONS ================= -->
+    <section class="py-16 lg:py-24 container mx-auto px-6 lg:px-12">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4 accent-line">Top
+                    Destinations</h2>
+                <p class="text-brand-slate text-lg lg:text-xl font-light">Curated locations for your next escape.</p>
+            </div>
+            <a href="#"
+                class="hidden md:flex items-center gap-2 text-brand-coral font-semibold hover:gap-3 transition-all duration-300 hover:text-brand-coral-dark">
+                See all <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6">
+            <!-- Card 1 -->
+            <a href="#"
+                class="card-hover group relative h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800" alt="Bali"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-6 lg:p-8 text-white">
+                    <h3 class="font-display text-2xl lg:text-3xl font-bold mb-2">Bali, Indonesia</h3>
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold border border-white/30">
+                        Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </span>
+                </div>
+            </a>
+            <!-- Card 2 -->
+            <a href="#"
+                class="card-hover group relative h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1602940659805-770d1b3b9911?q=80&w=800" alt="Santorini"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-6 lg:p-8 text-white">
+                    <h3 class="font-display text-2xl lg:text-3xl font-bold mb-2">Santorini, Greece</h3>
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold border border-white/30">
+                        Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </span>
+                </div>
+            </a>
+            <!-- Card 3 -->
+            <a href="#"
+                class="card-hover group relative h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800" alt="Tokyo"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-6 lg:p-8 text-white">
+                    <h3 class="font-display text-2xl lg:text-3xl font-bold mb-2">Tokyo, Japan</h3>
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold border border-white/30">
+                        Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </span>
+                </div>
+            </a>
+            <!-- Card 4 -->
+            <a href="#"
+                class="card-hover group relative h-[300px] lg:h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500 hidden lg:block">
+                <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=800" alt="Norway"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-6 lg:p-8 text-white">
+                    <h3 class="font-display text-2xl lg:text-3xl font-bold mb-2">Tromsø, Norway</h3>
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold border border-white/30">
+                        Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= SPECIAL OFFERS & DEALS ================= -->
+    <section class="py-16 lg:py-20 bg-brand-cream overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="mb-10">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4 accent-line">Special Offers
+                    & Deals</h2>
+                <p class="text-brand-slate text-lg lg:text-xl font-light">Limited-time discounts on premium stays.</p>
+            </div>
+
+            <!-- Horizontal Carousel -->
+            <div
+                class="flex overflow-x-auto snap-x snap-mandatory gap-6 lg:gap-8 -mx-6 lg:-mx-12 px-6 lg:px-12 pb-8 no-scrollbar">
+                <!-- Deal Card 1 -->
+                <div
+                    class="flex-shrink-0 snap-start w-[320px] lg:w-[420px] bg-white rounded-3xl shadow-elegant overflow-hidden group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-5 left-5 bg-brand-coral text-white text-sm font-bold px-4 py-2 rounded-full shadow-elegant">
+                            30% OFF
+                        </div>
+                    </div>
+                    <div class="p-6 lg:p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">The Royal Sands</h3>
+                            <div class="flex items-center text-sm text-brand-slate gap-1">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 4.9
+                            </div>
+                        </div>
+                        <p class="text-brand-slate flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i> Cancun, Mexico
+                        </p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-sm text-brand-slate line-through mb-1">$450/night</p>
+                                <p class="font-display text-3xl font-bold text-brand-navy">$315<span
+                                        class="text-base font-normal text-brand-slate">/night</span></p>
+                            </div>
+                            <button
+                                class="bg-brand-navy text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-gold transition-all duration-300 shadow-elegant hover:shadow-elegant-lg hover:-translate-y-1">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 2 -->
+                <div
+                    class="flex-shrink-0 snap-start w-[320px] lg:w-[420px] bg-white rounded-3xl shadow-elegant overflow-hidden group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-5 left-5 bg-brand-gold text-white text-sm font-bold px-4 py-2 rounded-full shadow-elegant">
+                            Limited Time
+                        </div>
+                    </div>
+                    <div class="p-6 lg:p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">Blue Lagoon Resort</h3>
+                            <div class="flex items-center text-sm text-brand-slate gap-1">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 4.8
+                            </div>
+                        </div>
+                        <p class="text-brand-slate flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i> Iceland
+                        </p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-sm text-brand-slate mb-1">Starting from</p>
+                                <p class="font-display text-3xl font-bold text-brand-navy">$299<span
+                                        class="text-base font-normal text-brand-slate">/person</span></p>
+                            </div>
+                            <button
+                                class="bg-brand-navy text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-gold transition-all duration-300 shadow-elegant hover:shadow-elegant-lg hover:-translate-y-1">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 3 -->
+                <div
+                    class="flex-shrink-0 snap-start w-[320px] lg:w-[420px] bg-white rounded-3xl shadow-elegant overflow-hidden group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-5 left-5 bg-brand-coral text-white text-sm font-bold px-4 py-2 rounded-full shadow-elegant">
+                            25% OFF
+                        </div>
+                    </div>
+                    <div class="p-6 lg:p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">Bordeaux Villas</h3>
+                            <div class="flex items-center text-sm text-brand-slate gap-1">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 4.9
+                            </div>
+                        </div>
+                        <p class="text-brand-slate flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i> France
+                        </p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-sm text-brand-slate line-through mb-1">$600/night</p>
+                                <p class="font-display text-3xl font-bold text-brand-navy">$450<span
+                                        class="text-base font-normal text-brand-slate">/night</span></p>
+                            </div>
+                            <button
+                                class="bg-brand-navy text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-gold transition-all duration-300 shadow-elegant hover:shadow-elegant-lg hover:-translate-y-1">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacer -->
+                <div class="w-1 flex-shrink-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= WHY BOOK WITH US ================= -->
+    <section class="py-16 lg:py-24 container mx-auto px-6 lg:px-12">
+        <div class="text-center mb-12">
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4">Why Book With EasyGDS?</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 px-4 lg:px-16">
+            <!-- Benefit 1 -->
+            <div class="flex flex-col items-center text-center md:items-start md:text-left group">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-blue-50 to-blue-100 text-brand-gold rounded-2xl flex items-center justify-center mb-6 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-300 group-hover:scale-110">
+                    <i data-lucide="shield-check" class="w-9 h-9"></i>
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-4 font-display">Best Price Guarantee</h3>
+                <p class="text-brand-slate leading-relaxed">Find a lower price? We'll match it and give you credit for
+                    your next trip.</p>
+            </div>
+            <!-- Benefit 2 -->
+            <div class="flex flex-col items-center text-center md:items-start md:text-left group">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-red-50 to-red-100 text-brand-coral rounded-2xl flex items-center justify-center mb-6 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-300 group-hover:scale-110">
+                    <i data-lucide="headset" class="w-9 h-9"></i>
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-4 font-display">24/7 Global Support</h3>
+                <p class="text-brand-slate leading-relaxed">Our team is available anywhere, anytime to help with
+                    unexpected changes.</p>
+            </div>
+            <!-- Benefit 3 -->
+            <div class="flex flex-col items-center text-center md:items-start md:text-left group">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-blue-50 to-blue-100 text-brand-gold rounded-2xl flex items-center justify-center mb-6 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-300 group-hover:scale-110">
+                    <i data-lucide="calendar-check-2" class="w-9 h-9"></i>
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-4 font-display">Flexible Cancellation</h3>
+                <p class="text-brand-slate leading-relaxed">Change of plans? Most bookings offer free cancellation up to
+                    24h before.</p>
+            </div>
+            <!-- Benefit 4 -->
+            <div class="flex flex-col items-center text-center md:items-start md:text-left group">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-red-50 to-red-100 text-brand-coral rounded-2xl flex items-center justify-center mb-6 shadow-elegant group-hover:shadow-elegant-lg transition-all duration-300 group-hover:scale-110">
+                    <i data-lucide="gem" class="w-9 h-9"></i>
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-4 font-display">Handpicked Quality</h3>
+                <p class="text-brand-slate leading-relaxed">We verify every hotel and tour to ensure premium quality
+                    standards.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= POPULAR PACKAGES ================= -->
+    <section class="py-16 lg:py-20">
+        <div class="container mx-auto px-6 lg:px-12 mb-10 flex justify-between items-end">
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy accent-line">Popular Holiday Packages
+            </h2>
+            <a href="#"
+                class="hidden md:flex items-center gap-2 text-brand-coral font-semibold hover:gap-3 transition-all duration-300 hover:text-brand-coral-dark">
+                View all packages <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <div class="flex flex-col gap-6 lg:gap-8">
+            <!-- Package 1 -->
+            <div class="relative h-[450px] lg:h-[550px] w-full parallax-bg group overflow-hidden rounded-3xl"
+                style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073');">
+                <div class="absolute inset-0 bg-black/40 transition-all duration-500 group-hover:bg-black/50"></div>
+                <div class="absolute inset-0 container mx-auto px-6 lg:px-12 flex items-center">
+                    <div
+                        class="bg-white/95 backdrop-blur-sm p-8 lg:p-12 rounded-3xl max-w-xl shadow-elegant-xl transform transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-elegant-xl">
+                        <span
+                            class="text-brand-gold font-bold tracking-wider text-sm uppercase mb-4 block">All-Inclusive
+                            7 Nights</span>
+                        <h3 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-5">Ultimate Maldives
+                            Escape</h3>
+                        <p class="text-brand-slate mb-8 text-lg">Flights, overwater villa, all meals, and spa treatments
+                            included.</p>
+                        <div class="flex items-center justify-between">
+                            <p class="font-display text-4xl font-bold text-brand-navy">$2,499 <span
+                                    class="text-base font-normal text-brand-slate">pp</span></p>
+                            <button
+                                class="btn-primary bg-brand-coral text-white px-8 py-4 rounded-full font-bold shadow-elegant hover:shadow-elegant-lg hover:bg-brand-coral-dark transition-all duration-300 relative overflow-hidden">
+                                <span class="relative z-10">Explore Package</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2 -->
+            <div class="relative h-[450px] lg:h-[550px] w-full parallax-bg group overflow-hidden rounded-3xl"
+                style="background-image: url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2070');">
+                <div class="absolute inset-0 bg-black/40 transition-all duration-500 group-hover:bg-black/50"></div>
+                <div class="absolute inset-0 container mx-auto px-6 lg:px-12 flex items-center justify-end">
+                    <div
+                        class="bg-white/95 backdrop-blur-sm p-8 lg:p-12 rounded-3xl max-w-xl shadow-elegant-xl transform transition-all duration-500 group-hover:-translate-y-3 group-hover:shadow-elegant-xl">
+                        <span class="text-brand-gold font-bold tracking-wider text-sm uppercase mb-4 block">Adventure &
+                            Culture 10 Days</span>
+                        <h3 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-5">Patagonia & Andes
+                            Trek</h3>
+                        <p class="text-brand-slate mb-8 text-lg">Guided hikes, premium lodges, domestic flights, and
+                            cultural tours.</p>
+                        <div class="flex items-center justify-between">
+                            <p class="font-display text-4xl font-bold text-brand-navy">$3,150 <span
+                                    class="text-base font-normal text-brand-slate">pp</span></p>
+                            <button
+                                class="btn-primary bg-brand-coral text-white px-8 py-4 rounded-full font-bold shadow-elegant hover:shadow-elegant-lg hover:bg-brand-coral-dark transition-all duration-300 relative overflow-hidden">
+                                <span class="relative z-10">Explore Package</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRENDING ACTIVITIES ================= -->
+    <section class="py-16 lg:py-24 container mx-auto px-6 lg:px-12 bg-brand-cream rounded-[48px] my-12">
+        <div class="text-center mb-12">
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4">Trending Activities & Tours
+            </h2>
+            <p class="text-brand-slate text-lg lg:text-xl font-light">Unforgettable experiences loved by travelers.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <!-- Activity 1 -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d993845?q=80&w=800"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute bottom-5 left-5 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-elegant">
+                        <i data-lucide="clock" class="w-4 h-4"></i> 4 Hours
+                    </div>
+                </div>
+                <div class="p-6 lg:p-8">
+                    <h3 class="font-display text-2xl font-bold mb-3 text-brand-navy">Rome: Colosseum & Forum
+                        Skip-the-Line Tour</h3>
+                    <div class="flex items-center gap-4 text-brand-slate text-sm mb-6">
+                        <span class="flex items-center gap-1.5">
+                            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 4.9 (2.5k reviews)
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center pt-5 border-t-2 border-gray-100">
+                        <p class="font-display text-2xl font-bold text-brand-navy">From $65</p>
+                        <a href="#"
+                            class="text-brand-coral font-semibold hover:text-brand-coral-dark transition-colors hover:underline">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 2 -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1523569665260-29935d122827?q=80&w=800"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute bottom-5 left-5 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-elegant">
+                        <i data-lucide="clock" class="w-4 h-4"></i> Full Day
+                    </div>
+                </div>
+                <div class="p-6 lg:p-8">
+                    <h3 class="font-display text-2xl font-bold mb-3 text-brand-navy">Dubai: Desert Safari, Camel Ride &
+                        BBQ Dinner</h3>
+                    <div class="flex items-center gap-4 text-brand-slate text-sm mb-6">
+                        <span class="flex items-center gap-1.5">
+                            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 4.8 (1.2k reviews)
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center pt-5 border-t-2 border-gray-100">
+                        <p class="font-display text-2xl font-bold text-brand-navy">From $89</p>
+                        <a href="#"
+                            class="text-brand-coral font-semibold hover:text-brand-coral-dark transition-colors hover:underline">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity 3 -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 card-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?q=80&w=800"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute bottom-5 left-5 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-elegant">
+                        <i data-lucide="clock" class="w-4 h-4"></i> 3 Hours
+                    </div>
+                </div>
+                <div class="p-6 lg:p-8">
+                    <h3 class="font-display text-2xl font-bold mb-3 text-brand-navy">Kyoto: Authentic Tea Ceremony &
+                        Garden Visit</h3>
+                    <div class="flex items-center gap-4 text-brand-slate text-sm mb-6">
+                        <span class="flex items-center gap-1.5">
+                            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-current"></i> 5.0 (450 reviews)
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center pt-5 border-t-2 border-gray-100">
+                        <p class="font-display text-2xl font-bold text-brand-navy">From $55</p>
+                        <a href="#"
+                            class="text-brand-coral font-semibold hover:text-brand-coral-dark transition-colors hover:underline">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRAVEL INSPIRATION ================= -->
+    <section class="py-16 lg:py-24 container mx-auto px-6 lg:px-12">
+        <div class="flex justify-between items-end mb-10">
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy accent-line">Travel Inspiration</h2>
+            <a href="#"
+                class="hidden md:flex items-center gap-2 text-brand-coral font-semibold hover:gap-3 transition-all duration-300 hover:text-brand-coral-dark">
+                Read the blog <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            <!-- Featured Article -->
+            <a href="#"
+                class="relative h-[450px] lg:h-full rounded-3xl overflow-hidden group shadow-elegant hover:shadow-elegant-xl transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 p-8 lg:p-12 text-white">
+                    <span
+                        class="bg-brand-gold text-white text-xs font-bold px-4 py-2 rounded-full uppercase mb-5 inline-block shadow-elegant">Guide</span>
+                    <h3 class="font-display text-3xl lg:text-4xl font-bold mb-5 leading-tight">The 10 Most Underrated
+                        European Cities to Visit in 2025</h3>
+                    <p class="text-white/90 hidden lg:block mb-6 text-lg">Escape the crowds and discover hidden gems
+                        that offer authentic experiences and stunning architecture.</p>
+                    <span class="font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">Read Article <i
+                            data-lucide="arrow-right-circle" class="w-6 h-6"></i></span>
+                </div>
+            </a>
+
+            <!-- Secondary Articles -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 h-full">
+                <!-- Sub Article 1 -->
+                <a href="#"
+                    class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 flex flex-col card-hover">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 lg:p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-brand-coral text-xs font-bold uppercase mb-3 block">Tips</span>
+                            <h4 class="font-display text-xl lg:text-2xl font-bold mb-4">How to Pack Light for a 2-Week
+                                Trip</h4>
+                        </div>
+                        <p
+                            class="text-brand-coral font-semibold text-sm mt-4 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Read more <i data-lucide="chevron-right" class="w-4 h-4 inline"></i>
+                        </p>
+                    </div>
+                </a>
+                <!-- Sub Article 2 -->
+                <a href="#"
+                    class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 flex flex-col card-hover">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 lg:p-8 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-brand-coral text-xs font-bold uppercase mb-3 block">Inspiration</span>
+                            <h4 class="font-display text-xl lg:text-2xl font-bold mb-4">Solo Travel: Why You Should Try
+                                It Once</h4>
+                        </div>
+                        <p
+                            class="text-brand-coral font-semibold text-sm mt-4 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Read more <i data-lucide="chevron-right" class="w-4 h-4 inline"></i>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRUST SIGNALS ================= -->
+    <section class="py-16 bg-brand-cream border-t-2 border-gray-200">
+        <div
+            class="container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row justify-between items-center gap-10 text-center lg:text-left">
+            <div>
+                <h4 class="font-display text-3xl font-bold text-brand-navy mb-3">Trusted by 1 Million+ Travelers</h4>
+                <div class="flex justify-center lg:justify-start items-center gap-3 text-brand-slate">
+                    <div class="flex">
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                    </div>
+                    <span class="font-semibold">4.9/5 Average Rating</span>
+                </div>
+            </div>
+            <div
+                class="flex flex-wrap justify-center items-center gap-8 opacity-70 hover:opacity-100 transition-opacity duration-300">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png"
+                    class="h-9 w-auto grayscale hover:grayscale-0 transition-all" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png"
+                    class="h-9 w-auto grayscale hover:grayscale-0 transition-all" alt="Mastercard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"
+                    class="h-9 w-auto grayscale hover:grayscale-0 transition-all" alt="PayPal">
+                <div class="flex items-center gap-2 border-l-2 pl-8 ml-2 border-gray-300">
+                    <i data-lucide="lock-keyhole" class="w-5 h-5 text-brand-gold"></i>
+                    <span class="text-sm font-bold text-brand-slate">SSL Secure Payment</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-brand-navy text-white py-16">
+        <div class="container mx-auto px-6 lg:px-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-10">
+            <!-- Brand Column -->
+            <div class="col-span-2 lg:col-span-2">
+                <a href="#" class="flex items-center gap-3 mb-6">
+                    <img src="https://waddat.com/easygds_logo_transparent.png" alt="EasyGDS Logo"
+                        class="h-10 w-auto brightness-0 invert">
+                </a>
+                <p class="mb-8 max-w-sm leading-relaxed text-white/80 text-base">Curating premium travel experiences for
+                    the modern explorer. Discover the world with confidence and style.</p>
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-coral hover:text-white transition-all duration-300 text-white shadow-elegant">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-coral hover:text-white transition-all duration-300 text-white shadow-elegant">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-coral hover:text-white transition-all duration-300 text-white shadow-elegant">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Company Column -->
+            <div>
+                <h5 class="text-white font-bold mb-6 text-lg">Company</h5>
+                <ul class="space-y-4">
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">About Us</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Careers</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Press</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Support Column -->
+            <div>
+                <h5 class="text-white font-bold mb-6 text-lg">Support</h5>
+                <ul class="space-y-4">
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Help Center</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Contact Us</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">FAQs</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Terms of Service</a>
+                    </li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Privacy Policy</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Destinations Column -->
+            <div>
+                <h5 class="text-white font-bold mb-6 text-lg">Popular</h5>
+                <ul class="space-y-4">
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Maldives</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Santorini</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Tokyo</a></li>
+                    <li><a href="#" class="text-white/70 hover:text-brand-gold transition-colors">Bali</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div
+            class="container mx-auto px-6 lg:px-12 pt-10 border-t-2 border-white/10 text-sm flex flex-col md:flex-row justify-between items-center gap-4 text-white/70">
+            <p>© 2025 EasyGDS. All rights reserved.</p>
+            <div class="flex gap-8">
+                <div class="flex items-center gap-2 cursor-pointer hover:text-brand-gold transition-colors">
+                    <i data-lucide="globe" class="w-4 h-4"></i> English (US)
+                </div>
+                <div class="flex items-center gap-2 cursor-pointer hover:text-brand-gold transition-colors">
+                    <span>$</span> USD
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add 'loaded' class for animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+
+            // --- Hero Carousel ---
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            const slideInterval = setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 6000);
+
+            // --- Mobile Menu Toggle ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isMenuOpen = false;
+
+            mobileBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileBtn.innerHTML = '<i data-lucide="x" class="w-7 h-7"></i>';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileBtn.innerHTML = '<i data-lucide="menu" class="w-7 h-7"></i>';
+                    document.body.style.overflow = '';
+                }
+                lucide.createIcons();
+            });
+
+            // --- Sticky Search Logic ---
+            const header = document.getElementById('main-header');
+            const searchContainerWrapper = document.getElementById('search-container-wrapper');
+            const searchPanel = document.getElementById('search-panel');
+            const searchInputsContainer = document.getElementById('search-inputs-container');
+            const searchTabsContainer = document.getElementById('search-tabs-container');
+            const headerHeight = header.offsetHeight;
+            let isSticky = false;
+
+            window.addEventListener('scroll', () => {
+                const triggerPoint = searchContainerWrapper.offsetTop - headerHeight;
+
+                if (window.scrollY > triggerPoint) {
+                    if (!isSticky) {
+                        isSticky = true;
+                        searchPanel.classList.add('is-sticky');
+
+                        searchPanel.classList.remove('max-w-7xl', 'rounded-3xl', 'shadow-elegant-xl', 'bg-white/25', 'backdrop-blur-xl', 'border-white/30', 'p-4', 'lg:p-6');
+                        searchPanel.classList.add('max-w-full', 'rounded-b-2xl', 'shadow-elegant-lg', 'border-t-2', 'border-gray-200', 'bg-white', 'py-1', 'px-4');
+                        searchContainerWrapper.classList.remove('px-4', 'lg:px-6', 'pb-6');
+
+                        searchInputsContainer.classList.add('hidden');
+                        searchInputsContainer.classList.remove('px-2', 'pb-2');
+
+                        searchTabsContainer.classList.remove('mb-6');
+                        searchTabsContainer.classList.add('mb-0');
+
+                        const tabs = searchTabsContainer.querySelectorAll('.search-tab');
+                        tabs.forEach(tab => {
+                            tab.classList.remove('py-3');
+                            tab.classList.add('py-2');
+
+                            if (!tab.classList.contains('active')) {
+                                tab.classList.remove('text-white/90', 'hover:text-white', 'hover:bg-white/15');
+                                tab.classList.add('text-brand-slate', 'hover:text-brand-navy', 'hover:bg-gray-100');
+                            }
+                        });
+                    }
+                } else {
+                    if (isSticky) {
+                        isSticky = false;
+                        searchPanel.classList.remove('is-sticky');
+
+                        searchPanel.classList.add('max-w-7xl', 'rounded-3xl', 'shadow-elegant-xl', 'bg-white/25', 'backdrop-blur-xl', 'border-white/30', 'p-4', 'lg:p-6');
+                        searchPanel.classList.remove('max-w-full', 'rounded-b-2xl', 'shadow-elegant-lg', 'border-t-2', 'border-gray-200', 'bg-white', 'py-1', 'px-4');
+                        searchContainerWrapper.classList.add('px-4', 'lg:px-6', 'pb-6');
+
+                        searchInputsContainer.classList.remove('hidden');
+                        searchInputsContainer.classList.add('px-2', 'pb-2');
+
+                        searchTabsContainer.classList.add('mb-6');
+                        searchTabsContainer.classList.remove('mb-0');
+
+                        const tabs = searchTabsContainer.querySelectorAll('.search-tab');
+                        tabs.forEach(tab => {
+                            tab.classList.add('py-3');
+                            tab.classList.remove('py-2');
+
+                            if (!tab.classList.contains('active')) {
+                                tab.classList.add('text-white/90', 'hover:text-white', 'hover:bg-white/15');
+                                tab.classList.remove('text-brand-slate', 'hover:text-brand-navy', 'hover:bg-gray-100');
+                            }
+                        });
+                    }
+                }
+            });
+
+            // Expand on tab click when sticky
+            searchTabsContainer.addEventListener('click', (e) => {
+                const clickedTab = e.target.closest('.search-tab');
+                if (clickedTab && isSticky) {
+                    searchInputsContainer.classList.remove('hidden');
+                    searchPanel.classList.remove('py-1');
+                    searchPanel.classList.add('py-4');
+                }
+            });
+
+            // Collapse on outside click when sticky
+            document.addEventListener('click', (e) => {
+                if (isSticky) {
+                    const isClickInside = searchPanel.contains(e.target);
+                    if (!isClickInside) {
+                        searchInputsContainer.classList.add('hidden');
+                        searchPanel.classList.add('py-1');
+                        searchPanel.classList.remove('py-4');
+                    }
+                }
+            });
+
+
+
+            // --- Search Tab Switching ---
+            const tabs = document.querySelectorAll('.search-tab');
+            const forms = document.querySelectorAll('.search-form');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.target;
+
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-white', 'text-brand-coral', 'shadow-elegant');
+
+                        const icon = t.querySelector('svg') || t.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('text-brand-coral');
+                        }
+
+                        if (isSticky) {
+                            t.classList.add('text-brand-slate', 'hover:text-brand-navy', 'hover:bg-gray-100');
+                            t.classList.remove('text-white/90', 'hover:text-white', 'hover:bg-white/15');
+                        } else {
+                            t.classList.add('text-white/90', 'hover:text-white', 'hover:bg-white/15');
+                            t.classList.remove('text-brand-slate', 'hover:text-brand-navy', 'hover:bg-gray-100');
+                        }
+                    });
+
+                    tab.classList.add('active', 'bg-white', 'text-brand-coral', 'shadow-elegant');
+                    tab.classList.remove('text-white/90', 'text-brand-slate', 'hover:bg-white/15', 'hover:bg-gray-100');
+
+                    const activeIcon = tab.querySelector('svg') || tab.querySelector('i');
+                    if (activeIcon) {
+                        activeIcon.classList.add('text-brand-coral');
+                    }
+
+                    forms.forEach(form => form.classList.add('hidden'));
+                    const targetForm = document.getElementById(`${target}-form`);
+                    if (targetForm) targetForm.classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+    <script src="custom_packages_form_v6.js"></script>
+</body>
+
+</html>

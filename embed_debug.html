@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGDS - Embed Debug</title>
+</head>
+
+<body>
+    <h1>EasyGDS Embed Debugger</h1>
+    <div id="debug-log"
+        style="border: 2px solid red; padding: 10px; margin-bottom: 20px; max-height: 200px; overflow: auto; background: #f0f0f0;">
+        <h3>Network Log:</h3>
+    </div>
+
+    <script>
+        // Intercept Fetch
+        const originalFetch = window.fetch;
+        window.fetch = async function (url, options) {
+            log('FETCH: ' + url);
+            return originalFetch.apply(this, arguments);
+        };
+
+        // Intercept XHR
+        const originalXhrOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+            log('XHR: ' + url);
+            return originalXhrOpen.apply(this, arguments);
+        };
+
+        function log(msg) {
+            const el = document.getElementById('debug-log');
+            const p = document.createElement('div');
+            p.textContent = msg;
+            p.style.borderBottom = "1px solid #ccc";
+            el.appendChild(p);
+            console.log("DEBUG_INTERCEPT: " + msg);
+        }
+    </script>
+
+    <div>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script defer="defer" src="https://ddlmmngmp2n1i.cloudfront.net/cms/production/embed/app.js"></script>
+
+        <egs-cms mode="embed" group="B2C" node-id="18aff99919af42bc9e2a8ec567f1e6a1" language-code="en-US"
+            currency-code="" partner-id="" flight-pnr="" access-token="" template-id=""></egs-cms>
+
+    </div>
+</body>
+
+</html>

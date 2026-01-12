@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MH Holidays - Flight + Hotel to Maldives</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "Roboto", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: "#0D4689",
+                            light: "#2B6CB0",
+                            dark: "#082F5D",
+                        },
+                        secondary: "#C7EAFB",
+                        background: {
+                            light: "#F3F4F6",
+                            dark: "#0F172A",
+                        },
+                        surface: {
+                            light: "#FFFFFF",
+                            dark: "#1E293B",
+                        },
+                        text: {
+                            main: "#1F2937",
+                            muted: "#6B7280",
+                            light: "#F9FAFB",
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-icons {
+            vertical-align: middle;
+            font-size: 1.25rem;
+        }
+
+        .image-carousel {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .image-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .image-carousel-item {
+            scroll-snap-align: start;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-sans text-text-main dark:text-text-light antialiased selection:bg-primary selection:text-white">
+
+    <!-- Header -->
+    <header class="bg-surface-light dark:bg-surface-dark shadow-soft sticky top-0 z-50 transition-colors duration-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <a href="#" class="flex items-center gap-3 group">
+                    <img alt="Malaysia Airlines logo" class="h-8 w-auto transition-transform group-hover:scale-105"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0" />
+                    <span class="text-xl font-bold text-primary dark:text-white tracking-tight">MHholidays</span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button
+                    class="bg-secondary/20 text-primary-dark hover:bg-secondary/40 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold transition-all duration-200">
+                    <span class="material-icons text-lg">smart_toy</span>
+                    <span>AI Agent</span>
+                </button>
+                <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2"></div>
+                <nav class="flex items-center gap-2">
+                    <a class="p-2 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        href="#" aria-label="Notifications">
+                        <span class="material-icons">notifications</span>
+                    </a>
+                    <a class="p-2 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        href="#" aria-label="Account">
+                        <span class="material-icons">person</span>
+                    </a>
+                    <a class="p-2 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        href="#" aria-label="Cart">
+                        <span class="material-icons">shopping_cart</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 max-w-7xl">
+
+        <!-- Search Summary Card -->
+        <div
+            class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card p-1 mb-8 border border-gray-100 dark:border-gray-700">
+            <div class="flex flex-col lg:flex-row items-stretch">
+                <!-- Trip Details -->
+                <div class="flex-grow p-4 lg:p-5 flex flex-col justify-center">
+                    <div
+                        class="flex flex-wrap items-center gap-y-2 gap-x-4 text-sm text-gray-600 dark:text-gray-300 mb-4">
+                        <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                            <span class="material-icons text-primary text-lg">flight_takeoff</span>
+                            <span class="font-medium text-gray-900 dark:text-white">Kuala Lumpur (KUL)</span>
+                            <span class="material-icons text-gray-400 text-sm">arrow_forward</span>
+                            <span class="font-medium text-gray-900 dark:text-white">Male (MLE)</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                            <span class="material-icons text-primary text-lg">date_range</span>
+                            <span class="font-medium text-gray-900 dark:text-white">13 Nov - 17 Nov</span>
+                            <span class="text-xs text-gray-500">(4 nights)</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg">
+                            <span class="material-icons text-primary text-lg">group</span>
+                            <span class="font-medium text-gray-900 dark:text-white">2 travellers, 1 room</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+                        <!-- Connecting line for desktop -->
+                        <div
+                            class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-100 dark:bg-gray-700 -translate-x-1/2">
+                        </div>
+
+                        <!-- Outbound -->
+                        <div
+                            class="flex items-start gap-3 group cursor-pointer p-2 -ml-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                            <div
+                                class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 text-primary">
+                                <span class="material-icons text-lg rotate-90">flight</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-xs font-bold text-primary uppercase tracking-wide mb-0.5">
+                                            Outbound</p>
+                                        <p class="font-semibold text-gray-900 dark:text-white text-sm">10:10 - 11:35</p>
+                                        <p class="text-xs text-gray-500">MH123 • 4h 25m • Non-stop</p>
+                                    </div>
+                                    <span
+                                        class="material-icons text-gray-400 group-hover:text-primary transition-colors text-lg">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Return -->
+                        <div
+                            class="flex items-start gap-3 group cursor-pointer p-2 -ml-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                            <div
+                                class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 text-primary">
+                                <span class="material-icons text-lg -rotate-90">flight</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-xs font-bold text-primary uppercase tracking-wide mb-0.5">Return
+                                        </p>
+                                        <p class="font-semibold text-gray-900 dark:text-white text-sm">12:35 - 20:15</p>
+                                        <p class="text-xs text-gray-500">MH124 • 4h 40m • Non-stop</p>
+                                    </div>
+                                    <span
+                                        class="material-icons text-gray-400 group-hover:text-primary transition-colors text-lg">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modify Button Area (Compact) -->
+                <div
+                    class="lg:w-40 bg-gray-50 dark:bg-gray-800/50 p-4 flex items-center justify-center border-t lg:border-t-0 lg:border-l border-gray-100 dark:border-gray-700 rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none">
+                    <button
+                        class="w-full bg-white dark:bg-surface-dark text-primary border border-gray-200 dark:border-gray-600 hover:border-primary hover:text-primary-dark px-4 py-2 rounded-lg font-bold shadow-sm hover:shadow-md transition-all duration-200 text-xs flex items-center justify-center gap-1.5">
+                        <span class="material-icons text-base">tune</span>
+                        Modify
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters & Sort -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Flight + Hotel
+                    to Maldives</h1>
+                <div class="flex items-center gap-2 mt-1">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">149 results found</p>
+                    <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+                    <div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm font-medium">
+                        <span class="material-icons text-sm">check_circle</span>
+                        <span>ATOL protected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-gray-500">Sort by:</span>
+                <button class="flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-dark">
+                    Recommended <span class="material-icons text-lg">expand_more</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex flex-wrap items-center gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            <button
+                class="bg-primary text-white px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium shadow-sm hover:bg-primary-dark transition-colors whitespace-nowrap">
+                Budget <span class="material-icons text-sm">expand_more</span>
+            </button>
+            <button
+                class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all whitespace-nowrap">
+                Property type <span class="material-icons text-sm">expand_more</span>
+            </button>
+            <button
+                class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all whitespace-nowrap">
+                Stars <span class="material-icons text-sm">expand_more</span>
+            </button>
+            <button
+                class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all whitespace-nowrap">
+                Guest rating <span class="material-icons text-sm">expand_more</span>
+            </button>
+            <button
+                class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium hover:border-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all whitespace-nowrap">
+                Meal plan <span class="material-icons text-sm">expand_more</span>
+            </button>
+            <div class="w-px h-8 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+            <button class="text-primary hover:text-primary-dark font-medium text-sm px-2 whitespace-nowrap">All
+                filters</button>
+            <button
+                class="ml-auto flex items-center gap-2 text-primary hover:text-primary-dark font-medium text-sm px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors whitespace-nowrap">
+                <span class="material-icons">map</span> Show map
+            </button>
+        </div>
+
+        <!-- Horizontal Top Recommendations -->
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Top Recommendations</h2>
+        <div
+            class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 mb-6 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
+
+            <!-- Card 1: Cinnamon Dhonveli -->
+            <div
+                class="min-w-[85%] md:min-w-[400px] snap-center bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                <div class="relative h-48 overflow-hidden">
+                    <img alt="Ocean villa" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0rw0noDZs_ppQdGkbZJm31tiG67K-9kI0-ghQF7lMHDP7l99G-XYQhzGiU_b8bVcnNxTvF_hi6s8X6gyO2Ncjggsf8kYLsBXoubgEimt9iCDh8SUJszXu7xI6sHR7xhoDhj4nGDNX9cZmYOt3UUUE2uR3LGMLWAA7OD-Y5NkTv6yCovS8kAwTRlg9RavDvz8VjmlVgsLmplPlBWeyLQSgH0u4fgvmmT8IA2-WR_Fjmp_k7ew4CXOgDubZ1Wgp4hhcBxqfDCCdpSU" />
+                    <div class="absolute top-3 left-3">
+                        <span
+                            class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                            <span class="material-icons text-sm">recommend</span> Recommended
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Cinnamon Dhonveli</h3>
+                            <p class="text-xs text-gray-500">North Male Atoll</p>
+                        </div>
+                        <div class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">8.5</div>
+                    </div>
+                    <div class="flex gap-2 text-xs text-gray-600 mb-4">
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">directions_boat</span> Speedboat</span>
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">restaurant</span> Breakfast</span>
+                    </div>
+                    <div
+                        class="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£915</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">£701</span>
+                                <span class="text-xs text-gray-500">pp</span>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Barceló Whale Lagoon -->
+            <div
+                class="min-w-[85%] md:min-w-[400px] snap-center bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                <div class="relative h-48 overflow-hidden">
+                    <img alt="Overwater bungalows" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrSqpnbQTh46sofjsuTqNYxlU0njShnaMx-lAghWEKYSEVGmMbNvVZthso419fJUQ3txORQebGyGjMhMfNfAgsj3fYfYzIDyCgljLzNOwP68ZzGHwp9ygMFZ4glNheDY7SoAqdoT3iKjBFyIDbHDZTajN2sc9mVI2GSHMkosh4TJmtV2r5J-bkkN1208cCMB-g3wN92k6f0Z5fu8wsFLqDwbLzauPffdKKGs2psryNXs-wWfvEhZrjZgP53MvCJsHcJuzGInL7pQ4" />
+                    <div class="absolute top-3 left-3">
+                        <span
+                            class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                            <span class="material-icons text-sm">recommend</span> Recommended
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">Barceló Whale Lagoon</h3>
+                            <p class="text-xs text-gray-500">Bodufinolhu Island</p>
+                        </div>
+                        <div class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">8.5</div>
+                    </div>
+                    <div class="flex gap-2 text-xs text-gray-600 mb-4">
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">flight</span> Seaplane</span>
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">restaurant</span> Breakfast</span>
+                    </div>
+                    <div
+                        class="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,473</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-lg font-bold text-red-600">£1,189</span>
+                                <span class="text-xs text-gray-500">pp</span>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: OBLU XPERIENCE -->
+            <div
+                class="min-w-[85%] md:min-w-[400px] snap-center bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col group">
+                <div class="relative h-48 overflow-hidden">
+                    <img alt="Overwater villas" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwtWNMQmkDG0sGLEfbIXV40cENWVaFMmYS9g7mmxqYV7C_doZsAseSk9b5E6UrUlVWTjhc9PKhv9AIxUdkIcaEJh8ha7qMT_VQZjXwIpcjbOOcSn9LvsUbnSKzXNTGrkCFyt1kChAnNpIIMX_Jy2VR8pY_5QjWZZKOKjrKmEuxGiBrxesT-P8E6CTxfBT9pn7mKxk9CyzPd3Je7BXv36cop6Th3o5m9nTtzpne9B4E0W37LqD3UjBHnnTCCdzyLaFqiHfTnjBjrPk" />
+                    <div class="absolute top-3 left-3">
+                        <span
+                            class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                            <span class="material-icons text-sm">recommend</span> Recommended
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">OBLU XPERIENCE</h3>
+                            <p class="text-xs text-gray-500">Ailafushi Island</p>
+                        </div>
+                        <div class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">8.6</div>
+                    </div>
+                    <div class="flex gap-2 text-xs text-gray-600 mb-4">
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">directions_boat</span> Speedboat</span>
+                        <span class="flex items-center gap-1"><span
+                                class="material-icons text-xs text-primary">local_bar</span> All Inclusive</span>
+                    </div>
+                    <div
+                        class="mt-auto pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,118</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-lg font-bold text-gray-900 dark:text-white">£1,089</span>
+                                <span class="text-xs text-gray-500">pp</span>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Grid (Vertical) -->
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">More Results</h2>
+        <div class="space-y-6">
+
+            <!-- Card 4: Taj Exotica -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Tropical beach" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj_DL2eRlRrIyTS8zIU1vLdIUxHCceXDRGk4DoV9jfKdu_wWuLeWyhFf4hmd-lyMJJK_3jNMZj3YY2oab37Bh2fUfaHkc9nx1sJxEU1qV4Rdy0hzyFOKKlbyrKmUtxdW3wNRY_eMiPd-KS2XDa97AE1j0xygarkgOLM7IV-t8Y9RBCakTem6aNIANGJ13cM6OUzEXeejGeu3hd-kU-ZFfWVuLQyzA8_uKo3fNQ1HmdfCpncT8btjPK2pm_KvKTLwSwJ_RPzr_GFWs" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Taj Exotica Resort & Spa
+                                </h3>
+                                <p class="text-sm text-gray-500">Emboodhu Finolhu</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.8</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,800</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£1,454</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £2,908</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Adaaran Prestige Vadoo -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Ocean view" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv373_S3njsHq3xaGW7M23Fsc_TWftct0GVdsYdIWPOASH0TaFB_0kacLwvHKCUdwstWhmTrSC791HXFFDs4-UDijIzOVeGtYy-pCWDDBaYLR5nfs08xh1ks2y4xj0ZnWSuvQiwDr49DDCGDqKXqUv65oCF5_F3QfAZsNRJd8s4asZ4b38Bu5xU32oThXsxhjb78czEkPzZqxWjK_5qqyqtqiMszLOvvcoT2QhZOLXqmew6wJ7Rg1w-5nefbjfzHsWVXPxr9a5EF4" />
+                    <div class="absolute top-3 left-3"><span
+                            class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">DEAL</span>
+                    </div>
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Adaaran Prestige Vadoo</h3>
+                                <p class="text-sm text-gray-500">South Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.9</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">local_bar</span> All Inclusive</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,100</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£950</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £1,900</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Hard Rock Hotel -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Hard Rock Hotel" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4tLAe96rpm95YOBJDZtBOJn5LCrEAdytll1wOgEAmrMin1mgEil6ET9kseeQVKUgM6LS3R18YEVZBbs2sztt5PwfVBgTK6ElTFBp0-AeG9cWxE9EMW8HIxMrpuFrPNONKC-vd3x2RJtqb-ecWNHqfs03D7BS53QySmUsHQgx2xFcI7cv8tUfWGKhs4Zw4h_dxQ1yAc4RJbYs-lW2zZWtFUi7fOEDra_sLzqANwaDjKQQZ8ylQqszKrrKsUk0lyczXl7lJVh3D64A" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Hard Rock Hotel Maldives
+                                </h3>
+                                <p class="text-sm text-gray-500">South Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.7</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,500</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£1,321</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £2,642</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7: Sun Siyam Olhuveli -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Sun Siyam Olhuveli" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwtWNMQmkDG0sGLEfbIXV40cENWVaFMmYS9g7mmxqYV7C_doZsAseSk9b5E6UrUlVWTjhc9PKhv9AIxUdkIcaEJh8ha7qMT_VQZjXwIpcjbOOcSn9LvsUbnSKzXNTGrkCFyt1kChAnNpIIMX_Jy2VR8pY_5QjWZZKOKjrKmEuxGiBrxesT-P8E6CTxfBT9pn7mKxk9CyzPd3Je7BXv36cop6Th3o5m9nTtzpne9B4E0W37LqD3UjBHnnTCCdzyLaFqiHfTnjBjrPk" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sun Siyam Olhuveli</h3>
+                                <p class="text-sm text-gray-500">South Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.3</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,011</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£899</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £1,798</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8: Kandima Maldives -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Kandima Maldives" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkmQG64vX-hqyC_kvjFRTdOdpl9kLPClneJQdP97xNqcbrvPlHc4QSLzasvyitgEG6TldU5Kj8YLl2vquvchtGXBw2wvq9ei66I9n2QALD7hUXpVFZGfiQsnqxL8ra79w0NKtr_V7Z-r2WLD0Skoziw2ggTfthced_l88SxR6W3SIk_R_H0figy5TYxRZgR49YgSpUkn3b2mH6aPzvh6kgU0iGALK7l66aCdFGEP2x0CGQyW8bkMCvKuZqWqvCjMB28JIgqOHdEHA" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Kandima Maldives</h3>
+                                <p class="text-sm text-gray-500">Dhaalu Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">9.0</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">flight</span> Seaplane</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,700</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£1,510</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £3,020</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 9: Velassaru Maldives -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Velassaru Maldives" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0rw0noDZs_ppQdGkbZJm31tiG67K-9kI0-ghQF7lMHDP7l99G-XYQhzGiU_b8bVcnNxTvF_hi6s8X6gyO2Ncjggsf8kYLsBXoubgEimt9iCDh8SUJszXu7xI6sHR7xhoDhj4nGDNX9cZmYOt3UUUE2uR3LGMLWAA7OD-Y5NkTv6yCovS8kAwTRlg9RavDvz8VjmlVgsLmplPlBWeyLQSgH0u4fgvmmT8IA2-WR_Fjmp_k7ew4CXOgDubZ1Wgp4hhcBxqfDCCdpSU" />
+                    <div class="absolute top-3 left-3"><span
+                            class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">DEAL</span>
+                    </div>
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Velassaru Maldives</h3>
+                                <p class="text-sm text-gray-500">South Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">9.2</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,455</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£1,155</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £2,310</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 10: Paradise Island Resort -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Paradise Island Resort" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrSqpnbQTh46sofjsuTqNYxlU0njShnaMx-lAghWEKYSEVGmMbNvVZthso419fJUQ3txORQebGyGjMhMfNfAgsj3fYfYzIDyCgljLzNOwP68ZzGHwp9ygMFZ4glNheDY7SoAqdoT3iKjBFyIDbHDZTajN2sc9mVI2GSHMkosh4TJmtV2r5J-bkkN1208cCMB-g3wN92k6f0Z5fu8wsFLqDwbLzauPffdKKGs2psryNXs-wWfvEhZrjZgP53MvCJsHcJuzGInL7pQ4" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Paradise Island Resort & Spa
+                                </h3>
+                                <p class="text-sm text-gray-500">North Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.1</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£910</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-red-600">£815</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £1,630</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 11: Kurumba Maldives -->
+            <div
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row h-auto md:h-64 group">
+                <div class="md:w-2/5 lg:w-1/3 relative overflow-hidden">
+                    <img alt="Kurumba Maldives" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAULbu_gtzm2avVsxLlJSNCxTe1dzNBWpA93XDHHfQUnQyDVQXv1pBi1r47x2dz6aFAls27zFSq4oyrilePhM0Uu4Oe2iAV2f8kSyBjK9N066GGsq7QwYY_3glSxEOJbBjcAHv_IKPUKEtD5IXfWY8ngUcf3WXg9gB4b3v1CF0-vJ5cuAhvXgU6KrT_RsqqI5rZoGdeXhkAlsftuliJr0DVfi0xcjIz2U6jvkFQfANvBR3lUrVn5L6VJaid3yGV8mFmdqKRp7bVTjk" />
+                </div>
+                <div class="flex-grow p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Kurumba Maldives</h3>
+                                <p class="text-sm text-gray-500">North Male Atoll</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-bold">8.4</div>
+                        </div>
+                        <div class="flex gap-3 mt-3 text-sm text-gray-600">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">directions_boat</span> Speedboat</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-icons text-sm text-primary">restaurant</span> Breakfast</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end gap-6">
+                        <div class="text-right">
+                            <div class="text-xs text-red-500 line-through">£1,200</div>
+                            <div class="flex items-baseline gap-1 justify-end">
+                                <span class="text-xl font-bold text-gray-900 dark:text-white">£1,050</span>
+                                <span class="text-sm text-gray-500">pp</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Total £2,100</p>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md">View
+                            Deal</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pagination / Load More -->
+        <div class="mt-12 text-center">
+            <p class="text-gray-500 dark:text-gray-400 mb-4">You've seen 11 of 149 results</p>
+            <div class="w-full max-w-md mx-auto bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-8">
+                <div class="bg-primary h-2 rounded-full" style="width: 7.3%"></div>
+            </div>
+            <button
+                class="bg-white dark:bg-surface-dark text-primary border border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-gray-50 dark:hover:bg-gray-800 px-8 py-3 rounded-xl font-bold shadow-sm transition-all duration-200">
+                Show more results
+            </button>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

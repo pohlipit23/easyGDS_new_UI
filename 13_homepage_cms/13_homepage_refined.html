@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyGDS | Curated Travel Experiences</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    display: ['Fraunces', 'serif'],
+                    sans: ['Outfit', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            coral: '#FF6B6B',
+                            'coral-dark': '#E85555',
+                            navy: '#1A1D2E',
+                            'navy-light': '#2D3250',
+                            gold: '#C5A028', // Slightly adjusted for better contrast
+                            cream: '#FFF8F0',
+                            'warm-gray': '#F9F7F5', // Lighter, cleaner
+                            slate: '#64748B',
+                            'slate-light': '#94A3B8',
+                        }
+                    },
+                    boxShadow: {
+                        'elegant': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'elegant-lg': '0 10px 40px -5px rgba(0, 0, 0, 0.1)',
+                        'elegant-xl': '0 20px 60px -10px rgba(0, 0, 0, 0.15)',
+                        'glow': '0 0 20px rgba(255, 107, 107, 0.3)',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F9F7F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #C5A028;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A88620;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Hero & Animations */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1.05);
+            /* Slight zoom start */
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+            /* Pan effect */
+        }
+
+        .animate-on-load {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .loaded .animate-on-load {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        /* Button Effects */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Card Hover */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Sticky Search Transition */
+        #search-panel {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Modern Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #1A1D2E 0%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Consistency Force */
+        .container-custom {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: 1.5rem;
+            /* px-6 */
+            padding-left: 1.5rem;
+            /* px-6 */
+        }
+
+        @media (min-width: 1024px) {
+            .container-custom {
+                padding-right: 3rem;
+                /* lg:px-12 */
+                padding-left: 3rem;
+                /* lg:px-12 */
+                max-width: 1400px;
+                /* Force a consistent max-width */
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-brand-warm-gray text-brand-navy font-sans antialiased selection:bg-brand-coral selection:text-white">
+
+    <!-- ================= HEADER ================= -->
+    <header class="absolute top-0 left-0 right-0 z-[60] h-24 flex items-center transition-all duration-300"
+        id="main-header">
+        <div class="container-custom flex justify-between items-center h-full w-full">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group relative z-50">
+                <img src="https://waddat.com/easygds_logo_transparent.png" alt="EasyGDS Logo"
+                    class="h-10 w-auto brightness-0 invert transition-transform duration-300 group-hover:scale-105 drop-shadow-md">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-10 text-sm font-medium text-white/90">
+                <a href="#" class="hover:text-white transition-colors duration-300 relative group">
+                    <span>Destinations</span>
+                    <span
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-coral transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-colors duration-300 relative group">
+                    <span>Packages</span>
+                    <span
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-coral transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="hover:text-white transition-colors duration-300 relative group">
+                    <span>Hotels</span>
+                    <span
+                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-coral transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <div class="h-6 w-px bg-white/20 mx-2"></div>
+
+                <div class="flex items-center gap-6">
+                    <button class="hover:text-white transition-colors flex items-center gap-1">
+                        USD <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <a href="#" class="font-semibold hover:text-white transition-colors">Log In</a>
+                    <a href="#"
+                        class="bg-white text-brand-navy px-7 py-3 rounded-full hover:bg-brand-gold hover:text-white transition-all duration-300 shadow-lg font-bold">Sign
+                        Up</a>
+                </div>
+            </nav>
+
+            <!-- Mobile Hamburger -->
+            <button class="lg:hidden text-white z-50" id="mobile-menu-btn">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-white z-[55] transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col pt-28 px-6"
+        id="mobile-menu">
+        <a href="#" class="text-3xl font-display font-medium mb-6 hover:text-brand-coral">Destinations</a>
+        <a href="#" class="text-3xl font-display font-medium mb-6 hover:text-brand-coral">Packages</a>
+        <a href="#" class="text-3xl font-display font-medium mb-6 hover:text-brand-coral">Hotels</a>
+        <hr class="border-gray-100 mb-8">
+        <a href="#" class="text-xl font-medium mb-4">Log In</a>
+        <a href="#" class="text-xl font-medium text-brand-coral">Sign Up</a>
+    </div>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative h-[65vh] min-h-[600px] w-full overflow-hidden">
+        <!-- Carousel Images -->
+        <div class="absolute inset-0 z-0">
+            <div class="hero-slide active absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=2574&auto=format&fit=crop');">
+            </div>
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2638&auto=format&fit=crop');">
+            </div>
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=2575&auto=format&fit=crop');">
+            </div>
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-brand-warm-gray/10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 container-custom h-full flex flex-col justify-center items-center pb-32 pt-20">
+            <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-sm mb-6 animate-on-load">Redefining
+                Luxury Travel</span>
+            <h1
+                class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-8 drop-shadow-2xl leading-[1.05] animate-on-load delay-100">
+                The World Awaits <br>
+                <span class="italic font-light text-brand-cream/90">Your Arrival</span>
+            </h1>
+            <p
+                class="text-lg md:text-xl text-white/90 text-center max-w-2xl font-light leading-relaxed animate-on-load delay-200">
+                Experience bespoke journeys curated by experts. Unforgettable destinations, exclusive access, and
+                premium comfort.
+            </p>
+        </div>
+    </section>
+
+    <!-- ================= STICKY SEARCH BAR ================= -->
+    <div class="sticky top-0 z-[50] -mt-24 px-4 lg:px-6 pb-6 pointer-events-none" id="search-container-wrapper">
+        <div class="container mx-auto pointer-events-auto">
+            <!-- Search Panel -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-elegant-xl p-4 lg:p-6 max-w-6xl mx-auto border border-white/40 flex flex-col relative overflow-hidden"
+                id="search-panel">
+
+                <!-- Search Tabs -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 p-1.5 bg-brand-navy/5 rounded-full lg:w-max lg:mx-auto transition-all duration-300"
+                    id="search-tabs-container">
+                    <button
+                        class="search-tab active flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap bg-brand-navy text-white shadow-md"
+                        data-target="packages">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i> Packages
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap text-brand-navy hover:bg-white hover:shadow-sm"
+                        data-target="hotels">
+                        <i data-lucide="bed" class="w-4 h-4"></i> Hotels
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap text-brand-navy hover:bg-white hover:shadow-sm"
+                        data-target="tours">
+                        <i data-lucide="map" class="w-4 h-4"></i> Tours
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap text-brand-navy hover:bg-white hover:shadow-sm"
+                        data-target="flights">
+                        <i data-lucide="plane" class="w-4 h-4"></i> Flights
+                    </button>
+                </div>
+
+                <!-- Search Forms -->
+                <div class="px-2 pb-2 transition-all duration-500" id="search-inputs-container">
+
+                    <!-- Packages Form -->
+                    <div class="search-form block" id="packages-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
+                            <!-- Input Style -->
+                            <div
+                                class="group bg-white rounded-2xl border border-gray-200 px-4 h-16 flex items-center shadow-sm focus-within:ring-2 focus-within:ring-brand-coral/20 focus-within:border-brand-coral transition-all">
+                                <div
+                                    class="p-2 bg-brand-warm-gray rounded-lg mr-3 group-hover:bg-brand-coral/10 transition-colors">
+                                    <i data-lucide="plane-takeoff"
+                                        class="w-5 h-5 text-brand-slate group-hover:text-brand-coral transition-colors"></i>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-[10px] uppercase font-bold text-brand-slate tracking-wider mb-0.5">From</label>
+                                    <input type="text" placeholder="Origin City"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm placeholder:font-normal">
+                                </div>
+                            </div>
+
+                            <div
+                                class="group bg-white rounded-2xl border border-gray-200 px-4 h-16 flex items-center shadow-sm focus-within:ring-2 focus-within:ring-brand-coral/20 focus-within:border-brand-coral transition-all">
+                                <div
+                                    class="p-2 bg-brand-warm-gray rounded-lg mr-3 group-hover:bg-brand-coral/10 transition-colors">
+                                    <i data-lucide="map-pin"
+                                        class="w-5 h-5 text-brand-slate group-hover:text-brand-coral transition-colors"></i>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-[10px] uppercase font-bold text-brand-slate tracking-wider mb-0.5">To</label>
+                                    <input type="text" placeholder="Destination"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm placeholder:font-normal">
+                                </div>
+                            </div>
+
+                            <div
+                                class="group bg-white rounded-2xl border border-gray-200 px-4 h-16 flex items-center shadow-sm focus-within:ring-2 focus-within:ring-brand-coral/20 focus-within:border-brand-coral transition-all">
+                                <div
+                                    class="p-2 bg-brand-warm-gray rounded-lg mr-3 group-hover:bg-brand-coral/10 transition-colors">
+                                    <i data-lucide="calendar"
+                                        class="w-5 h-5 text-brand-slate group-hover:text-brand-coral transition-colors"></i>
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-[10px] uppercase font-bold text-brand-slate tracking-wider mb-0.5">Dates</label>
+                                    <input type="text" placeholder="Select Dates"
+                                        class="w-full bg-transparent outline-none text-brand-navy font-semibold text-sm placeholder:font-normal">
+                                </div>
+                            </div>
+
+                            <button
+                                class="bg-brand-coral text-white h-16 rounded-2xl font-bold text-lg shadow-lg hover:bg-brand-coral-dark hover:shadow-xl hover:-translate-y-0.5 transition-all w-full flex items-center justify-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Other forms hidden for brevity, can be implemented similarly if user clicks tabs -->
+                    <div id="hotels-form" class="hidden search-form">
+                        <div class="flex items-center justify-center h-16 text-brand-slate">
+                            Hotel Search Interface...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TOP DESTINATIONS ================= -->
+    <section class="py-10 lg:py-14">
+        <div class="container-custom">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+                <div>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4">Trending Destinations
+                    </h2>
+                    <p class="text-brand-slate text-lg font-light max-w-xl">Explore our most sought-after locations,
+                        handpicked for their unique charm and luxury.</p>
+                </div>
+                <a href="#"
+                    class="group flex items-center gap-2 text-brand-coral font-bold hover:text-brand-coral-dark transition-colors">
+                    View all destinations
+                    <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <a href="#" class="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-elegant card-hover">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800" alt="Bali"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h3 class="font-display text-3xl font-bold text-white mb-2">Bali</h3>
+                        <p class="text-white/80 text-sm mb-4 line-clamp-2">Tropical paradise with pristine beaches and
+                            rich culture.</p>
+                        <span
+                            class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-brand-navy transition-all">
+                            Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Card 2 -->
+                <a href="#" class="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-elegant card-hover">
+                    <img src="https://images.unsplash.com/photo-1602940659805-770d1b3b9911?q=80&w=800" alt="Santorini"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h3 class="font-display text-3xl font-bold text-white mb-2">Santorini</h3>
+                        <p class="text-white/80 text-sm mb-4 line-clamp-2">Iconic white architecture meeting the deep
+                            blue Aegean.</p>
+                        <span
+                            class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-brand-navy transition-all">
+                            Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="#" class="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-elegant card-hover">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800" alt="Tokyo"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h3 class="font-display text-3xl font-bold text-white mb-2">Tokyo</h3>
+                        <p class="text-white/80 text-sm mb-4 line-clamp-2">A dazzling blend of neon modernity and
+                            ancient tradition.</p>
+                        <span
+                            class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-brand-navy transition-all">
+                            Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Card 4 -->
+                <a href="#"
+                    class="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-elegant card-hover hidden md:block">
+                    <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=800" alt="Norway"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h3 class="font-display text-3xl font-bold text-white mb-2">Tromsø</h3>
+                        <p class="text-white/80 text-sm mb-4 line-clamp-2">Chasing northern lights in the arctic circle.
+                        </p>
+                        <span
+                            class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-brand-navy transition-all">
+                            Explore <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SPECIAL OFFERS (Fixed Alignment) ================= -->
+    <section class="py-10 bg-brand-cream relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute top-0 right-0 p-20 opacity-[0.03]">
+            <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1A1D2E"
+                    d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,79.6,-46.9C87.4,-34.7,90.1,-20.4,87.7,-6.8C85.3,6.8,77.8,19.7,68.8,31.4C59.9,43.1,49.5,53.6,37.6,62.3C25.7,71.1,12.3,78.1,-0.6,79.1C-13.5,80.1,-27.6,75.1,-40.4,66.7C-53.2,58.3,-64.7,46.5,-73.2,32.8C-81.7,19.1,-87.3,3.5,-84.9,-10.8C-82.5,-25.1,-72.1,-38.1,-60.8,-48.3C-49.5,-58.5,-37.3,-65.9,-24.5,-70.7C-11.7,-75.5,-1.7,77.7,14.5,76.4Z"
+                    transform="translate(100 100)" />
+            </svg>
+        </div>
+
+        <div class="container-custom relative z-10">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4">Exclusive Deals</h2>
+                    <p class="text-brand-slate text-lg font-light">Limited-time offers on our premium property
+                        collection.</p>
+                </div>
+            </div>
+
+            <!-- Changed from Scroll to Grid for alignment consistency -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Deal 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-elegant group card-hover flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-4 left-4 bg-brand-coral text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                            30% OFF
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">The Royal Sands</h3>
+                            <div class="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md">
+                                <i data-lucide="star" class="w-3 h-3 text-yellow-500 fill-current"></i>
+                                <span class="text-xs font-bold text-brand-navy">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-brand-slate text-sm flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brand-coral"></i> Cancun, Mexico
+                        </p>
+                        <div class="mt-auto flex justify-between items-end border-t border-gray-100 pt-6">
+                            <div>
+                                <p class="text-xs text-brand-slate line-through mb-0.5">$450/night</p>
+                                <p class="font-display text-2xl font-bold text-brand-navy text-gradient">$315</p>
+                            </div>
+                            <button
+                                class="text-brand-navy font-bold text-sm bg-brand-warm-gray px-5 py-2.5 rounded-xl hover:bg-brand-navy hover:text-white transition-colors">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-elegant group card-hover flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-4 left-4 bg-brand-gold text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                            Limited Time
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">Blue Lagoon Resort</h3>
+                            <div class="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md">
+                                <i data-lucide="star" class="w-3 h-3 text-yellow-500 fill-current"></i>
+                                <span class="text-xs font-bold text-brand-navy">4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-brand-slate text-sm flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brand-coral"></i> Grindavík, Iceland
+                        </p>
+                        <div class="mt-auto flex justify-between items-end border-t border-gray-100 pt-6">
+                            <div>
+                                <p class="text-xs text-brand-slate mb-0.5">Starting from</p>
+                                <p class="font-display text-2xl font-bold text-brand-navy text-gradient">$299</p>
+                            </div>
+                            <button
+                                class="text-brand-navy font-bold text-sm bg-brand-warm-gray px-5 py-2.5 rounded-xl hover:bg-brand-navy hover:text-white transition-colors">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-elegant group card-hover flex flex-col">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute top-4 left-4 bg-brand-coral text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                            25% OFF
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-2xl font-bold text-brand-navy">Bordeaux Villas</h3>
+                            <div class="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md">
+                                <i data-lucide="star" class="w-3 h-3 text-yellow-500 fill-current"></i>
+                                <span class="text-xs font-bold text-brand-navy">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-brand-slate text-sm flex items-center gap-1.5 mb-6">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brand-coral"></i> Bordeaux, France
+                        </p>
+                        <div class="mt-auto flex justify-between items-end border-t border-gray-100 pt-6">
+                            <div>
+                                <p class="text-xs text-brand-slate line-through mb-0.5">$600/night</p>
+                                <p class="font-display text-2xl font-bold text-brand-navy text-gradient">$450</p>
+                            </div>
+                            <button
+                                class="text-brand-navy font-bold text-sm bg-brand-warm-gray px-5 py-2.5 rounded-xl hover:bg-brand-navy hover:text-white transition-colors">Book
+                                Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRAVEL INSPIRATION ================= -->
+    <section class="py-10 lg:py-14">
+        <div class="container-custom">
+            <div class="flex justify-between items-end mb-8">
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy">Journal</h2>
+                <a href="#"
+                    class="hidden md:flex items-center gap-2 text-brand-coral font-bold hover:gap-3 transition-all duration-300">
+                    Read the blog <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[600px] lg:h-[500px]">
+                <!-- Featured Article -->
+                <a href="#" class="relative h-full rounded-3xl overflow-hidden group shadow-elegant">
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-75 group-hover:brightness-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-10 text-white">
+                        <span
+                            class="bg-brand-gold/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-md uppercase mb-4 inline-block tracking-widest">Guide</span>
+                        <h3 class="font-display text-3xl lg:text-4xl font-bold mb-4 leading-tight max-w-md">The 10 Most
+                            Underrated European Cities for 2025</h3>
+                        <p class="text-white/80 hidden lg:block mb-6 text-lg max-w-lg">Escape the crowds and discover
+                            hidden gems that offer authentic experiences.</p>
+                        <span
+                            class="font-bold flex items-center gap-2 group-hover:gap-4 transition-all text-brand-gold">Read
+                            Article <i data-lucide="arrow-right" class="w-5 h-5"></i></span>
+                    </div>
+                </a>
+
+                <!-- Side Articles -->
+                <div class="flex flex-col gap-8 h-full">
+                    <a href="#"
+                        class="flex-1 bg-white rounded-3xl overflow-hidden shadow-elegant group flex flex-row items-center transition-all hover:shadow-xl">
+                        <div class="w-1/3 h-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="w-2/3 p-8 flex flex-col justify-center">
+                            <span class="text-brand-coral text-xs font-bold uppercase mb-2">Tips</span>
+                            <h4 class="font-display text-xl lg:text-2xl font-bold text-brand-navy mb-2 line-clamp-2">How
+                                to Pack Light for a 2-Week Luxury Trip</h4>
+                            <p class="text-brand-slate text-sm line-clamp-2">Master the art of carrying on with our
+                                expert travel curations.</p>
+                        </div>
+                    </a>
+
+                    <a href="#"
+                        class="flex-1 bg-white rounded-3xl overflow-hidden shadow-elegant group flex flex-row items-center transition-all hover:shadow-xl">
+                        <div class="w-1/3 h-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="w-2/3 p-8 flex flex-col justify-center">
+                            <span class="text-brand-coral text-xs font-bold uppercase mb-2">Inspiration</span>
+                            <h4 class="font-display text-xl lg:text-2xl font-bold text-brand-navy mb-2 line-clamp-2">Why
+                                Solo Travel Is The Ultimate Reset</h4>
+                            <p class="text-brand-slate text-sm line-clamp-2">Reconnect with yourself in some of the
+                                world's most serene locations.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= NEWSLETTER SIGNUP (NEW) ================= -->
+    <section class="py-10 lg:py-14 container-custom">
+        <div class="bg-brand-navy rounded-[2rem] relative overflow-hidden shadow-elegant-xl">
+            <!-- Decorative Elements -->
+            <div
+                class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-coral opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-gold opacity-10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3">
+            </div>
+
+            <div
+                class="relative z-10 px-8 py-16 lg:px-20 lg:py-24 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="max-w-2xl">
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-white mb-6">Unlock the World's Best Kept
+                        Secrets</h2>
+                    <p class="text-white/70 text-lg lg:text-xl font-light mb-8 lg:mb-0">Join our exclusive community to
+                        receive curated travel inspiration, early access to flash deals, and expert tips directly to
+                        your inbox.</p>
+                </div>
+
+                <div class="w-full max-w-md bg-white/5 backdrop-blur-sm p-2 rounded-2xl border border-white/10">
+                    <form class="flex flex-col gap-3" onsubmit="event.preventDefault();">
+                        <div class="relative">
+                            <i data-lucide="mail"
+                                class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                            <input type="email" placeholder="Your email address"
+                                class="w-full bg-white/10 text-white placeholder:text-gray-400 border border-white/10 rounded-xl px-12 py-4 focus:outline-none focus:bg-white/20 transition-all font-medium">
+                        </div>
+                        <button
+                            class="bg-brand-coral hover:bg-brand-coral-dark text-white font-bold text-lg py-4 rounded-xl shadow-lg transition-all transform active:scale-95">
+                            Join the Club
+                        </button>
+                        <p class="text-center text-white/40 text-xs mt-2">No spam, just wanderlust. Unsubscribe anytime.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TRUST SIGNALS ================= -->
+    <section class="py-16 border-t border-brand-slate/10 bg-white">
+        <div
+            class="container-custom flex flex-col lg:flex-row justify-between items-center gap-8 text-center lg:text-left">
+            <div>
+                <h4 class="font-display text-2xl font-bold text-brand-navy mb-2">Trusted by 1 Million+ Travelers</h4>
+                <div class="flex justify-center lg:justify-start items-center gap-2 text-brand-slate text-sm">
+                    <div class="flex">
+                        <i data-lucide="star" class="w-4 h-4 text-brand-gold fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-brand-gold fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-brand-gold fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-brand-gold fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-brand-gold fill-current"></i>
+                    </div>
+                    <span class="font-semibold">4.9/5 Average Rating</span>
+                </div>
+            </div>
+            <div
+                class="flex flex-wrap justify-center items-center gap-10 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Simple text Placeholders for Logos if images fail, but using generic logos -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png"
+                    class="h-8 w-auto object-contain" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png"
+                    class="h-8 w-auto object-contain" alt="Mastercard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"
+                    class="h-8 w-auto object-contain" alt="PayPal">
+                <div class="flex items-center gap-2 border-l border-gray-300 pl-8">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-brand-navy"></i>
+                    <span class="text-xs font-bold text-brand-navy text-left leading-tight">100%
+                        Secure<br>Payments</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-brand-navy text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+        </div>
+
+        <div class="container-custom relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+            <!-- Brand -->
+            <div class="lg:col-span-2">
+                <a href="#" class="flex items-center gap-3 mb-8">
+                    <img src="https://waddat.com/easygds_logo_transparent.png" alt="EasyGDS Logo"
+                        class="h-10 w-auto brightness-0 invert">
+                </a>
+                <p class="text-white/60 mb-8 max-w-sm leading-relaxed">
+                    EasyGDS connects you to the world's most inspiring destinations with ease, comfort, and style.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-coral transition-colors">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-coral transition-colors">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-coral transition-colors">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h5 class="font-bold text-lg mb-6">Company</h5>
+                <ul class="space-y-4 text-white/60">
+                    <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Press</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="font-bold text-lg mb-6">Support</h5>
+                <ul class="space-y-4 text-white/60">
+                    <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">FAQs</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="font-bold text-lg mb-6">Contact</h5>
+                <ul class="space-y-4 text-white/60">
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="map-pin" class="w-5 h-5 mt-0.5 text-brand-coral"></i>
+                        <span>123 Travel Lane, Suite 400<br>New York, NY 10001</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="phone" class="w-5 h-5 text-brand-coral"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i data-lucide="mail" class="w-5 h-5 text-brand-coral"></i>
+                        <span>hello@easygds.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            class="container-custom pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
+            <p>&copy; 2025 EasyGDS. All rights reserved.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <span class="hover:text-white cursor-pointer">Sitemap</span>
+                <span class="hover:text-white cursor-pointer">Cookies</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+        // Icons
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animation Trigger
+            setTimeout(() => document.body.classList.add('loaded'), 100);
+
+            // Slideshow
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            const slideInterval = setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 6000);
+
+            // Sticky Search
+            const header = document.getElementById('main-header');
+            const searchPanel = document.getElementById('search-panel');
+            const searchWrapper = document.getElementById('search-container-wrapper');
+            const searchTabs = document.getElementById('search-tabs-container');
+            const searchInputs = document.getElementById('search-inputs-container');
+
+            // Helper variables to track state
+            let isSticky = false;
+            let isManuallyExpanded = false;
+
+            window.addEventListener('scroll', () => {
+                const trigger = searchWrapper.offsetTop - 100;
+
+                if (window.scrollY > trigger) {
+                    // We are in the sticky zone
+                    if (!isSticky && !isManuallyExpanded) {
+                        collapseToSticky();
+                    }
+                } else {
+                    // We are at the top (hero area)
+                    if (isSticky || isManuallyExpanded) {
+                        expandSearchWidget(true); // true = reset to default state
+                    }
+                }
+            });
+
+            function collapseToSticky() {
+                isSticky = true;
+                isManuallyExpanded = false;
+
+                // Transform to Sticky State (Compact Pill)
+                // Note: We KEEP mx-auto in both states so we don't need to toggle it, but for safety against previous code we ensure it's handled.
+                searchPanel.classList.remove('max-w-6xl', 'rounded-[2rem]', 'p-4', 'lg:p-6', 'bg-white/80', 'backdrop-blur-xl', 'border-white/40', 'w-full');
+                searchPanel.classList.add('max-w-max', 'mx-auto', 'rounded-full', 'px-3', 'py-1.5', 'bg-white/95', 'backdrop-blur-md', 'shadow-elegant-lg', 'border-gray-200', 'mt-4');
+
+                searchInputs.classList.add('hidden');
+                searchTabs.classList.remove('hidden');
+                searchTabs.classList.remove('mb-6');
+                searchTabs.classList.add('mb-0');
+            }
+
+            // Helper function to expand widget
+            function expandSearchWidget(reset = false) {
+                if (reset) {
+                    isSticky = false;
+                    isManuallyExpanded = false;
+                } else {
+                    isManuallyExpanded = true;
+                }
+
+                // Revert to Expanded State
+                searchPanel.classList.add('max-w-6xl', 'mx-auto', 'rounded-[2rem]', 'p-4', 'lg:p-6', 'bg-white/80', 'backdrop-blur-xl', 'border-white/40', 'w-full');
+                searchPanel.classList.remove('max-w-max', 'rounded-full', 'px-3', 'py-1.5', 'bg-white/95', 'backdrop-blur-md', 'shadow-elegant-lg', 'border-gray-200', 'mt-4');
+                // Ensure mx-auto is not removed if it was added by sticky (it overlaps but safer to re-add in .add and remove from .remove list if it was unique, basically we want mx-auto ALWAYS)
+
+                searchInputs.classList.remove('hidden');
+                searchTabs.classList.remove('hidden');
+                searchTabs.classList.add('mb-6');
+                searchTabs.classList.remove('mb-0');
+            }
+
+            // Click outside to collapse
+            document.addEventListener('click', (event) => {
+                // Only collapse if we are scrolled down (sticky eligible) AND manually expanded
+                const trigger = searchWrapper.offsetTop - 100;
+                if (window.scrollY > trigger && isManuallyExpanded) {
+                    const isClickInside = searchPanel.contains(event.target);
+                    if (!isClickInside) {
+                        collapseToSticky();
+                    }
+                }
+            });
+
+            // Tabs Logic
+            const tabs = document.querySelectorAll('.search-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    // Update: if we are sticky, clicking expands but DOES NOT switch tab immediately or maybe it does? 
+                    // User said "click into... expand". Usually you want to switch to the clicked tab too.
+
+                    if (isSticky && !isManuallyExpanded) {
+                        expandSearchWidget();
+                        // We continue to let the tab switch happen below
+                    }
+
+                    const target = tab.dataset.target;
+
+                    // Reset Tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-brand-navy', 'text-white', 'shadow-md');
+                        t.classList.add('text-brand-navy', 'hover:bg-white');
+                    });
+
+                    // Active Tab
+                    tab.classList.add('active', 'bg-brand-navy', 'text-white', 'shadow-md');
+                    tab.classList.remove('text-brand-navy', 'hover:bg-white');
+
+                    console.log('Switch to ' + target);
+                });
+            });
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            let menuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                menuOpen = !menuOpen;
+                if (menuOpen) {
+                    menu.classList.remove('translate-x-full');
+                    menuBtn.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menu.classList.add('translate-x-full');
+                    menuBtn.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                    document.body.style.overflow = '';
+                }
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+
+</html>

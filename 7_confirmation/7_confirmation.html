@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MHolidays - Booking Confirmed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0D4689",
+                        "background-light": "#F7FAFC",
+                        "background-dark": "#041049",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#0D4689",
+                        "text-light": "#041049",
+                        "text-dark": "#C7EAFB",
+                        "text-secondary-light": "#6b7280",
+                        "text-secondary-dark": "#9ca3af",
+                        "accent-light": "#C7EAFB",
+                        "accent-dark": "#C7EAFB",
+                        "border-light": "#E2E8F0",
+                        "border-dark": "#2D3748",
+                        success: "#10B981",
+                        "success-light": "#D1FAE5",
+                    },
+                    fontFamily: {
+                        display: ["Roboto", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-icons {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex flex-col min-h-screen">
+<header class="bg-card-light dark:bg-primary shadow-md">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<div class="flex items-center space-x-4">
+<img alt="Malaysia Airlines logo" class="h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"/>
+<span class="text-xl font-bold text-primary dark:text-white">MHolidays</span>
+</div>
+<div class="flex items-center space-x-4">
+<a class="text-gray-600 dark:text-white hover:text-primary dark:hover:text-accent-dark" href="#">
+<span class="material-icons">person</span>
+</a>
+<a class="text-gray-600 dark:text-white hover:text-primary dark:hover:text-accent-dark" href="#">
+<span class="material-icons">shopping_cart</span>
+</a>
+</div>
+</div>
+</header>
+<main class="container mx-auto p-4 md:p-8 flex-grow">
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-4 text-center mb-8">
+<div class="bg-success-light dark:bg-green-900/50 rounded-full w-10 h-10 mx-auto flex items-center justify-center mb-2">
+<span class="material-icons text-success dark:text-green-300 text-2xl">check_circle</span>
+</div>
+<h1 class="text-2xl font-bold text-text-light dark:text-text-dark">Your holiday is confirmed!</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark mt-1 max-w-xl mx-auto text-sm">Thank you for booking with MHolidays. Your booking is confirmed and all your travel documents have been sent to your email address.</p>
+<div class="mt-3 bg-background-light dark:bg-background-dark inline-block p-2 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Your Booking Confirmation Number</p>
+<p class="text-lg font-bold text-primary dark:text-accent-dark tracking-wider">MH869420</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-icons text-primary dark:text-accent-dark text-3xl">flight</span>
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Flight Itinerary</h2>
+</div>
+<div class="space-y-4">
+<div class="border border-border-light dark:border-border-dark rounded-lg p-4">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-3">
+<img alt="Airline tailfin logo" class="h-6 w-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"/>
+<p class="font-semibold">Kuala Lumpur (KUL) to Malé (MLE)</p>
+</div>
+<span class="text-sm text-text-secondary-light dark:text-text-secondary-dark">MH 481</span>
+</div>
+<div class="text-sm space-y-1">
+<p><span class="font-medium">Date:</span> Mon, 28 Oct 2024</p>
+<p><span class="font-medium">Time:</span> 10:10 - 11:35 (4h 25m)</p>
+<p><span class="font-medium">Type:</span> Direct</p>
+</div>
+</div>
+<div class="border border-border-light dark:border-border-dark rounded-lg p-4">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-3">
+<img alt="Airline tailfin logo" class="h-6 w-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"/>
+<p class="font-semibold">Malé (MLE) to Kuala Lumpur (KUL)</p>
+</div>
+<span class="text-sm text-text-secondary-light dark:text-text-secondary-dark">MH 482</span>
+</div>
+<div class="text-sm space-y-1">
+<p><span class="font-medium">Date:</span> Fri, 01 Nov 2024</p>
+<p><span class="font-medium">Time:</span> 12:35 - 20:15 (4h 40m)</p>
+<p><span class="font-medium">Type:</span> Direct</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-icons text-primary dark:text-accent-dark text-3xl">hotel</span>
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Hotel Booking</h2>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<img alt="Cinnamon Dhonveli Maldives" class="w-full sm:w-40 h-32 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0rw0noDZs_ppQdGkbZJm31tiG67K-9kI0-ghQF7lMHDP7l99G-XYQhzGiU_b8bVcnNxTvF_hi6s8X6gyO2Ncjggsf8kYLsBXoubgEimt9iCDh8SUJszXu7xI6sHR7xhoDhj4nGDNX9cZmYOt3UUUE2uR3LGMLWAA7OD-Y5NkTv6yCovS8kAwTRlg9RavDvz8VjmlVgsLmplPlBWeyLQSgH0u4fgvmmT8IA2-WR_Fjmp_k7ew4CXOgDubZ1Wgp4hhcBxqfDCCdpSU"/>
+<div>
+<h3 class="font-bold text-lg">Cinnamon Dhonveli Maldives</h3>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Kaafu Atoll, Maldives</p>
+<div class="mt-3 space-y-1 text-sm">
+<p><span class="font-medium">Check-in:</span> Mon, 28 Oct 2024</p>
+<p><span class="font-medium">Check-out:</span> Fri, 01 Nov 2024 (4 nights)</p>
+<p><span class="font-medium">Room:</span> Over-Water Suite</p>
+<p><span class="font-medium">Guests:</span> 2 Adults</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-icons text-primary dark:text-accent-dark text-3xl">surfing</span>
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Tour &amp; Activity</h2>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<img alt="Sunset Dolphin Cruise" class="w-full sm:w-40 h-32 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt-CErogUhh9Za_TQX0H1-1rYTHN2YBWzUlsPCIMo27Rxipd3b2hcBJYHXCjzIjRguljTRPfRElIZjrpgHmXhsFBRSKm5lu_8xDgA_Yxd5ZiPaPWARkdLlJmZje_j6QQHoGzcQsQ6PJv9GNFtLX-vseCyMEZjV6jY4H7opXcFk1S7DDWDgBy1cXXwRgVu5SB6PW_zSmGcsZagAS8iSvkc-OalmZiFdxBLNgbqiUInL3PYQ3eIcWmmhWh75wAEuB5GaFtg5EK1ytMY"/>
+<div>
+<h3 class="font-bold text-lg">Sunset Dolphin Cruise</h3>
+<div class="mt-3 space-y-1 text-sm">
+<p><span class="font-medium">Date:</span> Tue, 29 Oct 2024</p>
+<p><span class="font-medium">Duration:</span> 2 hours</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-icons text-primary dark:text-accent-dark text-3xl">transfer_within_a_station</span>
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Airport Transfer</h2>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<img alt="Speedboat Transfer" class="w-full sm:w-40 h-32 object-cover rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXCheGXQJnNl5QOyZ52x0L2Q6vciMJQcAZv-2oma_cJRxhvETX_ericdNeEZhfLwVv5UR43fLE5r_ob6xv1wlr5tg5-P21Z4a_EiLYfLwoIQAfKdLmYtNA_xrGEOpjBfu4uI--Z21h7gowTGTSTM3yMGB060YGTMDHpovE_I9gKt2LGyb54GXJIWf58O1wTMZwJoqAEn91ApvNMn_lNA4r2VnGX1jAf3uQ7zVtGZyQ47iuHHY0NJFpiwtntkpgX56C1djogWAV2aI"/>
+<div>
+<h3 class="font-bold text-lg">Return Speedboat Transfer</h3>
+<div class="mt-3 space-y-1 text-sm">
+<p><span class="font-medium">Provider:</span> Hotel Services</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark">Included in your package</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="sticky top-8 space-y-8">
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<h3 class="font-bold text-lg mb-4 text-text-light dark:text-text-dark">Passenger Details</h3>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between items-center">
+<div>
+<p class="font-medium text-text-light dark:text-text-dark">Mr John Smith</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">ADT</p>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark"></div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-medium text-text-light dark:text-text-dark">Ms Jane Doe</p>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">ADT</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-lg p-6">
+<h3 class="font-bold text-lg mb-4 text-text-light dark:text-text-dark">What's next?</h3>
+<div class="space-y-4 mb-6">
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary dark:text-accent-dark mt-1">email</span>
+<div>
+<h4 class="font-semibold">Check your email</h4>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">We've sent all your travel documents and e-tickets to your registered email address.</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary dark:text-accent-dark mt-1">edit_document</span>
+<div>
+<h4 class="font-semibold">Manage your booking</h4>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Need to make changes? You can manage your booking, add extras or check-in online.</p>
+<a class="text-primary dark:text-accent-dark font-medium hover:underline text-sm mt-1 inline-block" href="#">Go to My Bookings</a>
+</div>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark pt-6">
+<h3 class="font-bold text-lg mb-4 text-text-light dark:text-text-dark">Payment Summary</h3>
+<div class="space-y-1 text-sm">
+<div class="flex justify-between">
+<span class="text-text-secondary-light dark:text-text-secondary-dark">Package Total</span>
+<span class="text-text-light dark:text-text-dark">£1,402.00</span>
+</div>
+<div class="flex justify-between text-green-600 dark:text-green-400">
+<span>Discount</span>
+<span>-£428.00</span>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark my-3"></div>
+<div class="flex justify-between items-center">
+<span class="font-bold text-lg text-text-light dark:text-text-dark">Total Paid</span>
+<span class="font-bold text-xl text-text-light dark:text-text-dark">£974.00</span>
+</div>
+<div class="flex items-center mt-2 text-sm">
+<span class="material-icons text-base mr-2">credit_card</span>
+<span class="text-text-secondary-light dark:text-text-secondary-dark">Paid with Visa •••• 4242</span>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark mt-6 pt-6">
+<h3 class="font-bold text-lg mb-2 text-text-light dark:text-text-dark">Customer Support</h3>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">If you have any questions about your booking, please contact our support team.</p>
+<p class="text-sm text-primary dark:text-accent-dark font-semibold mt-2">+60 3 1234 5678</p>
+</div>
+</div>
+</div>
+</div>
+</div></main>
+<footer class="bg-background-light dark:bg-background-dark py-4 mt-auto">
+<div class="container mx-auto px-4 flex justify-center">
+</div>
+</footer>
+</div>
+</body></html>

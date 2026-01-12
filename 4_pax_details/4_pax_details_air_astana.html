@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Air Astana Holidays - Passenger Details</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C8AA6E", // Air Astana Gold
+                        secondary: "#2D2D2D", // Graphite Grey
+                        "primary-hover": "#B09256",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#555555",
+                        "bg-surface": "#F9F9F9",
+                        success: "#4CAF50",
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    fontSize: {
+                        'xs': '0.92rem',
+                        'sm': '1.0rem',
+                        'base': '1.125rem',
+                        'lg': '1.25rem',
+                        'xl': '1.5rem',
+                        '2xl': '1.75rem',
+                        '3xl': '2.25rem',
+                    },
+                    boxShadow: {
+                        'subtle': '0 2px 10px -5px rgba(200, 170, 110, 0.15)',
+                        'float': '0 5px 15px -5px rgba(0, 0, 0, 0.08)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-icons-round {
+            vertical-align: middle;
+        }
+
+        .tailfin-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #C8AA6E;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%, 0 70%);
+            border-radius: 2px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .tailfin-icon.return {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-surface font-sans text-text-main antialiased pb-10 text-base">
+    <!-- Sticky Header Container -->
+    <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm relative">
+        <div class="container mx-auto px-4 md:px-6 h-16 flex justify-between items-center bg-white relative z-30">
+            <div class="flex items-center gap-4">
+                <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" alt="Air Astana"
+                    class="h-12 object-contain -ml-2">
+                <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+                <span
+                    class="text-base font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-text-muted hover:text-primary transition-colors">
+                    <span class="material-icons-round text-2xl">shopping_cart</span>
+                </a>
+                <button class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors">
+                    <span class="material-icons-round text-2xl">person_outline</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 md:px-6 py-8">
+
+        <!-- Page Title -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-medium text-secondary tracking-tight">Passenger Details</h1>
+            <p class="text-text-muted mt-1">Please enter details for all passengers. Names must match government-issued
+                photo ID exactly.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column: Forms -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Login Banner -->
+                <div
+                    class="bg-white rounded-2xl border border-primary/20 p-6 shadow-subtle flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-icons-round">lock</span>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-lg text-secondary">Log in for faster booking</h2>
+                            <p class="text-sm text-text-muted">Use your Nomad Club account to pre-fill your details.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <button
+                            class="flex-1 md:flex-none bg-primary text-white px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-primary-hover transition shadow-md">Log
+                            in</button>
+                        <button
+                            class="flex-1 md:flex-none border border-primary text-primary px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-primary/5 transition">Guest</button>
+                    </div>
+                </div>
+
+                <!-- Passenger 1 -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-8">
+                    <div class="flex items-center mb-6 border-b border-gray-100 pb-4">
+                        <div
+                            class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-sm mr-3">
+                            1</div>
+                        <h2 class="text-lg font-bold text-secondary uppercase tracking-wide">Passenger 1 (Adult)</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="title-1">Title</label>
+                            <select
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all"
+                                id="title-1">
+                                <option>Mr</option>
+                                <option>Mrs</option>
+                                <option>Ms</option>
+                                <option>Miss</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-5">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="first-name-1">First & Middle Name(s)</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="first-name-1" placeholder="e.g. John Michael" type="text" />
+                        </div>
+                        <div class="md:col-span-5">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="last-name-1">Last Name</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="last-name-1" placeholder="e.g. Smith" type="text" />
+                        </div>
+
+                        <div class="md:col-span-6">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5" for="dob-1">Date of
+                                Birth</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="dob-1" type="date" />
+                        </div>
+                        <div class="md:col-span-6">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="nationality-1">Nationality</label>
+                            <select
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all"
+                                id="nationality-1">
+                                <option>Kazakhstan</option>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                                <option>Malaysia</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passenger 2 -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-8">
+                    <div class="flex items-center mb-6 border-b border-gray-100 pb-4">
+                        <div
+                            class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-sm mr-3">
+                            2</div>
+                        <h2 class="text-lg font-bold text-secondary uppercase tracking-wide">Passenger 2 (Adult)</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="title-2">Title</label>
+                            <select
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all"
+                                id="title-2">
+                                <option>Mr</option>
+                                <option>Mrs</option>
+                                <option>Ms</option>
+                                <option>Miss</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-5">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="first-name-2">First & Middle Name(s)</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="first-name-2" placeholder="e.g. Jane" type="text" />
+                        </div>
+                        <div class="md:col-span-5">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="last-name-2">Last Name</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="last-name-2" placeholder="e.g. Doe" type="text" />
+                        </div>
+
+                        <div class="md:col-span-6">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5" for="dob-2">Date of
+                                Birth</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="dob-2" type="date" />
+                        </div>
+                        <div class="md:col-span-6">
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5"
+                                for="nationality-2">Nationality</label>
+                            <select
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all"
+                                id="nationality-2">
+                                <option>Kazakhstan</option>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                                <option>Malaysia</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-8">
+                    <h2 class="text-lg font-bold text-secondary uppercase tracking-wide mb-2">Contact Information</h2>
+                    <p class="text-sm text-text-muted mb-6">Your travel documents will be sent to this email address.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5" for="email">Email
+                                Address</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="email" placeholder="you@example.com" type="email" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-text-muted mb-1.5" for="phone">Phone
+                                Number</label>
+                            <input
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-11 transition-all px-3"
+                                id="phone" placeholder="+7 701 123 4567" type="tel" />
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex items-start bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="flex items-center h-5">
+                            <input id="offers" name="offers" type="checkbox"
+                                class="focus:ring-primary h-4 w-4 text-primary border-gray-300 rounded" />
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label for="offers" class="font-medium text-secondary">I'd like to receive exclusive offers
+                                and promotions from Air Astana Holidays.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-float border border-gray-200 p-6 sticky top-24">
+                    <h3 class="font-bold text-lg mb-4 text-secondary">Your package summary</h3>
+
+                    <!-- Hotel Summary -->
+                    <div class="flex gap-4 mb-4">
+                        <img alt="Cinnamon Dhonveli Maldives" class="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0rw0noDZs_ppQdGkbZJm31tiG67K-9kI0-ghQF7lMHDP7l99G-XYQhzGiU_b8bVcnNxTvF_hi6s8X6gyO2Ncjggsf8kYLsBXoubgEimt9iCDh8SUJszXu7xI6sHR7xhoDhj4nGDNX9cZmYOt3UUUE2uR3LGMLWAA7OD-Y5NkTv6yCovS8kAwTRlg9RavDvz8VjmlVgsLmplPlBWeyLQSgH0u4fgvmmT8IA2-WR_Fjmp_k7ew4CXOgDubZ1Wgp4hhcBxqfDCCdpSU" />
+                        <div>
+                            <h4 class="font-bold text-sm text-secondary leading-tight">Cinnamon Dhonveli Maldives
+                            </h4>
+                            <p class="text-xs text-text-muted mt-1">4 nights, 2 adults</p>
+                            <p class="text-xs text-text-muted">Over-Water Suite</p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-100 my-4"></div>
+
+                    <!-- Flight Summary -->
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="tailfin-icon mt-0.5"></div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-bold text-secondary">KUL <span
+                                            class="text-gray-400">→</span> MLE</span>
+                                </div>
+                                <p class="text-xs text-text-muted">10:10 - 11:35</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="tailfin-icon return mt-0.5"></div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-bold text-secondary">MLE <span
+                                            class="text-gray-400">→</span> KUL</span>
+                                </div>
+                                <p class="text-xs text-text-muted">12:35 - 20:15</p>
+                            </div>
+                        </div>
+                        <a class="text-primary hover:text-primary-hover font-bold text-xs uppercase tracking-wide mt-2 inline-block"
+                            href="#">View flight details</a>
+                    </div>
+
+                    <div class="border-t border-gray-100 my-4"></div>
+
+                    <!-- Price Breakdown -->
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-text-muted">2 travellers</span>
+                            <span class="text-secondary font-medium">£1,402.00</span>
+                        </div>
+                        <div class="flex justify-between text-success">
+                            <span>Discount</span>
+                            <span>-£428.00</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-100 my-4"></div>
+
+                    <!-- Total -->
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-secondary">Total</span>
+                        <div class="text-right">
+                            <p class="font-bold text-2xl text-secondary">£974.00</p>
+                            <p class="text-xs text-text-muted">£487 per person</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-text-muted mt-1 text-right">Includes taxes and fees</p>
+
+                    <button
+                        class="bg-primary text-white w-full py-3.5 rounded-lg font-bold text-base mt-6 hover:bg-primary-hover shadow-subtle uppercase tracking-wide transition-all transform active:scale-[0.98]">Continue
+                        to Payment</button>
+
+                    <p class="text-xs text-text-muted mt-3 text-center">Price held for <span
+                            class="font-bold text-secondary">18:32</span></p>
+
+                    <div class="mt-6 text-sm text-text-main">
+                        <div class="flex items-center text-success">
+                            <span class="material-icons-round mr-1">check_circle</span>
+                            <span class="font-semibold">ATOL protected</span>
+                            <span class="material-icons-round text-xs ml-1"
+                                title="Some of the flights and flight-inclusive holidays on this website are financially protected by the ATOL scheme.">info_outline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

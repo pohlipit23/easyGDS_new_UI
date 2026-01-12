@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Air Astana Holidays - Shopping Basket</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C8AA6E", // Air Astana Gold
+                        secondary: "#2D2D2D", // Graphite Grey
+                        "primary-hover": "#B09256",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#555555",
+                        "bg-surface": "#F9F9F9",
+                        success: "#4CAF50",
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    fontSize: {
+                        'xs': '0.92rem',
+                        'sm': '1.0rem',
+                        'base': '1.125rem',
+                        'lg': '1.25rem',
+                        'xl': '1.5rem',
+                        '2xl': '1.75rem',
+                        '3xl': '2.25rem',
+                    },
+                    boxShadow: {
+                        'subtle': '0 2px 10px -5px rgba(200, 170, 110, 0.15)',
+                        'float': '0 5px 15px -5px rgba(0, 0, 0, 0.08)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-icons-round {
+            vertical-align: middle;
+        }
+
+        .tailfin-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #C8AA6E;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%, 0 70%);
+            border-radius: 2px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .tailfin-icon.return {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+
+<body class="bg-bg-surface font-sans text-text-main antialiased pb-10 text-base">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+            <div class="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" alt="Air Astana"
+                        class="h-12 object-contain -ml-2">
+                    <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+                    <span
+                        class="text-base font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-icons-round text-2xl">person_outline</span>
+                    </a>
+                    <a class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors relative"
+                        href="#">
+                        <span class="material-icons-round text-2xl">shopping_cart</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">1</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main class="container mx-auto p-4 md:p-8 flex-grow">
+            <div class="mb-6">
+                <h1 class="text-3xl font-medium text-secondary tracking-tight">Your Holiday</h1>
+                <p class="text-text-muted mt-1 text-sm">Your items are listed below. Complete your booking before the
+                    timer runs out!</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                        <span class="material-icons-round text-primary text-2xl">flight_takeoff</span>
+                                    </div>
+                                    <div class="h-full w-px bg-gray-200 mx-auto mt-2"></div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <h2 class="text-xl font-bold text-secondary">Outbound Flight</h2>
+                                        <button
+                                            class="text-sm text-primary hover:text-primary-hover font-medium">Edit</button>
+                                    </div>
+                                    <p class="text-sm text-text-muted">Wed 23 Oct 2024 • 2 travellers</p>
+                                    <div class="mt-4 space-y-3">
+                                        <div class="flex items-center text-sm">
+                                            <div class="tailfin-icon"></div>
+                                            <div class="ml-3">
+                                                <p class="font-semibold text-text-main">Kuala Lumpur (KUL) to Malé (MLE)
+                                                </p>
+                                                <p class="text-text-muted">10:10 - 11:35 • Air Astana</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-100 my-4"></div>
+                                    <div class="flex items-center text-sm">
+                                        <span
+                                            class="material-icons-round text-primary mr-2 text-2xl">directions_boat</span>
+                                        <div class="flex-grow">
+                                            <p class="font-semibold text-text-main">Airport transfer to your hotel</p>
+                                            <p class="text-text-muted">Shared speedboat transfer included with your
+                                                hotel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                        <span class="material-icons-round text-primary text-2xl">hotel</span>
+                                    </div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <h2 class="text-xl font-bold text-secondary">Cinnamon Dhonveli Maldives</h2>
+                                        <button class="text-sm text-primary hover:text-primary-hover font-medium">Change
+                                            room</button>
+                                    </div>
+                                    <p class="text-sm text-text-muted">4 nights • Check-in: Wed 23 Oct • Check-out: Sun
+                                        27 Oct 2024</p>
+                                    <div class="mt-4 flex flex-col md:flex-row gap-4">
+                                        <img alt="Over-Water Suite bedroom"
+                                            class="w-full md:w-48 h-32 object-cover rounded-lg"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeEnBdaO_e2rZkGLeHWddV8SkEYAzVPVlNUURRm0cR9gQTTNb6wTVV3xUoJbdaXntyA_qrwPt4WRV9M2nbKcJ51G0YN3OMZdwRiikeitaHX68zugzyZV9HpC1Jth8XAM7cwcn2HpSWTxj58Kssh5_xFESljykWAxkA8-GRt4EEimnMosMdojGR0Fry6FzGONj9wyKv04XVNUkNZBA8c6pKvC87kySYPtysQQDWin4SXouX6iNx92mzcVOVRG40WaKpMHqGN6a6GZs" />
+                                        <div>
+                                            <h3 class="font-semibold text-text-main">Over-Water Suite</h3>
+                                            <ul class="mt-2 text-sm space-y-1 text-text-muted list-inside list-disc">
+                                                <li>Breakfast included</li>
+                                                <li>Free cancellation</li>
+                                                <li>Seaplane transfer included</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100 -mx-6 my-6"></div>
+                        <div class="px-6 pb-6 pt-0">
+                            <div class="flex items-center mb-4">
+                                <span class="material-icons-round text-primary mr-2">local_activity</span>
+                                <h3 class="text-lg font-bold text-secondary">Recommended for you</h3>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <div class="pl-16">
+                                    <div class="flex flex-col md:flex-row gap-4">
+                                        <img alt="Dolphins jumping at sunset"
+                                            class="w-full md:w-48 h-32 object-cover rounded-lg"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbeBeGl8ZUbBEq1I9DLMQsI5baXuYCkVPvMNpFKBR1wzggng_u00iy1TKkLiG-LnzFCRtLOJgnYmX7EC-aL8tSBN_LNCuLbJkvM6suB9aG6DB0F83-g8Zj8Lz-YaqpKKdaaSK6azbJ9AI_hReZR_7pNSCNhlElsXkag4qCAJc6F8Dsj4QJlV6IxXDFAqBbGzmgS2h1i-BnULpB_qqP1_WmeUqFuGrFxffL8KqdypkWhkQYwoDuAx9ByJVz5AtF2SpHnno8XI2hZ14" />
+                                        <div class="flex-grow">
+                                            <h4 class="font-semibold text-text-main">Sunset Dolphin Cruise</h4>
+                                            <p class="text-sm text-text-muted mt-1">Enjoy a magical 2-hour cruise
+                                                watching dolphins play in the sunset.</p>
+                                            <div class="flex items-baseline mt-2">
+                                                <p class="font-bold text-lg text-primary mr-2">£45</p>
+                                                <p class="text-sm text-text-muted">per person</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0 mt-4 md:mt-0 md:ml-4">
+                                            <button
+                                                class="w-full sm:w-auto bg-primary text-white py-2 px-6 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-primary-hover shadow-subtle">Add
+                                                to trip</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                        <span class="material-icons-round text-primary text-2xl">flight_land</span>
+                                    </div>
+                                    <div class="h-full w-px bg-gray-200 mx-auto mt-2"></div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <h2 class="text-xl font-bold text-secondary">Return Flight</h2>
+                                        <button
+                                            class="text-sm text-primary hover:text-primary-hover font-medium">Edit</button>
+                                    </div>
+                                    <p class="text-sm text-text-muted">Sun 27 Oct 2024 • 2 travellers</p>
+                                    <div class="mt-4 space-y-3">
+                                        <div class="flex items-center text-sm">
+                                            <div class="tailfin-icon" style="transform: scaleX(-1);"></div>
+                                            <div class="ml-3">
+                                                <p class="font-semibold text-text-main">Malé (MLE) to Kuala Lumpur (KUL)
+                                                </p>
+                                                <p class="text-text-muted">12:35 - 20:15 • Air Astana</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-100 my-4"></div>
+                                    <div class="flex items-center text-sm">
+                                        <span
+                                            class="material-icons-round text-primary mr-2 text-2xl">directions_boat</span>
+                                        <div class="flex-grow">
+                                            <p class="font-semibold text-text-main">Airport transfer from your hotel</p>
+                                            <p class="text-text-muted">Shared speedboat transfer included with your
+                                                hotel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-secondary mb-4">Add more to your trip</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div
+                                class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center hover:shadow-float hover:border-primary/20 transition-all">
+                                <span class="material-icons-round text-3xl text-primary mb-2">hotel</span>
+                                <h3 class="font-semibold text-text-main">Add a hotel</h3>
+                                <p class="text-xs text-text-muted mb-3">Visiting another city?</p>
+                                <button
+                                    class="mt-auto w-full bg-primary/10 text-primary py-2 px-4 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-primary/20">Add</button>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center hover:shadow-float hover:border-primary/20 transition-all">
+                                <span class="material-icons-round text-3xl text-primary mb-2">directions_car</span>
+                                <h3 class="font-semibold text-text-main">Add a car</h3>
+                                <p class="text-xs text-text-muted mb-3">Rent a car for your trip</p>
+                                <button
+                                    class="mt-auto w-full bg-primary/10 text-primary py-2 px-4 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-primary/20">Add</button>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center hover:shadow-float hover:border-primary/20 transition-all">
+                                <span
+                                    class="material-icons-round text-3xl text-primary mb-2">transfer_within_a_station</span>
+                                <h3 class="font-semibold text-text-main">Add a transfer</h3>
+                                <p class="text-xs text-text-muted mb-3">Airport to hotel</p>
+                                <button
+                                    class="mt-auto w-full bg-primary/10 text-primary py-2 px-4 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-primary/20">Add</button>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center text-center hover:shadow-float hover:border-primary/20 transition-all">
+                                <span class="material-icons-round text-3xl text-primary mb-2">local_activity</span>
+                                <h3 class="font-semibold text-text-main">Add a tour</h3>
+                                <p class="text-xs text-text-muted mb-3">Explore activities</p>
+                                <button
+                                    class="mt-auto w-full bg-primary/10 text-primary py-2 px-4 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-primary/20">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 p-6 sticky top-8">
+                        <h3 class="font-bold text-lg mb-4 text-secondary">Price summary</h3>
+
+                        <!-- Price Breakdown -->
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-text-muted">2 travellers</span>
+                                <span class="text-secondary font-medium">£1,402.00</span>
+                            </div>
+                            <div class="flex justify-between text-success">
+                                <span>Discount</span>
+                                <span>-£428.00</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-100 my-4"></div>
+
+                        <!-- Total -->
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-secondary">Total</span>
+                            <div class="text-right">
+                                <p class="font-bold text-2xl text-secondary">£974.00</p>
+                                <p class="text-xs text-text-muted">£487 per person</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-text-muted mt-1 text-right">Includes taxes and fees</p>
+
+                        <button
+                            class="bg-primary text-white w-full py-3.5 rounded-lg font-bold text-base mt-6 hover:bg-primary-hover shadow-subtle uppercase tracking-wide transition-all transform active:scale-[0.98]">Continue
+                            to book</button>
+
+                        <p class="text-xs text-text-muted mt-3 text-center">Price held for <span
+                                class="font-bold text-secondary">18:32</span></p>
+
+                        <div class="mt-6 text-sm text-text-main">
+                            <div class="flex items-center text-success">
+                                <span class="material-icons-round mr-1">check_circle</span>
+                                <span class="font-semibold">ATOL protected</span>
+                                <span class="material-icons-round text-xs ml-1"
+                                    title="Some of the flights and flight-inclusive holidays on this website are financially protected by the ATOL scheme.">info_outline</span>
+                            </div>
+                            <p class="mt-2 flex items-start text-xs text-text-muted">
+                                <span class="material-icons-round text-sm mr-2 mt-0.5">lock</span>
+                                <span>We use secure transmission and encrypted storage to protect your personal
+                                    information.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="bg-white py-4 mt-auto border-t border-gray-100">
+            <div class="container mx-auto px-4 flex justify-center">
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

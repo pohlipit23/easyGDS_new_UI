@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Air Astana Holidays - Flight + Hotel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C8AA6E", // Air Astana Gold
+                        secondary: "#2D2D2D", // Graphite Grey
+                        "primary-hover": "#B09256",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#555555", // Darkened for accessibility
+                        "bg-surface": "#F9F9F9",
+                        success: "#4CAF50",
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    fontSize: {
+                        // Accessibility update: Ensure minimum size is ~11pt (approx 14.7px)
+                        'xs': '0.92rem', // ~14.7px (11pt)
+                        'sm': '1.0rem', // ~16px
+                        'base': '1.125rem', // ~18px
+                        'lg': '1.25rem',
+                        'xl': '1.5rem',
+                        '2xl': '1.75rem',
+                        '3xl': '2.25rem',
+                    },
+                    boxShadow: {
+                        'subtle': '0 2px 10px -5px rgba(200, 170, 110, 0.15)',
+                        'float': '0 5px 15px -5px rgba(0, 0, 0, 0.08)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-white font-sans text-text-main antialiased pb-10 text-base">
+
+    <!-- Sticky Header Container -->
+    <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm relative">
+
+        <!-- Row 1: Brand & Profile -->
+        <div class="container mx-auto px-4 md:px-6 h-16 flex justify-between items-center bg-white relative z-30">
+            <div class="flex items-center gap-4">
+                <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" alt="Air Astana"
+                    class="h-12 object-contain -ml-2">
+                <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+                <span
+                    class="text-base font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+            </div>
+            <button class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors">
+                <span class="material-icons-round text-2xl">person_outline</span>
+            </button>
+        </div>
+
+        <!-- Row 2: Context Bar -->
+        <div class="bg-gray-50 border-t border-gray-100 relative z-30">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row gap-0 md:gap-6">
+
+                    <!-- Search Context -->
+                    <div
+                        class="py-3 flex items-center justify-between md:justify-start gap-4 md:border-r md:border-gray-200 md:pr-6 md:w-auto border-b md:border-b-0 border-gray-100">
+                        <div class="flex items-center gap-3 text-base text-text-main overflow-hidden">
+                            <span class="material-icons-round text-xl text-primary">search</span>
+                            <div class="flex flex-col leading-tight">
+                                <span class="font-bold text-secondary truncate">Almaty - Dubai</span>
+                                <span class="text-text-muted text-xs mt-0.5">13-17 Nov • 2 Pax</span>
+                            </div>
+                        </div>
+                        <button onclick="toggleSection('search-widget')"
+                            class="text-xs font-bold uppercase text-primary bg-white border border-primary/20 px-4 py-2 rounded transition-all whitespace-nowrap hover:bg-primary hover:text-white"
+                            id="btn-search-modify">
+                            Modify
+                        </button>
+                    </div>
+
+                    <!-- Flight Itinerary Summary -->
+                    <div onclick="toggleSection('flight-details')"
+                        class="py-3 flex items-center justify-between gap-4 cursor-pointer group flex-grow hover:bg-white transition-colors rounded px-2 -mx-2">
+                        <div class="flex flex-row items-center gap-4 md:gap-10 text-sm w-full">
+                            <!-- Outbound -->
+                            <div class="flex items-center gap-3 text-text-main">
+                                <span class="material-icons-round text-gray-400 text-xl rotate-90">flight</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-secondary text-base">07:05</span>
+                                    <span class="text-gray-400">→</span>
+                                    <span class="font-bold text-secondary text-base">10:45</span>
+                                    <span
+                                        class="text-xs text-text-muted bg-gray-200 px-2 py-0.5 rounded hidden sm:inline-block">KC
+                                        895</span>
+                                </div>
+                            </div>
+                            <div class="hidden md:block w-px h-6 bg-gray-300"></div>
+                            <!-- Return -->
+                            <div class="flex items-center gap-3 text-text-main">
+                                <span class="material-icons-round text-gray-400 text-xl -rotate-90">flight</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-secondary text-base">12:00</span>
+                                    <span class="text-gray-400">→</span>
+                                    <span class="font-bold text-secondary text-base">18:10</span>
+                                    <span
+                                        class="text-xs text-text-muted bg-gray-200 px-2 py-0.5 rounded hidden sm:inline-block">KC
+                                        896</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="chevron-flight-details"
+                            class="material-icons-round text-gray-400 text-2xl group-hover:text-primary transition-transform duration-300">expand_more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPANDABLE 1: Full Search Widget -->
+        <div id="search-widget"
+            class="hidden bg-white border-b border-gray-200 shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+            <div class="container mx-auto px-4 md:px-6 py-3 bg-white relative">
+                <!-- Close button positioned absolutely -->
+                <button onclick="toggleSection('search-widget')"
+                    class="absolute top-2 right-4 text-gray-400 hover:text-primary z-10">
+                    <span class="material-icons-round text-xl">close</span>
+                </button>
+
+                <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 pr-8 md:pr-0">
+                    <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                        <label class="block text-xs uppercase text-gray-600 font-bold">From</label>
+                        <input type="text" value="Almaty (ALA)"
+                            class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                    </div>
+                    <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                        <label class="block text-xs uppercase text-gray-600 font-bold">To</label>
+                        <input type="text" value="Dubai (DXB)"
+                            class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                    </div>
+                    <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                        <label class="block text-xs uppercase text-gray-600 font-bold">Dates</label>
+                        <input type="text" value="13 Nov - 17 Nov"
+                            class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                    </div>
+                    <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                        <label class="block text-xs uppercase text-gray-600 font-bold">Guests</label>
+                        <select
+                            class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                            <option>2 Adults, 1 Room</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="toggleSection('search-widget')"
+                        class="bg-primary text-white font-bold uppercase text-xs rounded shadow-md hover:bg-primary-hover transition-colors h-full min-h-[38px]">
+                        Update Search
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- EXPANDABLE 2: Flight Details -->
+        <div id="flight-details"
+            class="hidden bg-white border-b border-gray-200 shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+            <div class="container mx-auto px-4 md:px-6 py-4 bg-white">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500">Detailed Itinerary</h3>
+                    <button onclick="toggleSection('flight-details')" class="text-gray-400 hover:text-primary"><span
+                            class="material-icons-round text-2xl">close</span></button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-gray-100 rounded-xl p-3 bg-gray-50/50">
+                        <div class="text-xs font-bold text-primary uppercase mb-1">Outbound • 4h 40m</div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-xl font-bold text-secondary">07:05 <span
+                                    class="text-sm font-normal text-gray-500">ALA</span></div>
+                            <div class="h-px flex-grow bg-gray-300 mx-4 relative"><span
+                                    class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-300"></span></div>
+                            <div class="text-xl font-bold text-secondary">10:45 <span
+                                    class="text-sm font-normal text-gray-500">DXB</span></div>
+                        </div>
+                        <div class="text-xs text-gray-600 flex items-center gap-2">
+                            <span class="material-icons-round text-base">flight_takeoff</span> Air Astana KC 895 •
+                            Economy
+                        </div>
+                    </div>
+                    <div class="border border-gray-100 rounded-xl p-3 bg-gray-50/50">
+                        <div class="text-xs font-bold text-primary uppercase mb-1">Return • 4h 10m</div>
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="text-xl font-bold text-secondary">12:00 <span
+                                    class="text-sm font-normal text-gray-500">DXB</span></div>
+                            <div class="h-px flex-grow bg-gray-300 mx-4 relative"><span
+                                    class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-300"></span></div>
+                            <div class="text-xl font-bold text-secondary">18:10 <span
+                                    class="text-sm font-normal text-gray-500">ALA</span></div>
+                        </div>
+                        <div class="text-xs text-gray-600 flex items-center gap-2">
+                            <span class="material-icons-round text-base">flight_takeoff</span> Air Astana KC 896 •
+                            Economy
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 md:px-6 py-4">
+
+        <!-- Consolidated Header & Tools Row -->
+        <div class="mb-6 flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-2">
+
+            <!-- Left: Title & Count -->
+            <div class="flex flex-col">
+                <h1 class="text-2xl md:text-3xl font-medium text-secondary tracking-tight">Stays in <span
+                        class="text-primary font-semibold">Dubai</span></h1>
+                <p class="text-xs text-text-muted mt-1">84 results found (Flight + Hotel)</p>
+            </div>
+
+            <!-- Right: Tools (Search, Filter, Map) -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-stretch sm:items-center">
+                <!-- Compact Search Input -->
+                <div class="relative flex-grow sm:flex-grow-0 sm:w-64 group">
+                    <span
+                        class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-gray-400 text-lg group-focus-within:text-primary transition-colors">search</span>
+                    <input type="text" placeholder="Search hotel..." ```html <style>
+                    .hide-scrollbar::-webkit-scrollbar {
+                    display: none;
+                    }
+
+                    .hide-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
+                    </style>
+                    </head>
+
+                    <body class="bg-white font-sans text-text-main antialiased pb-10 text-base">
+
+                        <!-- Sticky Header Container -->
+                        <nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm relative">
+
+                            <!-- Row 1: Brand & Profile -->
+                            <div
+                                class="container mx-auto px-4 md:px-6 h-16 flex justify-between items-center bg-white relative z-30">
+                                <div class="flex items-center gap-4">
+                                    <img src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg"
+                                        alt="Air Astana" class="h-12 object-contain -ml-2">
+                                    <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+                                    <span
+                                        class="text-base font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+                                </div>
+                                <button
+                                    class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors">
+                                    <span class="material-icons-round text-2xl">person_outline</span>
+                                </button>
+                            </div>
+
+                            <!-- Row 2: Context Bar -->
+                            <div class="bg-gray-50 border-t border-gray-100 relative z-30">
+                                <div class="container mx-auto px-4 md:px-6">
+                                    <div class="flex flex-col md:flex-row gap-0 md:gap-6">
+
+                                        <!-- Search Context -->
+                                        <div
+                                            class="py-3 flex items-center justify-between md:justify-start gap-4 md:border-r md:border-gray-200 md:pr-6 md:w-auto border-b md:border-b-0 border-gray-100">
+                                            <div
+                                                class="flex items-center gap-3 text-base text-text-main overflow-hidden">
+                                                <span class="material-icons-round text-xl text-primary">search</span>
+                                                <div class="flex flex-col leading-tight">
+                                                    <span class="font-bold text-secondary truncate">Almaty -
+                                                        Dubai</span>
+                                                    <span class="text-text-muted text-xs mt-0.5">13-17 Nov • 2
+                                                        Pax</span>
+                                                </div>
+                                            </div>
+                                            <button onclick="toggleSection('search-widget')"
+                                                class="text-xs font-bold uppercase text-primary bg-white border border-primary/20 px-4 py-2 rounded transition-all whitespace-nowrap hover:bg-primary hover:text-white"
+                                                id="btn-search-modify">
+                                                Modify
+                                            </button>
+                                        </div>
+
+                                        <!-- Flight Itinerary Summary -->
+                                        <div onclick="toggleSection('flight-details')"
+                                            class="py-3 flex items-center justify-between gap-4 cursor-pointer group flex-grow hover:bg-white transition-colors rounded px-2 -mx-2">
+                                            <div class="flex flex-row items-center gap-4 md:gap-10 text-sm w-full">
+                                                <!-- Outbound -->
+                                                <div class="flex items-center gap-3 text-text-main">
+                                                    <span
+                                                        class="material-icons-round text-gray-400 text-xl rotate-90">flight</span>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="font-bold text-secondary text-base">07:05</span>
+                                                        <span class="text-gray-400">→</span>
+                                                        <span class="font-bold text-secondary text-base">10:45</span>
+                                                        <span
+                                                            class="text-xs text-text-muted bg-gray-200 px-2 py-0.5 rounded hidden sm:inline-block">KC
+                                                            895</span>
+                                                    </div>
+                                                </div>
+                                                <div class="hidden md:block w-px h-6 bg-gray-300"></div>
+                                                <!-- Return -->
+                                                <div class="flex items-center gap-3 text-text-main">
+                                                    <span
+                                                        class="material-icons-round text-gray-400 text-xl -rotate-90">flight</span>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="font-bold text-secondary text-base">12:00</span>
+                                                        <span class="text-gray-400">→</span>
+                                                        <span class="font-bold text-secondary text-base">18:10</span>
+                                                        <span
+                                                            class="text-xs text-text-muted bg-gray-200 px-2 py-0.5 rounded hidden sm:inline-block">KC
+                                                            896</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="chevron-flight-details"
+                                                class="material-icons-round text-gray-400 text-2xl group-hover:text-primary transition-transform duration-300">expand_more</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- EXPANDABLE 1: Full Search Widget -->
+                            <div id="search-widget"
+                                class="hidden bg-white border-b border-gray-200 shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+                                <div class="container mx-auto px-4 md:px-6 py-3 bg-white relative">
+                                    <!-- Close button positioned absolutely -->
+                                    <button onclick="toggleSection('search-widget')"
+                                        class="absolute top-2 right-4 text-gray-400 hover:text-primary z-10">
+                                        <span class="material-icons-round text-xl">close</span>
+                                    </button>
+
+                                    <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 pr-8 md:pr-0">
+                                        <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                            <label class="block text-xs uppercase text-gray-600 font-bold">From</label>
+                                            <input type="text" value="Almaty (ALA)"
+                                                class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                                        </div>
+                                        <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                            <label class="block text-xs uppercase text-gray-600 font-bold">To</label>
+                                            <input type="text" value="Dubai (DXB)"
+                                                class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                                        </div>
+                                        <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                            <label class="block text-xs uppercase text-gray-600 font-bold">Dates</label>
+                                            <input type="text" value="13 Nov - 17 Nov"
+                                                class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                                        </div>
+                                        <div class="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                                            <label
+                                                class="block text-xs uppercase text-gray-600 font-bold">Guests</label>
+                                            <select
+                                                class="w-full bg-transparent border-none p-0 text-sm font-bold text-secondary focus:ring-0 h-6">
+                                                <option>2 Adults, 1 Room</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" onclick="toggleSection('search-widget')"
+                                            class="bg-primary text-white font-bold uppercase text-xs rounded shadow-md hover:bg-primary-hover transition-colors h-full min-h-[38px]">
+                                            Update Search
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- EXPANDABLE 2: Flight Details -->
+                            <div id="flight-details"
+                                class="hidden bg-white border-b border-gray-200 shadow-lg absolute left-0 right-0 z-20 top-full animate-fade-in-down">
+                                <div class="container mx-auto px-4 md:px-6 py-4 bg-white">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500">Detailed
+                                            Itinerary</h3>
+                                        <button onclick="toggleSection('flight-details')"
+                                            class="text-gray-400 hover:text-primary"><span
+                                                class="material-icons-round text-2xl">close</span></button>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div class="border border-gray-100 rounded-xl p-3 bg-gray-50/50">
+                                            <div class="text-xs font-bold text-primary uppercase mb-1">Outbound • 4h 40m
+                                            </div>
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-xl font-bold text-secondary">07:05 <span
+                                                        class="text-sm font-normal text-gray-500">ALA</span></div>
+                                                <div class="h-px flex-grow bg-gray-300 mx-4 relative"><span
+                                                        class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-300"></span>
+                                                </div>
+                                                <div class="text-xl font-bold text-secondary">10:45 <span
+                                                        class="text-sm font-normal text-gray-500">DXB</span></div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 flex items-center gap-2">
+                                                <span class="material-icons-round text-base">flight_takeoff</span> Air
+                                                Astana KC 895 •
+                                                Economy
+                                            </div>
+                                        </div>
+                                        <div class="border border-gray-100 rounded-xl p-3 bg-gray-50/50">
+                                            <div class="text-xs font-bold text-primary uppercase mb-1">Return • 4h 10m
+                                            </div>
+                                            <div class="flex items-center justify-between mb-1">
+                                                <div class="text-xl font-bold text-secondary">12:00 <span
+                                                        class="text-sm font-normal text-gray-500">DXB</span></div>
+                                                <div class="h-px flex-grow bg-gray-300 mx-4 relative"><span
+                                                        class="absolute right-0 -top-1.5 w-3 h-3 rounded-full bg-gray-300"></span>
+                                                </div>
+                                                <div class="text-xl font-bold text-secondary">18:10 <span
+                                                        class="text-sm font-normal text-gray-500">ALA</span></div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 flex items-center gap-2">
+                                                <span class="material-icons-round text-base">flight_takeoff</span> Air
+                                                Astana KC 896 •
+                                                Economy
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                        <main class="container mx-auto px-4 md:px-6 py-4">
+
+                            <!-- Consolidated Header & Tools Row -->
+                            <div class="mb-6 flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-2">
+
+                                <!-- Left: Title & Count -->
+                                <div class="flex flex-col">
+                                    <h1 class="text-2xl md:text-3xl font-medium text-secondary tracking-tight">Stays in
+                                        <span class="text-primary font-semibold">Dubai</span></h1>
+                                    <p class="text-xs text-text-muted mt-1">84 results found (Flight + Hotel)</p>
+                                </div>
+
+                                <!-- Right: Tools (Search, Filter, Map) -->
+                                <div
+                                    class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto items-stretch sm:items-center">
+                                    <!-- Compact Search Input -->
+                                    <div class="relative flex-grow sm:flex-grow-0 sm:w-64 group">
+                                        <span
+                                            class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-gray-400 text-lg group-focus-within:text-primary transition-colors">search</span>
+                                        <input type="text" placeholder="Search hotel..."
+                                            class="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white shadow-sm h-10 transition-all">
+                                    </div>
+
+                                    <!-- Buttons Group -->
+                                    <div class="flex gap-2">
+                                        <button onclick="toggleFilters()"
+                                            class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-secondary rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-gray-50 hover:border-gray-300 transition h-10 shadow-sm">
+                                            <span class="material-icons-round text-lg">tune</span> Filters
+                                        </button>
+
+                                        <button
+                                            class="flex items-center gap-2 px-5 py-2 bg-white border border-primary text-primary rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition whitespace-nowrap shadow-sm h-10">
+                                            <span class="material-icons-round text-lg">map</span> Map
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Air Astana Picks Carousel (5 Hotels) -->
+                            <section class="mb-0 relative">
+                                <div class="flex items-center justify-between mb-2 px-1">
+                                    <h2
+                                        class="text-xs font-bold uppercase tracking-widest text-secondary flex items-center gap-3">
+                                        <span class="w-8 h-[3px] bg-primary"></span> Air Astana Picks
+                                    </h2>
+                                    <!-- Navigation Arrows -->
+                                    <div class="flex gap-3 hidden md:flex">
+                                        <button onclick="scrollRecs('left')"
+                                            class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 bg-white hover:border-primary text-secondary transition"><span
+                                                class="material-icons-round text-sm">arrow_back</span></button>
+                                        <button onclick="scrollRecs('right')"
+                                            class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 bg-white hover:border-primary text-secondary transition"><span
+                                                class="material-icons-round text-sm">arrow_forward</span></button>
+                                    </div>
+                                </div>
+
+                                <div id="rec-container"
+                                    class="flex overflow-x-auto snap-x snap-mandatory gap-8 hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-0 items-start">
+                                    <!-- Rec Cards Injected Here -->
+                                </div>
+                            </section>
+
+                            <!-- Main Results List -->
+                            <div class="border-t border-gray-100 pt-4 mt-0">
+                                <div class="flex justify-between items-end mb-4">
+                                    <h2 class="text-xs font-bold uppercase tracking-widest text-secondary">All
+                                        Properties</h2>
+                                    <span class="text-xs text-text-muted font-medium">Sorted by Recommended</span>
+                                </div>
+
+                                <!-- List Container -->
+                                <div id="results-list" class="flex flex-col space-y-6">
+                                    <!-- List Items Injected Here -->
+                                </div>
+                            </div>
+
+                            <div class="mt-8 mb-8 text-center">
+                                <button
+                                    class="w-full md:w-auto px-12 py-4 border border-gray-300 rounded-full text-xs font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition text-secondary bg-white">Load
+                                    More Results</button>
+                            </div>
+
+                        </main>
+
+                        <!-- Filter Drawer Overlay -->
+                        <div id="filter-drawer" class="fixed inset-0 z-[60] hidden transition-all duration-300">
+                            <!-- Backdrop -->
+                            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+                                id="filter-backdrop" onclick="toggleFilters()"></div>
+
+                            <!-- Panel -->
+                            <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col"
+                                id="filter-panel">
+                                <!-- Header -->
+                                <div
+                                    class="p-5 border-b border-gray-100 flex justify-between items-center bg-white z-10">
+                                    <h2 class="text-lg font-bold text-secondary">Filters</h2>
+                                    <button onclick="toggleFilters()"
+                                        class="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition">
+                                        <span class="material-icons-round">close</span>
+                                    </button>
+                                </div>
+
+                                <!-- Scrollable Content -->
+                                <div class="flex-grow overflow-y-auto p-6 space-y-8">
+                                    <!-- Price -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-secondary uppercase tracking-wider mb-4">Price
+                                            Range (Total)</h3>
+                                        <div class="flex items-center gap-4">
+                                            <div class="relative flex-1">
+                                                <span
+                                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">£</span>
+                                                <input type="number" id="price-min" placeholder="Min"
+                                                    class="w-full pl-6 pr-3 py-2 bg-gray-50 border border-gray-200 rounded text-sm font-medium focus:ring-primary focus:border-primary">
+                                            </div>
+                                            <span class="text-gray-400">-</span>
+                                            <div class="relative flex-1">
+                                                <span
+                                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">£</span>
+                                                <input type="number" id="price-max" placeholder="Max"
+                                                    class="w-full pl-6 pr-3 py-2 bg-gray-50 border border-gray-200 rounded text-sm font-medium focus:ring-primary focus:border-primary">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Star Rating -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Star
+                                            Rating</h3>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer group">
+                                                <input type="checkbox" value="5"
+                                                    class="filter-star rounded border-gray-300 text-primary focus:ring-primary">
+                                                <div class="flex text-primary"><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span></div>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer group">
+                                                <input type="checkbox" value="4"
+                                                    class="filter-star rounded border-gray-300 text-primary focus:ring-primary">
+                                                <div class="flex text-primary"><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span></div>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer group">
+                                                <input type="checkbox" value="3"
+                                                    class="filter-star rounded border-gray-300 text-primary focus:ring-primary">
+                                                <div class="flex text-primary"><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span><span
+                                                        class="material-icons-round text-sm">star</span></div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Guest Rating -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Guest
+                                            Rating</h3>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="radio" name="guest-rating" value="9"
+                                                    class="filter-rating text-primary focus:ring-primary border-gray-300">
+                                                <span class="text-sm text-secondary">Excellent (9+)</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="radio" name="guest-rating" value="8"
+                                                    class="filter-rating text-primary focus:ring-primary border-gray-300">
+                                                <span class="text-sm text-secondary">Very Good (8+)</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="radio" name="guest-rating" value="7"
+                                                    class="filter-rating text-primary focus:ring-primary border-gray-300">
+                                                <span class="text-sm text-secondary">Good (7+)</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="radio" name="guest-rating" value="0" checked
+                                                    class="filter-rating text-primary focus:ring-primary border-gray-300">
+                                                <span class="text-sm text-secondary">Any</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Board Basis -->
+                                    <div>
+                                        <h3 class="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Board
+                                            Basis</h3>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="checkbox" value="Breakfast"
+                                                    class="filter-board rounded border-gray-300 text-primary focus:ring-primary">
+                                                <span class="text-sm text-secondary">Breakfast Included</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="checkbox" value="Half Board"
+                                                    class="filter-board rounded border-gray-300 text-primary focus:ring-primary">
+                                                <span class="text-sm text-secondary">Half Board</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer">
+                                                <input type="checkbox" value="All Inclusive"
+                                                    class="filter-board rounded border-gray-300 text-primary focus:ring-primary">
+                                                <span class="text-sm text-secondary">All Inclusive</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="p-5 border-t border-gray-100 bg-gray-50 flex gap-3">
+                                    <button onclick="resetFilters()"
+                                        class="flex-1 py-3 border border-gray-300 rounded-lg text-xs font-bold uppercase tracking-wide text-secondary hover:bg-white transition">Reset</button>
+                                    <button onclick="applyFilters()"
+                                        class="flex-[2] py-3 bg-primary text-white rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-primary-hover transition shadow-md">Show
+                                        Results</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            const hotels = [
+                                {
+                                    name: "Atlantis, The Palm",
+                                    location: "Palm Jumeirah, Dubai",
+                                    stars: 5,
+                                    rating: 9.0,
+                                    ratingText: "Exceptional",
+                                    price: 4200,
+                                    oldPrice: 4800,
+                                    images: [
+                                        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+                                        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"
+                                    ],
+                                    roomType: "Ocean King Room",
+                                    boardType: "Half Board",
+                                    recBadge: "Iconic"
+                                },
+                                {
+                                    name: "Rixos Premium Dubai JBR",
+                                    location: "Jumeirah Beach Residence",
+                                    stars: 5,
+                                    rating: 9.2,
+                                    ratingText: "Excellent",
+                                    price: 2800,
+                                    oldPrice: 3100,
+                                    images: [
+                                        "https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=800&q=80",
+                                        "https://images.unsplash.com/photo-1571896349842-6e5c48dc52e3?auto=format&fit=crop&w=800&q=80"
+                                    ],
+                                    roomType: "Premium Room",
+                                    boardType: "Breakfast",
+                                    recBadge: "Bestseller"
+                                },
+                                {
+                                    name: "Jumeirah Al Naseem",
+                                    location: "Madinat Jumeirah",
+                                    stars: 5,
+                                    rating: 9.5,
+                                    ratingText: "Exceptional",
+                                    price: 5100,
+                                    oldPrice: 5500,
+                                    images: [
+                                        "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+                                        "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
+                                    ],
+                                    roomType: "Resort Deluxe",
+                                    boardType: "Breakfast",
+                                    recBadge: "Luxury"
+                                },
+                                {
+                                    name: "Sofitel Dubai The Palm",
+                                    location: "Palm Jumeirah",
+                                    stars: 5,
+                                    rating: 8.8,
+                                    ratingText: "Very Good",
+                                    price: 2500,
+                                    oldPrice: 2900,
+                                    images: [
+                                        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80",
+                                        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80"
+                                    ],
+                                    roomType: "Luxury Room",
+                                    boardType: "All Inclusive",
+                                    recBadge: "Family Choice"
+                                },
+                                {
+                                    name: "Five Palm Jumeirah",
+                                    location: "Palm Jumeirah",
+                                    stars: 5,
+                                    rating: 8.9,
+                                    ratingText: "Excellent",
+                                    price: 3200,
+                                    oldPrice: 3500,
+                                    images: [
+                                        "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80",
+                                        "https://images.unsplash.com/photo-1549294413-26f195200c16?auto=format&fit=crop&w=800&q=80"
+                                    ],
+                                    roomType: "Superior Room",
+                                    boardType: "Half Board",
+                                    recBadge: "Trending"
+                                }
+                            ];
+
+                            // Populate Recs (5 Hotels) - Aspect Ratio 16/10
+                            const recContainer = document.getElementById('rec-container');
+                            hotels.forEach((hotel, index) => {
+                                const starsHtml = Array(hotel.stars).fill('<span class="material-icons-round text-primary text-xs">star</span>').join('');
+                                recContainer.innerHTML += `
+            <div class="snap-center shrink-0 w-[300px] md:w-[340px] group cursor-pointer bg-white rounded-2xl border border-primary/10 p-0 hover:shadow-glow transition-all flex flex-col overflow-hidden relative">
+                <div class="h-1.5 w-full bg-primary"></div>
+                
+                <!-- Image (Aspect 16/10) -->
+                <div class="aspect-[16/10] relative bg-gray-100 group/slider">
+                    <!-- FIX: Added absolute inset-0 to force containment of tall images like Five Palm -->
+                     <div id="rec-slider-${index}" class="h-full w-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar scroll-smooth absolute inset-0">
+                        ${hotel.images.map(img => `<img src="${img}" class="w-full h-full object-cover shrink-0 snap-center" />`).join('')}
+                    </div>
+                     <div class="absolute inset-y-0 flex items-center justify-between w-full px-2 opacity-0 group-hover/slider:opacity-100 transition-opacity pointer-events-none z-10">
+                         <button onclick="scrollSlider('rec-slider-${index}', 'left')" class="pointer-events-auto w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm"><span class="material-icons-round text-base">chevron_left</span></button>
+                         <button onclick="scrollSlider('rec-slider-${index}', 'right')" class="pointer-events-auto w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm"><span class="material-icons-round text-base">chevron_right</span></button>
+                    </div>
+
+                    ${hotel.recBadge ? `<div class="absolute top-3 left-3 bg-primary text-white px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-md z-10">${hotel.recBadge}</div>` : ''}
+                    <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur text-primary px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-1.5 text-xs font-bold z-10">
+                        <span>${hotel.rating}</span>
+                        <span class="w-1 h-1 bg-primary rounded-full"></span>
+                        <span class="text-[10px] uppercase tracking-wide font-medium">${hotel.ratingText}</span>
+                    </div>
+                </div>
+
+                <div class="p-3 flex flex-col">
+                    <div class="flex items-center gap-1 mb-2 opacity-90">${starsHtml}</div>
+                    <h3 class="font-bold text-lg text-text-main group-hover:text-primary truncate mb-1">${hotel.name}</h3>
+                    <p class="text-xs text-text-muted mb-3 flex items-center gap-1 truncate"><span class="material-icons-round text-sm">location_on</span> ${hotel.location}</p>
+                    
+                    <!-- Rate Includes Section -->
+                    <div class="mt-1 pt-2 border-t border-gray-100">
+                        <!-- Accessibility Fix: Bumped to text-xs (11pt) -->
+                        <p class="text-xs font-bold text-text-muted uppercase tracking-wide mb-2">Package Includes</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="flex items-center gap-2 text-xs text-text-muted bg-gray-50 px-2 py-1 rounded border border-gray-100 font-medium">
+                                <span class="material-icons-round text-gray-400 text-sm">bed</span> ${hotel.roomType}
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-text-muted bg-gray-50 px-2 py-1 rounded border border-gray-100 font-medium">
+                                <span class="material-icons-round text-gray-400 text-sm">restaurant</span> ${hotel.boardType}
+                            </div>
+                             <!-- Subtler Flight Label -->
+                             <div class="flex items-center gap-2 text-xs text-primary px-2 py-1 rounded font-bold">
+                                <span class="material-icons-round text-sm">check_circle</span> Flight & Hotel
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 flex items-end justify-between">
+                        <div>
+                            ${hotel.oldPrice ? `<div class="text-xs text-text-muted line-through">£${hotel.oldPrice.toLocaleString()}</div>` : ''}
+                            <div class="text-xl font-bold text-primary leading-none">£${hotel.price.toLocaleString()}</div>
+                            <!-- Accessibility Fix: Bumped to text-xs (11pt) -->
+                            <div class="text-xs text-text-muted mt-0.5 font-medium">Total for 2 guests</div>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-900 transition shadow-subtle uppercase tracking-wide">View</button>
+                    </div>
+                </div>
+            </div>
+        `;
+                            });
+
+                            // Initial Render
+                            renderHotels(hotels);
+
+                            function renderHotels(data) {
+                                const listContainer = document.getElementById('results-list');
+                                listContainer.innerHTML = ''; // Clear existing
+
+                                if (data.length === 0) {
+                                    listContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <span class="material-icons-round text-4xl text-gray-300 mb-2">search_off</span>
+                        <p class="text-secondary font-bold">No hotels found matching your filters.</p>
+                        <button onclick="resetFilters()" class="text-primary text-sm font-bold mt-2 hover:underline">Reset Filters</button>
+                    </div>
+                `;
+                                    return;
+                                }
+
+                                data.forEach((hotel, index) => {
+                                    const sliderId = `list-slider-${index}-${Math.random().toString(36).substr(2, 5)}`; // Unique ID for re-renders
+                                    const starsHtml = Array(hotel.stars).fill('<span class="material-icons-round text-gold text-sm">star</span>').join('');
+
+                                    const html = `
+        <div class="bg-white rounded-2xl border border-gray-200 p-0 overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="flex flex-col md:flex-row h-full">
+                
+                <!-- Carousel Image - EXACT 16/10 RATIO (Matching Recs) -->
+                <div class="relative w-full md:w-[340px] md:min-w-[340px] md:max-w-[340px] aspect-[16/10] shrink-0 group/slider bg-gray-100 self-start">
+                    <div id="${sliderId}" class="h-full w-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar scroll-smooth absolute inset-0">
+                        ${hotel.images.map(img => `<img src="${img}" class="w-full h-full object-cover shrink-0 snap-center" />`).join('')}
+                    </div>
+                    <div class="absolute inset-y-0 flex items-center justify-between w-full px-2 opacity-0 group-hover/slider:opacity-100 transition-opacity pointer-events-none z-10">
+                         <button onclick="scrollSlider('${sliderId}', 'left')" class="pointer-events-auto w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm"><span class="material-icons-round text-base">chevron_left</span></button>
+                         <button onclick="scrollSlider('${sliderId}', 'right')" class="pointer-events-auto w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm"><span class="material-icons-round text-base">chevron_right</span></button>
+                    </div>
+                    ${hotel.recBadge ? `<div class="absolute top-3 left-3 bg-primary text-white px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-md z-10">${hotel.recBadge}</div>` : ''}
+                </div>
+
+                <!-- Content -->
+                <div class="flex-grow p-5 flex flex-col md:flex-row gap-6">
+                    <div class="flex-grow flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="flex gap-0.5">${starsHtml}</div>
+                            <span class="text-xs font-bold text-secondary bg-gray-100 px-2 py-0.5 rounded">${hotel.rating} ${hotel.ratingText}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-secondary leading-tight mb-2 cursor-pointer hover:text-primary transition-colors">${hotel.name}</h3>
+                        <p class="text-xs text-text-muted mb-5 flex items-center gap-1"><span class="material-icons-round text-base text-primary">location_on</span> ${hotel.location}</p>
+                        
+                        <!-- RATE INCLUDES SECTION -->
+                        <div class="mt-2 pt-4 border-t border-gray-100">
+                             <p class="text-xs font-bold text-text-muted uppercase tracking-wide mb-3">Rate Includes</p>
+                             <div class="flex flex-wrap gap-3">
+                                <div class="flex items-center gap-2 text-xs text-text-muted bg-gray-50 px-3 py-1.5 rounded border border-gray-100 font-medium">
+                                    <span class="material-icons-round text-gray-400 text-base">bed</span> ${hotel.roomType}
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-text-muted bg-gray-50 px-3 py-1.5 rounded border border-gray-100 font-medium">
+                                    <span class="material-icons-round text-gray-400 text-base">restaurant</span> ${hotel.boardType}
+                                </div>
+                                 <div class="flex items-center gap-2 text-xs text-primary px-2 py-1.5 rounded font-bold">
+                                    <span class="material-icons-round text-lg">check_circle</span> Flight & Hotel Package
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price & CTA -->
+                    <div class="flex md:flex-col justify-between md:justify-center items-center md:items-end md:border-l md:border-gray-100 md:pl-8 md:w-60 pt-4 md:pt-0 border-t md:border-t-0 border-gray-100 mt-2 md:mt-0 shrink-0">
+                        <div class="text-left md:text-right">
+                            ${hotel.oldPrice ? `<div class="text-xs text-text-muted line-through">£${hotel.oldPrice.toLocaleString()}</div>` : ''}
+                            <div class="text-2xl font-bold text-primary leading-none">£${hotel.price.toLocaleString()}</div>
+                            <div class="text-xs text-text-muted mt-1 font-medium">Total price / 2 Pax</div>
+                            <div class="text-xs text-green-600 mt-1 font-medium flex items-center gap-1 justify-end"><span class="material-icons-round text-sm">check</span> Free Cancellation</div>
+                        </div>
+                        <button class="px-8 py-3 bg-primary text-white rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-primary-hover transition md:mt-6 shadow-md w-auto md:w-full">
+                            View Deal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+                                    listContainer.insertAdjacentHTML('beforeend', html);
+                                });
+                            }
+
+                            // Filter Logic
+                            function toggleFilters() {
+                                const drawer = document.getElementById('filter-drawer');
+                                const backdrop = document.getElementById('filter-backdrop');
+                                const panel = document.getElementById('filter-panel');
+
+                                if (drawer.classList.contains('hidden')) {
+                                    // Open
+                                    drawer.classList.remove('hidden');
+                                    // Small delay to allow display:block to apply before opacity transition
+                                    setTimeout(() => {
+                                        backdrop.classList.remove('opacity-0');
+                                        panel.classList.remove('translate-x-full');
+                                    }, 10);
+                                } else {
+                                    // Close
+                                    backdrop.classList.add('opacity-0');
+                                    panel.classList.add('translate-x-full');
+                                    setTimeout(() => {
+                                        drawer.classList.add('hidden');
+                                    }, 300); // Match transition duration
+                                }
+                            }
+
+                            function applyFilters() {
+                                // Get values
+                                const minPrice = document.getElementById('price-min').value;
+                                const maxPrice = document.getElementById('price-max').value;
+
+                                const starCheckboxes = document.querySelectorAll('.filter-star:checked');
+                                const selectedStars = Array.from(starCheckboxes).map(cb => parseInt(cb.value));
+
+                                const guestRatingRadio = document.querySelector('input[name="guest-rating"]:checked');
+                                const minRating = guestRatingRadio ? parseFloat(guestRatingRadio.value) : 0;
+
+                                const boardCheckboxes = document.querySelectorAll('.filter-board:checked');
+                                const selectedBoards = Array.from(boardCheckboxes).map(cb => cb.value);
+
+                                // Filter Data
+                                const filtered = hotels.filter(hotel => {
+                                    // Price
+                                    if (minPrice && hotel.price < minPrice) return false;
+                                    if (maxPrice && hotel.price > maxPrice) return false;
+
+                                    // Stars
+                                    if (selectedStars.length > 0 && !selectedStars.includes(hotel.stars)) return false;
+
+                                    // Rating
+                                    if (hotel.rating < minRating) return false;
+
+                                    // Board (Partial match or exact? Let's do partial/includes)
+                                    if (selectedBoards.length > 0) {
+                                        // Check if hotel board type contains any of the selected strings
+                                        const matchesBoard = selectedBoards.some(board => hotel.boardType.includes(board));
+                                        if (!matchesBoard) return false;
+                                    }
+
+                                    return true;
+                                });
+
+                                renderHotels(filtered);
+                                toggleFilters(); // Close drawer on apply
+                            }
+
+                            function resetFilters() {
+                                document.getElementById('price-min').value = '';
+                                document.getElementById('price-max').value = '';
+                                document.querySelectorAll('.filter-star').forEach(cb => cb.checked = false);
+                                document.querySelector('input[name="guest-rating"][value="0"]').checked = true;
+                                document.querySelectorAll('.filter-board').forEach(cb => cb.checked = false);
+
+                                renderHotels(hotels);
+                            }
+
+                            function scrollRecs(direction) {
+                                const container = document.getElementById('rec-container');
+                                const scrollAmount = 340;
+                                if (direction === 'left') {
+                                    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                } else {
+                                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                }
+                            }
+
+                            function scrollSlider(id, direction) {
+                                const container = document.getElementById(id);
+                                container.scrollBy({ left: direction === 'left' ? -container.clientWidth : container.clientWidth, behavior: 'smooth' });
+                            }
+
+                            function toggleSection(id) {
+                                const section = document.getElementById(id);
+                                const otherId = id === 'search-widget' ? 'flight-details' : 'search-widget';
+                                const otherSection = document.getElementById(otherId);
+                                const flightChevron = document.getElementById('chevron-flight-details');
+
+                                if (!otherSection.classList.contains('hidden')) {
+                                    otherSection.classList.add('hidden');
+                                    if (otherId === 'flight-details') flightChevron.style.transform = 'rotate(0deg)';
+                                }
+
+                                section.classList.toggle('hidden');
+
+                                if (id === 'flight-details') {
+                                    flightChevron.style.transform = section.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+                                }
+                            }
+                        </script>
+                    </body>
+
+</html>
+```

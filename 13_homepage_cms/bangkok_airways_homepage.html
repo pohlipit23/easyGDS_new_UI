@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangkok Airways | Asia's Boutique Airline</title>
+    <meta name="description"
+        content="Fly with Bangkok Airways, Asia's Boutique Airline. Discover Koh Samui, Phuket, Chiang Mai, and more with our full-service experience.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fraunces & Outfit Fonts (Keeping for Premium Feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    display: ['Fraunces', 'serif'],
+                    sans: ['Outfit', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#254AA5', // Bangkok Airways Blue
+                            'primary-light': '#4A6FC2',
+                            accent: '#BC9454', // Gold/Khaki
+                            'accent-dark': '#9A783A',
+                            navy: '#0D1E35',
+                            'navy-light': '#1A3A5A',
+                            sand: '#F9FAFB',
+                            'warm-gray': '#F3F4F6',
+                            slate: '#64748B',
+                            'slate-light': '#94A3B8',
+                        }
+                    },
+                    boxShadow: {
+                        'elegant': '0 4px 20px -2px rgba(37, 74, 165, 0.1)',
+                        'elegant-lg': '0 10px 25px -3px rgba(37, 74, 165, 0.15)',
+                        'elegant-xl': '0 20px 40px -5px rgba(37, 74, 165, 0.2)',
+                        'inner-glow': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'scale-in': 'scaleIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F9FAFB;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #254AA5;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1A3A5A;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Hero Carousel */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-text-slide {
+            opacity: 0;
+            transition: opacity 1.0s ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-text-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        /* Custom Radio Buttons */
+        .custom-radio {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #94A3B8;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            background: white;
+        }
+
+        .custom-radio::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.2s ease;
+            background: #BC9454;
+        }
+
+        .custom-radio:checked::before {
+            transform: scale(1);
+        }
+
+        .custom-radio:checked {
+            border-color: #BC9454;
+            background-color: white;
+        }
+
+        .custom-radio:hover {
+            border-color: #BC9454;
+        }
+
+        /* Sticky Search Styling */
+        #search-panel.is-sticky .input-container {
+            background-color: #F8FAFC;
+            border-color: #E2E8F0;
+        }
+
+        #search-panel.is-sticky .input-container:hover {
+            border-color: #254AA5;
+        }
+
+        #search-panel.is-sticky label {
+            color: #64748B;
+        }
+
+        #search-panel.is-sticky input {
+            color: #1A2E35;
+        }
+
+        #search-panel.is-sticky input::placeholder {
+            color: #94A3B8;
+        }
+
+        /* Texture Overlay */
+        .texture-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+        }
+
+        /* Button Animations */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(188, 148, 84, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Accent Line */
+        .accent-line {
+            position: relative;
+        }
+
+        .accent-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -12px;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #BC9454 0%, transparent 100%);
+            border-radius: 2px;
+        }
+
+        /* Loading Animations */
+        .animate-on-load {
+            opacity: 0;
+        }
+
+        .loaded .animate-on-load {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-sand text-brand-navy font-sans antialiased selection:bg-brand-accent selection:text-white">
+
+    <!-- ================= HEADER ================= -->
+    <header class="absolute top-0 left-0 right-0 z-[60] h-24 flex items-center transition-all duration-300"
+        id="main-header">
+        <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center h-full">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- Using specified logo -->
+                <img src="Bangkok-Airways-Logo.png" alt="Bangkok Airways"
+                    class="h-16 w-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-105 brightness-0 invert">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-white/95">
+                <div
+                    class="flex items-center gap-1.5 cursor-pointer hover:text-brand-accent transition-all duration-300">
+                    <span class="font-semibold">THB</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+                <div class="flex items-center gap-2 cursor-pointer hover:text-brand-accent transition-all duration-300">
+                    <img src="https://flagcdn.com/w20/th.png" alt="Thailand" class="w-5 h-auto rounded shadow-sm">
+                    <span class="font-semibold">EN</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+                <nav class="flex items-center gap-6">
+                    <a href="#" class="hover:text-brand-accent transition-colors font-semibold">Destinations</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors font-semibold">Boutique Services</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors font-semibold">FlyerBonus</a>
+                </nav>
+                <a href="#"
+                    class="bg-white/10 backdrop-blur-md border border-white/30 text-white px-6 py-2.5 rounded-full hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-300 font-bold shadow-lg">
+                    Sign In
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button class="lg:hidden text-white hover:text-brand-accent transition-colors" id="mobile-menu-btn">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-brand-primary z-[55] transform translate-x-full transition-transform duration-300 lg:hidden pt-28 px-6 flex flex-col gap-6"
+        id="mobile-menu">
+        <a href="#" class="text-2xl font-display font-bold text-white border-b border-white/10 pb-4">Destinations</a>
+        <a href="#" class="text-2xl font-display font-bold text-white border-b border-white/10 pb-4">Boutique
+            Services</a>
+        <a href="#" class="text-2xl font-display font-bold text-white border-b border-white/10 pb-4">FlyerBonus</a>
+        <div class="flex flex-col gap-4 mt-8">
+            <a href="#"
+                class="text-center py-4 border border-white/30 rounded-full font-bold text-white hover:bg-white hover:text-brand-primary transition-all">
+                Sign In
+            </a>
+            <a href="#"
+                class="text-center py-4 bg-brand-accent text-white rounded-full font-bold shadow-lg hover:bg-white hover:text-brand-accent transition-all">
+                Join FlyerBonus
+            </a>
+        </div>
+    </div>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative h-[95vh] min-h-[700px] w-full overflow-hidden texture-overlay">
+        <!-- Carousel Images -->
+        <div class="absolute inset-0 z-0">
+            <!-- Slide 1: Koh Samui (New Generated Image) -->
+            <div class="hero-slide active absolute inset-0 bg-cover bg-center"
+                style="background-image: url('images/koh_samui_hero.png');"></div>
+            <!-- Slide 2: Phuket (New Generated Image) -->
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('images/phuket.png');"></div>
+            <!-- Slide 3: Chiang Mai (New Generated Image) -->
+            <div class="hero-slide absolute inset-0 bg-cover bg-center"
+                style="background-image: url('images/chiang_mai.png');"></div>
+
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-white/70"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 container mx-auto px-6 lg:px-12 h-full">
+            <!-- Slide 1: Koh Samui -->
+            <div class="hero-text-slide active absolute inset-0 flex flex-col justify-center items-center pb-32 pt-20">
+                <span
+                    class="inline-block py-2 px-5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs lg:text-sm font-bold tracking-widest uppercase mb-6 border border-white/30 shadow-lg">
+                    Asia's Boutique Airline
+                </span>
+                <h1
+                    class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-6 drop-shadow-2xl leading-[1.05]">
+                    Koh Samui <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-yellow-200 italic">Like
+                        Never Before</span>
+                </h1>
+                <p
+                    class="text-lg md:text-2xl text-white/95 text-center max-w-2xl drop-shadow-lg font-normal leading-relaxed">
+                    Discover the jewel of the Gulf of Thailand with our award-winning boutique service.
+                </p>
+            </div>
+
+            <!-- Slide 2: Phuket -->
+            <div class="hero-text-slide absolute inset-0 flex flex-col justify-center items-center pb-32 pt-20">
+                <span
+                    class="inline-block py-2 px-5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs lg:text-sm font-bold tracking-widest uppercase mb-6 border border-white/30  shadow-lg">
+                    Pearl of the Andaman
+                </span>
+                <h1
+                    class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-6 drop-shadow-2xl leading-[1.05]">
+                    Escape to <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-200 italic">Phuket</span>
+                </h1>
+                <p
+                    class="text-lg md:text-2xl text-white/95 text-center max-w-2xl drop-shadow-lg font-normal leading-relaxed">
+                    Immerse yourself in crystal clear waters and vibrant island culture.
+                </p>
+            </div>
+
+            <!-- Slide 3: Chiang Mai -->
+            <div class="hero-text-slide absolute inset-0 flex flex-col justify-center items-center pb-32 pt-20">
+                <span
+                    class="inline-block py-2 px-5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs lg:text-sm font-bold tracking-widest uppercase mb-6 border border-white/30  shadow-lg">
+                    Rose of the North
+                </span>
+                <h1
+                    class="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-6 drop-shadow-2xl leading-[1.05]">
+                    Explore <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-green-100 italic">Chiang
+                        Mai</span>
+                </h1>
+                <p
+                    class="text-lg md:text-2xl text-white/95 text-center max-w-2xl drop-shadow-lg font-normal leading-relaxed">
+                    Experience rich history, ancient temples, and breathtaking mountain scenery.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= STICKY SEARCH BAR ================= -->
+    <div class="sticky top-0 z-[50] -mt-32 lg:-mt-40 px-4 lg:px-6 pb-6 transition-all duration-300 pointer-events-none"
+        id="search-container-wrapper">
+        <div class="container mx-auto pointer-events-auto">
+            <!-- Search Panel -->
+            <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-elegant-xl p-6 lg:p-8 max-w-6xl mx-auto transition-all duration-500 border border-white/50"
+                id="search-panel">
+
+                <!-- Search Tabs -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 mb-8 p-2 bg-brand-warm-gray rounded-full lg:w-max lg:mx-auto transition-all duration-300"
+                    id="search-tabs-container">
+                    <button
+                        class="search-tab active flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap text-brand-primary bg-white shadow-sm"
+                        data-target="flights">
+                        <i data-lucide="plane" class="w-4 h-4"></i> Flights
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold text-brand-slate hover:text-brand-primary hover:bg-white/50 transition-all duration-300 whitespace-nowrap"
+                        data-target="packages">
+                        <i data-lucide="package" class="w-4 h-4"></i> Packages
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold text-brand-slate hover:text-brand-primary hover:bg-white/50 transition-all duration-300 whitespace-nowrap"
+                        data-target="hotels">
+                        <i data-lucide="bed" class="w-4 h-4"></i> Hotels
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold text-brand-slate hover:text-brand-primary hover:bg-white/50 transition-all duration-300 whitespace-nowrap"
+                        data-target="check-in">
+                        <i data-lucide="ticket" class="w-4 h-4"></i> Check-in
+                    </button>
+                    <button
+                        class="search-tab flex items-center gap-2.5 px-6 py-3 rounded-full text-sm font-bold text-brand-slate hover:text-brand-primary hover:bg-white/50 transition-all duration-300 whitespace-nowrap"
+                        data-target="manage-booking">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i> My Booking
+                    </button>
+                </div>
+
+                <!-- Search Forms Container -->
+                <div class="transition-all duration-500 origin-top" id="search-inputs-container">
+
+                    <!-- Flights Form (Default) -->
+                    <form class="search-form block" id="flights-form">
+                        <div class="flex flex-wrap gap-6 mb-6 text-brand-navy text-sm font-semibold">
+                            <label
+                                class="flex items-center gap-2.5 cursor-pointer hover:text-brand-primary transition-colors">
+                                <input type="radio" name="tripType" class="custom-radio" checked>
+                                <span>Return</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2.5 cursor-pointer hover:text-brand-primary transition-colors">
+                                <input type="radio" name="tripType" class="custom-radio">
+                                <span>One-way</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2.5 cursor-pointer hover:text-brand-primary transition-colors">
+                                <input type="radio" name="tripType" class="custom-radio">
+                                <span>Multi-city</span>
+                            </label>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1.5fr_1fr_1fr_auto] gap-4 items-center">
+                            <!-- Origin -->
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <label
+                                    class="absolute left-14 top-2 text-[10px] uppercase font-bold text-brand-slate tracking-wide pointer-events-none">From</label>
+                                <i data-lucide="plane-takeoff"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <input type="text" value="Bangkok (BKK)"
+                                    class="w-full ml-4 bg-transparent outline-none text-brand-navy font-semibold text-base pt-3 placeholder:text-gray-400">
+                            </div>
+
+                            <!-- Destination -->
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <label
+                                    class="absolute left-14 top-2 text-[10px] uppercase font-bold text-brand-slate tracking-wide pointer-events-none">To</label>
+                                <i data-lucide="plane-landing"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <input type="text" placeholder="Koh Samui (USM)"
+                                    class="w-full ml-4 bg-transparent outline-none text-brand-navy font-semibold text-base pt-3 placeholder:text-gray-400">
+                            </div>
+
+                            <!-- Dates -->
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <label
+                                    class="absolute left-14 top-2 text-[10px] uppercase font-bold text-brand-slate tracking-wide pointer-events-none">Depart
+                                    - Return</label>
+                                <i data-lucide="calendar"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <input type="text" placeholder="Select Dates"
+                                    class="w-full ml-4 bg-transparent outline-none text-brand-navy font-semibold text-base pt-3 placeholder:text-gray-400">
+                            </div>
+
+                            <!-- Passengers -->
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative cursor-pointer hover:border-brand-primary/50">
+                                <label
+                                    class="absolute left-14 top-2 text-[10px] uppercase font-bold text-brand-slate tracking-wide pointer-events-none">Passengers</label>
+                                <i data-lucide="users"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <input type="text" value="1 Adult, Economy" readonly
+                                    class="w-full ml-4 bg-transparent outline-none text-brand-navy font-semibold text-base pt-3 cursor-pointer">
+                            </div>
+
+                            <!-- Search Button -->
+                            <button
+                                class="btn-primary h-16 bg-brand-primary hover:bg-brand-primary-light text-white rounded-2xl px-10 font-display font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition-all">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Packages Form -->
+                    <form class="search-form hidden" id="packages-form">
+                        <div class="grid grid-cols-1 md:grid-cols-[2fr_auto] gap-4 items-center">
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="compass"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span
+                                        class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Experience
+                                        Type</span>
+                                    <input type="text" placeholder="Wellness, Adventure, Honeymoon..."
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <button
+                                class="btn-primary h-16 bg-brand-accent hover:bg-brand-accent-dark text-white rounded-2xl px-12 font-display font-bold text-lg shadow-lg">
+                                Explore Packages
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Hotels Form -->
+                    <form class="search-form hidden" id="hotels-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_auto] gap-4 items-center">
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="map-pin"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span
+                                        class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Destination</span>
+                                    <input type="text" placeholder="Where do you want to stay?"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="calendar-days"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span
+                                        class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Check-in
+                                        / Out</span>
+                                    <input type="text" placeholder="Add dates"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="user"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span
+                                        class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Guests</span>
+                                    <input type="text" placeholder="2 Guests, 1 Room"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <button
+                                class="btn-primary h-16 bg-brand-accent hover:bg-brand-accent-dark text-white rounded-2xl px-8 font-display font-bold text-lg shadow-lg">
+                                Find Hotels
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Check-in Form -->
+                    <form class="search-form hidden" id="check-in-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1.5fr_auto] gap-4 items-center">
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="ticket"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Booking
+                                        Reference</span>
+                                    <input type="text" placeholder="6-character code"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="user"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Last
+                                        Name</span>
+                                    <input type="text" placeholder="As in passport"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <button
+                                class="btn-primary h-16 bg-brand-primary hover:bg-brand-primary-light text-white rounded-2xl px-8 font-display font-bold text-lg shadow-lg">
+                                Check In
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Manage Booking Form -->
+                    <form class="search-form hidden" id="manage-booking-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1.5fr_auto] gap-4 items-center">
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="briefcase"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Booking
+                                        Reference</span>
+                                    <input type="text" placeholder="6-character code"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <div
+                                class="input-container bg-white h-16 px-5 rounded-2xl border border-gray-200 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all flex items-center group relative hover:border-brand-primary/50">
+                                <i data-lucide="user"
+                                    class="w-5 h-5 text-brand-slate/50 group-focus-within:text-brand-primary transition-colors"></i>
+                                <div class="ml-4 flex flex-col justify-center w-full">
+                                    <span class="text-[10px] font-bold text-brand-slate uppercase tracking-wide">Last
+                                        Name</span>
+                                    <input type="text" placeholder="As in passport"
+                                        class="w-full bg-transparent outline-none font-semibold text-brand-navy text-base">
+                                </div>
+                            </div>
+                            <button
+                                class="btn-primary h-16 bg-brand-navy hover:bg-brand-navy-light text-white rounded-2xl px-8 font-display font-bold text-lg shadow-lg">
+                                Manage
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FEATURED DESTINATIONS ================= -->
+    <section class="py-20 lg:py-28 container mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
+            <div>
+                <span class="text-brand-accent font-bold tracking-widest text-sm uppercase mb-3 block">
+                    Discover Thailand
+                </span>
+                <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy accent-line mb-4">
+                    Top Destinations
+                </h2>
+                <p class="text-brand-slate text-lg max-w-xl mt-6">
+                    From the bustling streets of Bangkok to the serene beaches of Krabi, explore the Land of Smiles with
+                    us.
+                </p>
+            </div>
+            <a href="#"
+                class="group flex items-center gap-2 text-brand-primary font-bold hover:text-brand-accent transition-colors text-base">
+                View Route Map
+                <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Koh Samui -->
+            <a href="#"
+                class="group relative h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500 cursor-pointer">
+                <img src="images/koh_samui_hero.png" alt="Koh Samui"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div
+                    class="absolute top-5 right-5 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 text-white text-xs font-bold border border-white/30">
+                    Boutique
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 p-8 text-white transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <h3 class="font-display text-2xl font-bold mb-2">Koh Samui</h3>
+                    <p class="text-white/80 text-sm mb-4 leading-relaxed">Our home island, a tropical paradise.</p>
+                    <div
+                        class="flex items-center gap-2 text-brand-accent font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        Explore Flights <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Chiang Mai -->
+            <a href="#"
+                class="group relative h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500 cursor-pointer">
+                <!-- Using Generated Chiang Mai Image -->
+                <img src="images/chiang_mai.png" alt="Chiang Mai"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div
+                    class="absolute top-5 right-5 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 text-white text-xs font-bold border border-white/30">
+                    Heritage
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 p-8 text-white transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <h3 class="font-display text-2xl font-bold mb-2">Chiang Mai</h3>
+                    <p class="text-white/80 text-sm mb-4 leading-relaxed">Ancient temples and mountain tranquility.</p>
+                    <div
+                        class="flex items-center gap-2 text-brand-accent font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        Explore Flights <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Phuket -->
+            <a href="#"
+                class="group relative h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500 cursor-pointer">
+                <!-- Using Generated Phuket Image -->
+                <img src="images/phuket.png" alt="Phuket"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div
+                    class="absolute top-5 right-5 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 text-white text-xs font-bold border border-white/30">
+                    Beach
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 p-8 text-white transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <h3 class="font-display text-2xl font-bold mb-2">Phuket</h3>
+                    <p class="text-white/80 text-sm mb-4 leading-relaxed">Thailand's most famous island destination.</p>
+                    <div
+                        class="flex items-center gap-2 text-brand-accent font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        Explore Flights <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Bangkok -->
+            <a href="#"
+                class="group relative h-[420px] rounded-3xl overflow-hidden shadow-elegant hover:shadow-elegant-xl transition-all duration-500 cursor-pointer hidden lg:block">
+                <!-- Using Generated Bangkok Image -->
+                <img src="images/bangkok.png" alt="Bangkok"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div
+                    class="absolute top-5 right-5 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 text-white text-xs font-bold border border-white/30">
+                    City
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 p-8 text-white transform transition-transform duration-500 group-hover:-translate-y-2">
+                    <h3 class="font-display text-2xl font-bold mb-2">Bangkok</h3>
+                    <p class="text-white/80 text-sm mb-4 leading-relaxed">Vibrant street life and cultural landmarks.
+                    </p>
+                    <div
+                        class="flex items-center gap-2 text-brand-accent font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        Explore Flights <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= BOUTIQUE SERVICES ================= -->
+    <section class="py-20 lg:py-24 bg-brand-primary relative overflow-hidden">
+        <!-- Subtle Pattern Background -->
+        <div
+            class="absolute top-0 right-0 w-1/3 h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                <div class="lg:w-1/2">
+                    <span class="text-brand-accent font-bold tracking-widest text-sm uppercase mb-4 block">
+                        Exclusive Service
+                    </span>
+                    <h2 class="font-display text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                        Asia's Boutique Airline<br>Experience
+                    </h2>
+                    <p class="text-white/80 text-lg mb-10 leading-relaxed">
+                        Bangkok Airways is dedicated to providing a full-service experience with a boutique touch. Enjoy
+                        exclusive privileges that make your journey special.
+                    </p>
+
+                    <ul class="space-y-5 mb-12">
+                        <li class="flex items-start gap-4 text-white">
+                            <span
+                                class="w-10 h-10 rounded-full bg-brand-navy flex items-center justify-center text-brand-accent flex-shrink-0 mt-0.5">
+                                <i data-lucide="armchair" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <div class="font-semibold text-lg mb-1">Boutique Lounge for All</div>
+                                <div class="text-white/70 text-sm">All passengers enjoy complimentary access to our
+                                    Boutique Lounges.</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4 text-white">
+                            <span
+                                class="w-10 h-10 rounded-full bg-brand-navy flex items-center justify-center text-brand-accent flex-shrink-0 mt-0.5">
+                                <i data-lucide="utensils" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <div class="font-semibold text-lg mb-1">In-flight Dining</div>
+                                <div class="text-white/70 text-sm">Delicious meals served on all flights.</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4 text-white">
+                            <span
+                                class="w-10 h-10 rounded-full bg-brand-navy flex items-center justify-center text-brand-accent flex-shrink-0 mt-0.5">
+                                <i data-lucide="gem" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <div class="font-semibold text-lg mb-1">FlyerBonus Priority</div>
+                                <div class="text-white/70 text-sm">Exclusive benefits and rewards for our loyal members.
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <a href="#"
+                        class="inline-flex items-center gap-2 bg-brand-accent hover:bg-white hover:text-brand-accent text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-2xl">
+                        Discover More
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="lg:w-1/2 w-full">
+                    <div class="grid grid-cols-2 gap-5">
+                        <!-- Placeholders for Service Images - Using nice crops of existing images -->
+                        <img src="images/koh_samui_hero.png" alt="Lounge"
+                            class="rounded-3xl shadow-2xl transform translate-y-8 hover:translate-y-4 transition-transform duration-500 w-full h-72 object-cover">
+                        <img src="images/phuket.png" alt="Service"
+                            class="rounded-3xl shadow-2xl hover:-translate-y-4 transition-transform duration-500 w-full h-72 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROMOTIONS ================= -->
+    <section class="py-20 lg:py-28 container mx-auto px-6 lg:px-12">
+        <div class="text-center mb-14">
+            <span class="text-brand-accent font-bold tracking-widest text-sm uppercase mb-3 block">
+                Special Offers
+            </span>
+            <h2 class="font-display text-4xl lg:text-5xl font-bold text-brand-navy mb-4">
+                FlyerBonus Exclusives
+            </h2>
+            <p class="text-brand-slate text-lg max-w-2xl mx-auto">
+                Exclusive deals and redemptions for our FlyerBonus members.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Samui Escape -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 border border-gray-100">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/koh_samui_hero.png" alt="Samui"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div
+                        class="absolute top-5 left-5 bg-brand-accent text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                        Hot Deal
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Samui Escape</h3>
+                    <p class="text-brand-slate text-sm mb-6 leading-relaxed">
+                        Round trip Bangkok - Samui including 2 nights at a partner resort and airport transfers.
+                    </p>
+                    <div class="flex justify-between items-end pt-4 border-t border-gray-100">
+                        <div>
+                            <span class="text-xs text-brand-slate block mb-1">From</span>
+                            <span class="text-3xl font-bold text-brand-primary font-display">THB 5,900</span>
+                            <span class="text-sm text-brand-slate ml-1">net</span>
+                        </div>
+                        <button
+                            class="text-brand-navy font-bold text-sm hover:text-brand-accent transition-colors flex items-center gap-1.5">
+                            Details
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maldives Dream (Using Phuket as placeholder) -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 border border-gray-100">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/phuket.png" alt="Maldives"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div
+                        class="absolute top-5 left-5 bg-brand-navy text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                        FlyerBonus 2x Points
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Phuket Getaway</h3>
+                    <p class="text-brand-slate text-sm mb-6 leading-relaxed">
+                        Escape to the pearl of the andaman. Includes return flights and 3 nights at 5-star resort.
+                    </p>
+                    <div class="flex justify-between items-end pt-4 border-t border-gray-100">
+                        <div>
+                            <span class="text-xs text-brand-slate block mb-1">From</span>
+                            <span class="text-3xl font-bold text-brand-primary font-display">THB 8,500</span>
+                            <span class="text-sm text-brand-slate ml-1">roundtrip</span>
+                        </div>
+                        <button
+                            class="text-brand-navy font-bold text-sm hover:text-brand-accent transition-colors flex items-center gap-1.5">
+                            Details
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chiang Mai Cultural -->
+            <div
+                class="bg-white rounded-3xl overflow-hidden shadow-elegant group hover:shadow-elegant-xl transition-all duration-500 border border-gray-100">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="images/chiang_mai.png" alt="Chiang Mai"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div
+                        class="absolute top-5 left-5 bg-brand-primary text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                        Weekend Special
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-display text-2xl font-bold text-brand-navy mb-3">Lanna Culture</h3>
+                    <p class="text-brand-slate text-sm mb-6 leading-relaxed">
+                        Weekend getaway to Chiang Mai. Visit Doi Suthep and enjoy authentic Northern Thai cuisine.
+                    </p>
+                    <div class="flex justify-between items-end pt-4 border-t border-gray-100">
+                        <div>
+                            <span class="text-xs text-brand-slate block mb-1">From</span>
+                            <span class="text-3xl font-bold text-brand-primary font-display">THB 2,200</span>
+                            <span class="text-sm text-brand-slate ml-1">one-way</span>
+                        </div>
+                        <button
+                            class="text-brand-navy font-bold text-sm hover:text-brand-accent transition-colors flex items-center gap-1.5">
+                            Details
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-brand-navy text-white pt-20 pb-10 border-t border-white/10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div>
+                    <img src="Bangkok-Airways-Logo.png" alt="Bangkok Airways"
+                        class="h-14 w-auto mb-6 brightness-0 invert opacity-90">
+                    <p class="text-white/60 mb-6 leading-relaxed">
+                        Asia's Boutique Airline. Connecting you to the most beautiful destinations in the region with
+                        unique hospitality.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent flex items-center justify-center transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent flex items-center justify-center transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent flex items-center justify-center transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-display font-bold text-xl mb-6">About Us</h4>
+                    <ul class="space-y-4 text-white/70">
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Company Profile</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Investor Relations</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Newsroom</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Sustainability</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="font-display font-bold text-xl mb-6">Boutique Services</h4>
+                    <ul class="space-y-4 text-white/70">
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Boutique Lounges</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">In-flight Dining</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Baggage</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition-colors">Special Assistance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-display font-bold text-xl mb-6">Stay Updated</h4>
+                    <p class="text-white/60 mb-4">Subscribe to our newsletter for exclusive offers and travel
+                        inspiration.</p>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Your email address"
+                            class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-colors">
+                        <button
+                            class="bg-brand-primary hover:bg-white hover:text-brand-primary text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-white/40 text-sm">
+                <p>&copy; 2024 Bangkok Airways. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Use</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Icons
+        lucide.createIcons();
+
+        // Hero Carousel
+        const slides = document.querySelectorAll('.hero-slide');
+        const textSlides = document.querySelectorAll('.hero-text-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            textSlides[currentSlide].classList.remove('active');
+
+            currentSlide = (currentSlide + 1) % slides.length;
+
+            slides[currentSlide].classList.add('active');
+            textSlides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 6000);
+
+        // Sticky Search Bar Logic
+        const searchContainer = document.getElementById('search-container-wrapper');
+        const searchPanel = document.getElementById('search-panel');
+        const searchInputsContainer = document.getElementById('search-inputs-container');
+        const searchTabsContainer = document.getElementById('search-tabs-container');
+
+        // Function to handle sticky state
+        const handleScroll = () => {
+            if (window.scrollY > 100) {
+                // STICKY STATE
+                searchPanel.classList.remove('rounded-3xl', 'max-w-6xl', 'shadow-elegant-xl');
+                searchPanel.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'rounded-none', 'max-w-full', 'shadow-md', 'border-b', 'border-gray-200', 'z-[60]', 'is-sticky');
+
+                // If not expanded by user, make it compact
+                if (!searchPanel.classList.contains('expanded-by-user')) {
+                    // COMPACT MODE
+                    searchPanel.classList.remove('py-4', 'p-6', 'lg:p-8');
+                    searchPanel.classList.add('py-2'); // Minimal padding
+
+                    searchInputsContainer.classList.add('hidden');
+
+                    // Make tabs container transparent and flush
+                    searchTabsContainer.classList.remove('mb-8', 'p-2', 'bg-brand-warm-gray');
+                    searchTabsContainer.classList.add('mb-0', 'p-0', 'bg-transparent');
+                } else {
+                    // EXPANDED MODE (Sticky but user clicked a tab)
+                    searchPanel.classList.remove('py-2');
+                    searchPanel.classList.add('py-4');
+
+                    searchInputsContainer.classList.remove('hidden');
+
+                    // Restore background for tabs in expanded mode
+                    searchTabsContainer.classList.remove('mb-0', 'p-0', 'bg-transparent');
+                    searchTabsContainer.classList.add('mb-6', 'p-2', 'bg-brand-warm-gray');
+                }
+
+            } else {
+                // NORMAL STATE
+                searchPanel.classList.add('rounded-3xl', 'max-w-6xl', 'shadow-elegant-xl');
+                searchPanel.classList.add('p-6', 'lg:p-8'); // Restore original padding
+                searchPanel.classList.remove('fixed', 'top-0', 'left-0', 'right-0', 'rounded-none', 'max-w-full', 'shadow-md', 'border-b', 'border-gray-200', 'z-[60]', 'py-4', 'py-2', 'is-sticky', 'expanded-by-user');
+
+                searchInputsContainer.classList.remove('hidden');
+
+                searchTabsContainer.classList.add('mb-8', 'p-2', 'bg-brand-warm-gray');
+                searchTabsContainer.classList.remove('mb-0', 'p-0', 'bg-transparent', 'mb-6');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Tab Switching & Accordion Logic
+        const tabs = document.querySelectorAll('.search-tab');
+        const forms = document.querySelectorAll('.search-form');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => {
+                    t.classList.remove('active', 'bg-white', 'text-brand-primary', 'shadow-sm');
+                    t.classList.add('text-brand-slate', 'hover:bg-white/50');
+                });
+
+                // Add active class to clicked tab
+                tab.classList.add('active', 'bg-white', 'text-brand-primary', 'shadow-sm');
+                tab.classList.remove('text-brand-slate', 'hover:bg-white/50');
+
+                // If sticky, ensure expanded
+                if (window.scrollY > 100) {
+                    searchPanel.classList.add('expanded-by-user');
+                    handleScroll(); // Apply changes
+                }
+
+                // Hide all forms
+                forms.forEach(form => form.classList.add('hidden'));
+                forms.forEach(form => form.classList.remove('block', 'animate-fade-in'));
+
+                // Show target form
+                const targetId = tab.dataset.target + '-form';
+                const targetForm = document.getElementById(targetId);
+                if (targetForm) {
+                    targetForm.classList.remove('hidden');
+                    targetForm.classList.add('block', 'animate-fade-in');
+                }
+            });
+        });
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-load').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isClosed = mobileMenu.classList.contains('translate-x-full');
+            if (isClosed) {
+                mobileMenu.classList.remove('translate-x-full');
+                // Change icon to X
+                mobileMenuBtn.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                // Change icon back to Menu
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+            }
+        });
+
+    </script>
+</body>
+
+</html>

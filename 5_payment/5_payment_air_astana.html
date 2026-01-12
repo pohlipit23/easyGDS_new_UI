@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Air Astana Holidays - Payment</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#C8AA6E", // Air Astana Gold
+                        secondary: "#2D2D2D", // Graphite Grey
+                        "primary-hover": "#B09256",
+                        "text-main": "#1A1A1A",
+                        "text-muted": "#555555",
+                        "bg-surface": "#F9F9F9",
+                        success: "#4CAF50",
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                    },
+                    fontSize: {
+                        'xs': '0.92rem', // ~14.7px (11pt)
+                        'sm': '1.0rem', // ~16px
+                        'base': '1.125rem', // ~18px
+                        'lg': '1.25rem',
+                        'xl': '1.5rem',
+                        '2xl': '1.75rem',
+                        '3xl': '2.25rem',
+                    },
+                    boxShadow: {
+                        'subtle': '0 2px 10px -5px rgba(200, 170, 110, 0.15)',
+                        'float': '0 5px 15px -5px rgba(0, 0, 0, 0.08)',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-icons-round {
+            vertical-align: middle;
+        }
+
+        .tailfin-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #C8AA6E;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%, 0 70%);
+            border-radius: 4px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .tailfin-icon.return {
+            transform: scaleX(-1);
+        }
+
+        /* Custom Range Slider */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #C8AA6E;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid #fff;
+            box-shadow: 0 0 0 1px #ddd;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #C8AA6E;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid #fff;
+            box-shadow: 0 0 0 1px #ddd;
+        }
+    </style>
+</head>
+
+<body class="bg-white font-sans text-text-main antialiased text-base">
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <img alt="Air Astana logo" class="h-12 object-contain -ml-2"
+                        src="https://ir.airastana.com/media/8dc255bf980e194/air_astana_logo_rgb.jpg" />
+                    <div class="h-6 w-px bg-gray-200 hidden sm:block"></div>
+                    <span
+                        class="text-base font-medium tracking-wide text-secondary hidden sm:block uppercase">Holidays</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-icons-round text-2xl">person_outline</span>
+                    </a>
+                    <a class="p-2 rounded-full hover:bg-gray-50 text-text-muted hover:text-primary transition-colors"
+                        href="#">
+                        <span class="material-icons-round text-2xl">shopping_cart</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 md:p-8 flex-grow">
+            <!-- Page Title -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-medium text-secondary tracking-tight">Secure Payment</h1>
+                <p class="text-text-muted mt-1 text-sm">Choose your preferred payment method to complete your booking.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: Payment Options -->
+                <div class="lg:col-span-2 space-y-8">
+
+                    <!-- Login / Guest Section -->
+                    <div
+                        class="bg-white rounded-2xl shadow-float border border-gray-200 p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="material-icons-round text-primary text-2xl">loyalty</span>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-lg text-secondary">Log in to your Nomad Club account</h2>
+                                <p class="text-sm text-text-muted">Earn and redeem points on your booking.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 w-full md:w-auto">
+                            <button
+                                class="flex-1 md:flex-none bg-primary text-white px-6 py-2.5 rounded-lg font-bold text-sm uppercase tracking-wide hover:bg-primary-hover transition shadow-subtle">Log
+                                in</button>
+                            <button
+                                class="flex-1 md:flex-none border border-gray-300 text-secondary px-6 py-2.5 rounded-lg font-bold text-sm uppercase tracking-wide hover:bg-gray-50 transition">Guest</button>
+                        </div>
+                    </div>
+
+                    <!-- Pay with Miles Section -->
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 overflow-hidden">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-secondary flex items-center gap-2">
+                                <span class="material-icons-round text-primary">savings</span>
+                                Pay with Nomad Club Points
+                            </h2>
+                            <p class="text-sm text-text-muted mt-1">You have <span class="font-bold text-primary">15,000
+                                    Points</span> available.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs font-bold uppercase tracking-wide text-text-muted">Pay by
+                                    Points</span>
+                                <span class="text-xs font-bold uppercase tracking-wide text-text-muted">Pay by
+                                    Card</span>
+                            </div>
+
+                            <div class="relative py-2">
+                                <input
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                                    id="miles-slider" max="100" min="0" type="range" value="25" />
+                            </div>
+
+                            <div
+                                class="flex justify-between items-center mt-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <div class="text-center">
+                                    <p class="font-bold text-xl text-primary">£243.50</p>
+                                    <p class="text-xs text-text-muted font-medium uppercase tracking-wide">5,000 Points
+                                    </p>
+                                </div>
+                                <div class="h-8 w-px bg-gray-300"></div>
+                                <div class="text-center">
+                                    <p class="font-bold text-xl text-secondary">£730.50</p>
+                                    <p class="text-xs text-text-muted font-medium uppercase tracking-wide">Card payment
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Section -->
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 overflow-hidden">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="text-xl font-bold text-secondary flex items-center gap-2">
+                                <span class="material-icons-round text-primary">payment</span>
+                                Payment Method
+                            </h2>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="flex border-b border-gray-200">
+                            <button
+                                class="flex-1 py-4 text-center border-b-2 border-primary text-primary font-bold text-sm uppercase tracking-wide bg-primary/5">Credit/Debit
+                                Card</button>
+                            <button
+                                class="flex-1 py-4 text-center text-text-muted hover:bg-gray-50 font-medium text-sm uppercase tracking-wide transition-colors">PayPal</button>
+                            <button
+                                class="flex-1 py-4 text-center text-text-muted hover:bg-gray-50 font-medium text-sm uppercase tracking-wide transition-colors">E-Wallets</button>
+                        </div>
+
+                        <div class="p-6 md:p-8">
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-text-muted mb-2"
+                                        for="card-number">Card Number</label>
+                                    <div class="relative">
+                                        <input
+                                            class="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm pl-4 pr-12 py-3 text-secondary font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white transition-all"
+                                            id="card-number" placeholder="0000 0000 0000 0000" type="text" />
+                                        <div
+                                            class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none gap-1">
+                                            <img alt="Visa" class="h-5"
+                                                src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" />
+                                            <img alt="Mastercard" class="h-5"
+                                                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-text-muted mb-2"
+                                        for="card-name">Name on Card</label>
+                                    <input
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm px-4 py-3 text-secondary font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white transition-all"
+                                        id="card-name" placeholder="John M. Doe" type="text" />
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs font-bold uppercase text-text-muted mb-2"
+                                            for="expiry-date">Expiry Date</label>
+                                        <input
+                                            class="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm px-4 py-3 text-secondary font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white transition-all"
+                                            id="expiry-date" placeholder="MM / YY" type="text" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold uppercase text-text-muted mb-2"
+                                            for="cvv">CVV</label>
+                                        <div class="relative">
+                                            <input
+                                                class="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm px-4 py-3 text-secondary font-medium focus:ring-1 focus:ring-primary focus:border-primary focus:bg-white transition-all"
+                                                id="cvv" placeholder="123" type="text" />
+                                            <span
+                                                class="material-icons-round absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg cursor-help"
+                                                title="3 digits on the back of your card">help_outline</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start pt-2">
+                                    <div class="flex items-center h-5">
+                                        <input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                            id="save-card" name="save-card" type="checkbox" />
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label class="font-medium text-secondary" for="save-card">Save this card for
+                                            future payments</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-float border border-gray-200 p-6 sticky top-8">
+                        <h3 class="font-bold text-lg mb-4 text-secondary">Your package summary</h3>
+
+                        <!-- Hotel Summary -->
+                        <div class="flex gap-4 mb-4">
+                            <img alt="Cinnamon Dhonveli Maldives"
+                                class="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0rw0noDZs_ppQdGkbZJm31tiG67K-9kI0-ghQF7lMHDP7l99G-XYQhzGiU_b8bVcnNxTvF_hi6s8X6gyO2Ncjggsf8kYLsBXoubgEimt9iCDh8SUJszXu7xI6sHR7xhoDhj4nGDNX9cZmYOt3UUUE2uR3LGMLWAA7OD-Y5NkTv6yCovS8kAwTRlg9RavDvz8VjmlVgsLmplPlBWeyLQSgH0u4fgvmmT8IA2-WR_Fjmp_k7ew4CXOgDubZ1Wgp4hhcBxqfDCCdpSU" />
+                            <div>
+                                <h4 class="font-bold text-sm text-secondary leading-tight">Cinnamon Dhonveli Maldives
+                                </h4>
+                                <p class="text-xs text-text-muted mt-1">4 nights, 2 adults</p>
+                                <p class="text-xs text-text-muted">Over-Water Suite</p>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-100 my-4"></div>
+
+                        <!-- Flight Summary -->
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <div class="tailfin-icon mt-0.5"></div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-bold text-secondary">KUL <span
+                                                class="text-gray-400">→</span> MLE</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted">10:10 - 11:35</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="tailfin-icon return mt-0.5"></div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-bold text-secondary">MLE <span
+                                                class="text-gray-400">→</span> KUL</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted">12:35 - 20:15</p>
+                                </div>
+                            </div>
+                            <a class="text-primary hover:text-primary-hover font-bold text-xs uppercase tracking-wide mt-2 inline-block"
+                                href="#">View flight details</a>
+                        </div>
+
+                        <div class="border-t border-gray-100 my-4"></div>
+
+                        <!-- Price Breakdown -->
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-text-muted">2 travellers</span>
+                                <span class="text-secondary font-medium">£1,402.00</span>
+                            </div>
+                            <div class="flex justify-between text-success">
+                                <span>Discount</span>
+                                <span>-£428.00</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-100 my-4"></div>
+
+                        <!-- Total -->
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-secondary">Total</span>
+                            <div class="text-right">
+                                <p class="font-bold text-2xl text-secondary">£974.00</p>
+                                <p class="text-xs text-text-muted">£487 per person</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-text-muted mt-1 text-right">Includes taxes and fees</p>
+
+                        <button
+                            class="bg-primary text-white w-full py-3.5 rounded-lg font-bold text-base mt-6 hover:bg-primary-hover shadow-subtle uppercase tracking-wide transition-all transform active:scale-[0.98]">Pay
+                            Now</button>
+
+                        <p class="text-[10px] text-text-muted mt-3 text-center leading-tight">
+                            By clicking 'Pay Now' you agree to the <a class="underline hover:text-primary"
+                                href="#">Terms & Conditions</a>.
+                        </p>
+
+                        <div
+                            class="mt-4 flex justify-center gap-2 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                            <img alt="Visa" class="h-6"
+                                src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" />
+                            <img alt="Mastercard" class="h-6"
+                                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-white py-6 mt-auto border-t border-gray-100">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-sm text-text-muted">&copy; 2024 Air Astana. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

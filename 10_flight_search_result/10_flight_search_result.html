@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MH Holidays - Flight Search Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0D4689",
+                        "background-light": "#F7F9FC",
+                        "background-dark": "#041049",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#0D4689",
+                        "text-light": "#041049",
+                        "text-dark": "#C7EAFB",
+                        "text-secondary-light": "#6b7280",
+                        "text-secondary-dark": "#9ca3af",
+                        "accent-light": "#C7EAFB",
+                        "accent-dark": "#C7EAFB",
+                        "recommendation-bg-light": "#EFF6FF"
+                    },
+                    fontFamily: {
+                        display: ["Roboto", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-icons {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<header class="bg-white dark:bg-primary shadow-md">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<div class="flex items-center space-x-4">
+<img alt="Malaysia Airlines logo" class="h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"/>
+<span class="text-xl font-bold text-primary dark:text-white">MHholidays</span>
+</div>
+<div class="flex items-center space-x-4">
+<a class="text-gray-600 dark:text-white hover:text-primary dark:hover:text-accent-dark" href="#">
+<span class="material-icons">notifications</span>
+</a>
+<a class="text-gray-600 dark:text-white hover:text-primary dark:hover:text-accent-dark" href="#">
+<span class="material-icons">person</span>
+</a>
+<a class="text-gray-600 dark:text-white hover:text-primary dark:hover:text-accent-dark" href="#">
+<span class="material-icons">shopping_cart</span>
+</a>
+</div>
+</div>
+</header>
+<main class="container mx-auto p-4 md:p-8">
+<div class="mb-6 bg-white dark:bg-card-dark p-4 rounded-lg shadow-sm">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-primary dark:text-text-dark">
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-base md:text-lg">
+<div class="font-semibold">
+<span>London (LHR)</span>
+<span class="material-icons mx-2">arrow_forward</span>
+<span>Sydney (SYD)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-icons">date_range</span>
+<span>13 Nov - 17 Nov</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-icons">person</span>
+<span>2 travellers</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-icons">flight_class</span>
+<span>Economy</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-icons">sync_alt</span>
+<span>Return</span>
+</div>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-opacity-90 text-sm w-full md:w-auto flex-shrink-0"> Modify search </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+<aside class="lg:col-span-1">
+<div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-xl font-bold text-text-light dark:text-text-dark">Filters</h2>
+<button class="text-sm text-primary dark:text-accent-dark font-semibold hover:underline"> Clear all filters </button>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold text-text-light dark:text-text-dark">Stops</h3>
+<button class="text-xs text-primary dark:text-accent-dark font-medium hover:underline">Clear</button>
+</div>
+<div class="space-y-2 text-sm">
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Direct</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>1 Stop</span>
+<input checked="" class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>2+ Stops</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700"></div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold text-text-light dark:text-text-dark">Baggage</h3>
+<button class="text-xs text-primary dark:text-accent-dark font-medium hover:underline">Clear</button>
+</div>
+<div class="space-y-2 text-sm">
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>1 Checked Bag</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>2+ Checked Bags</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700"></div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold text-text-light dark:text-text-dark">Airlines</h3>
+<button class="text-xs text-primary dark:text-accent-dark font-medium hover:underline">Clear</button>
+</div>
+<div class="space-y-2 text-sm">
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Malaysia Airlines</span>
+<input checked="" class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>AirAsia</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Singapore Airlines</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700"></div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold text-text-light dark:text-text-dark">Departure Time</h3>
+<button class="text-xs text-primary dark:text-accent-dark font-medium hover:underline">Clear</button>
+</div>
+<div class="space-y-2 text-sm">
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Morning (05:00 - 11:59)</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Afternoon (12:00 - 17:59)</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Evening (18:00 - 23:59)</span>
+<input checked="" class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700"></div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-semibold text-text-light dark:text-text-dark">Arrival Time</h3>
+<button class="text-xs text-primary dark:text-accent-dark font-medium hover:underline">Clear</button>
+</div>
+<div class="space-y-2 text-sm">
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Morning (05:00 - 11:59)</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Afternoon (12:00 - 17:59)</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between text-text-secondary-light dark:text-text-secondary-dark">
+<span>Evening (18:00 - 23:59)</span>
+<input class="rounded text-primary focus:ring-primary/50" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700"></div>
+<div>
+<h3 class="font-semibold mb-2 text-text-light dark:text-text-dark">Price Range</h3>
+<input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" max="2000" min="500" type="range" value="1250"/>
+<div class="flex justify-between text-sm text-text-secondary-light dark:text-text-secondary-dark mt-2">
+<span>£500</span>
+<span>£2000</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<div class="lg:col-span-3">
+<div class="flex justify-between items-center mb-4">
+<h1 class="text-2xl font-bold text-text-light dark:text-text-dark">Select your flight</h1>
+<div class="flex items-center space-x-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+<span>Sort by:</span>
+<button class="font-semibold text-primary dark:text-accent-dark flex items-center"> Recommended <span class="material-icons text-base">expand_more</span>
+</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-recommendation-bg-light dark:bg-card-dark rounded-lg shadow-md border border-primary/20 dark:border-accent-dark/30">
+<div class="p-4 flex flex-col md:flex-row items-center gap-4">
+<div class="w-full flex-grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Airline logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGgA3BaU1gUKYUFU6htACOss54Sg3PuKKPtY_dVXG-y15HccbqkLR7hhGohYPCHv6HHulJOz2URjAK3tYmF4rLgFPOHU-FNZxRh8FvDDq--LMOWoCnUHTY6gMJ7E3ZbQsYXGFObc2joI28A6KNheujc2s5T4wxhbqTh1G0I-_9RqHgHpXzR7JPQ8XFuotIlsq5g50op5M6tzoCTRh50_3lUEL6NI67bYM6fnphqzezfJLf4fLL4ZsY5ytKqj6sdSbNX3wdyfDex0"/>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">Malaysia Airlines</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Economy (Q, B)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-icons text-base">work_outline</span>
+<span>2 pieces checked</span>
+</div>
+</div>
+<div class="mt-3 space-y-2">
+<div class="flex items-center gap-3 text-sm">
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">18:10 LHR</p>
+</div>
+<div class="flex-grow text-center px-2">
+<div class="relative h-px bg-gray-300 dark:bg-gray-600">
+<span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-recommendation-bg-light dark:bg-card-dark px-1 material-icons text-primary dark:text-accent-dark text-lg">flight</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">15:15 KUL<span class="text-xs font-normal align-top">+1</span></p>
+</div>
+<div class="flex-shrink-0 text-xs text-text-secondary-light dark:text-text-secondary-dark min-w-[120px] text-right">
+<p>13h 5m, MH 001</p>
+<p>Economy (Q)</p>
+</div>
+</div>
+<div class="pl-4 border-l-2 border-dashed border-gray-300 dark:border-gray-600 ml-4 py-1">
+<p class="text-xs text-primary dark:text-accent-dark font-semibold">Layover in KUL: 2h 20m</p>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">17:35 KUL<span class="text-xs font-normal align-top">+1</span></p>
+</div>
+<div class="flex-grow text-center px-2">
+<div class="relative h-px bg-gray-300 dark:bg-gray-600">
+<span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-recommendation-bg-light dark:bg-card-dark px-1 material-icons text-primary dark:text-accent-dark text-lg">flight</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">05:00 SYD<span class="text-xs font-normal align-top">+2</span></p>
+</div>
+<div class="flex-shrink-0 text-xs text-text-secondary-light dark:text-text-secondary-dark min-w-[120px] text-right">
+<p>8h 25m, MH 123</p>
+<p>Economy (B)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden md:block w-px bg-gray-200 dark:bg-gray-700 self-stretch"></div>
+<div class="w-full md:w-auto flex flex-row items-center justify-between md:flex-col md:justify-center md:items-end gap-2 text-right">
+<div>
+<p class="text-xl font-bold text-text-light dark:text-text-dark">£1150</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">per person, return</p>
+</div>
+<button class="bg-primary text-white px-5 py-1.5 rounded-lg font-bold text-sm hover:bg-opacity-90 flex-shrink-0">Select</button>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm">
+<div class="p-4 flex flex-col md:flex-row items-center gap-4">
+<div class="w-full flex-grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Airline logo" class="h-10 w-10 object-contain rounded-full bg-white p-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvZZR5PuFp51UpI2MzTIKi1bn6YdrL2UKBFHe4Cduq0BayP47GqaaKyWVbNW7dbyhMG_s4cOvblWXkpqNud28MZVpz224A3CczTKM1110hMTSc9_OHEozkoW475B0RmR1irZKs5FiIdQEM2wWaP5dKRL8Rbutae50o0Tr5nWsEgocwGrmjbMb5mffptCLAKRMouzB102EQLVV3iAAX15kxqjxlbvcixOs_-xsP9hW8tdUWS1ln-u3TJZOGakagNhlM_3B3AhXcutc"/>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">AirAsia</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Economy (Q)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-icons text-base">work_outline</span>
+<span>1 piece checked</span>
+</div>
+</div>
+<div class="mt-3 flex items-center gap-3 text-sm">
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">09:30 <span class="font-medium">KUL</span></p>
+</div>
+<div class="flex-grow text-center px-2">
+<div class="relative h-px bg-gray-300 dark:bg-gray-600">
+<span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-card-light dark:bg-card-dark px-1 material-icons text-primary dark:text-accent-dark text-lg">flight</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">14:40 <span class="font-medium">MLE</span></p>
+</div>
+<div class="flex-shrink-0 text-xs text-text-secondary-light dark:text-text-secondary-dark min-w-[120px] text-right">
+<p>6h 10m, AK 078</p>
+<p>Economy (Q)</p>
+</div>
+</div>
+</div>
+<div class="hidden md:block w-px bg-gray-200 dark:bg-gray-700 self-stretch"></div>
+<div class="w-full md:w-auto flex flex-row items-center justify-between md:flex-col md:justify-center md:items-end gap-2 text-right">
+<div>
+<p class="text-xl font-bold text-text-light dark:text-text-dark">£685</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">per person, one-way</p>
+</div>
+<button class="bg-primary text-white px-5 py-1.5 rounded-lg font-bold text-sm hover:bg-opacity-90 flex-shrink-0">Select</button>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm">
+<div class="p-4 flex flex-col md:flex-row items-center gap-4">
+<div class="w-full flex-grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Airline logo" class="h-10 w-10 object-contain rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbc4nf53q6V_eHFE0z61VTnKPReHrPI2culuO7djhZGr095VkT-JQki7-5vdlZpMn9WOtLkUHWnJgiZYi03Oc_dnk4baQSdgh8MaO873X_m_yWyUzaL3dISMIIr8vjtEPGC0YPTWN-aUKbxBV3FKCSBNIyqdpGJ2-HkXWjFN7EcljocPE2m15pz_L040rOVKsnqVtg1bfNl280oEjChsBq3eBGQvbfa9MZ6h5T-YURTUF8GyScH9QNIan9o1Yn7WkiHgPfEmr1eEQ"/>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">Singapore Airlines</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Economy (V)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-icons text-base">work_outline</span>
+<span>2 pieces checked</span>
+</div>
+</div>
+<div class="mt-3 flex items-center gap-3 text-sm">
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">11:00 <span class="font-medium">KUL</span></p>
+</div>
+<div class="flex-grow text-center px-2">
+<div class="relative h-px bg-gray-300 dark:bg-gray-600">
+<span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-card-light dark:bg-card-dark px-1 material-icons text-primary dark:text-accent-dark text-lg">flight</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-text-light dark:text-text-dark">12:30 <span class="font-medium">MLE</span></p>
+</div>
+<div class="flex-shrink-0 text-xs text-text-secondary-light dark:text-text-secondary-dark min-w-[120px] text-right">
+<p>4h 30m, SQ 521</p>
+<p>Economy (V)</p>
+</div>
+</div>
+</div>
+<div class="hidden md:block w-px bg-gray-200 dark:bg-gray-700 self-stretch"></div>
+<div class="w-full md:w-auto flex flex-row items-center justify-between md:flex-col md:justify-center md:items-end gap-2 text-right">
+<div>
+<p class="text-xl font-bold text-text-light dark:text-text-dark">£750</p>
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">per person, one-way</p>
+</div>
+<button class="bg-primary text-white px-5 py-1.5 rounded-lg font-bold text-sm hover:bg-opacity-90 flex-shrink-0">Select</button>
+</div>
+</div>
+</div>
+<div class="mt-8 text-center">
+<button class="bg-white dark:bg-card-dark border border-gray-300 dark:border-gray-600 text-primary dark:text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-opacity-90"> Show more flights </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>
